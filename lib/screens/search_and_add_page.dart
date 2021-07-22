@@ -4,6 +4,7 @@ import 'package:jboss_ui/util/constant.dart';
 class SearchAndAddPage extends StatelessWidget {
   SearchAndAddPage({Key? key}) : super(key: key);
   final _controller = TextEditingController();
+  final _searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +14,22 @@ class SearchAndAddPage extends StatelessWidget {
         children: [
           Stack(alignment: AlignmentDirectional.center, children: [
             TextField(
+              focusNode: _searchFocusNode,
+              autofocus: true,
               controller: _controller,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(16),
+                contentPadding: EdgeInsets.fromLTRB(8.0, 16.0, 140.0, 16.0),
                 hintText: "Введите ФИО или ID",
                 isDense: true,
                 filled: true,
                 fillColor: kBgColor,
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.green, width: 2.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),
@@ -35,6 +42,7 @@ class SearchAndAddPage extends StatelessWidget {
                   child: RawMaterialButton(
                     onPressed: () {
                       _controller.clear();
+                      _searchFocusNode.requestFocus();
                     },
                     elevation: 0,
                     hoverElevation: 0,
@@ -52,7 +60,7 @@ class SearchAndAddPage extends StatelessWidget {
                   //icon: Icon(Icons.clear, color: Colors.white),
                   //child: Text("Найти"),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 6.0,
                 ),
                 Container(
@@ -67,9 +75,12 @@ class SearchAndAddPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+
                     label: Text("Найти"),
                     icon: Icon(Icons.search, color: Colors.white),
+                    onPressed: () {
+                      _searchFocusNode.requestFocus();
+                    },
                     //child: Text("Найти"),
                   ),
                 ),
