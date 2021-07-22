@@ -20,35 +20,29 @@ class HubPage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 4.0),
             child: Row(
               children: [
-                Expanded(
-                  child: Theme(
-                    data: ThemeData(
-                      //splashColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
+                const Expanded(
+                  child: TabBar(
+                    indicator: BoxDecoration(
+                      color: kTopColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: kTabsRadius,
+                        bottomRight: kTabsRadius,
+                      ),
                     ),
-                    child: const TabBar(
-                      indicator: BoxDecoration(
-                        color: kTopColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: kTabsRadius,
-                          bottomRight: kTabsRadius,
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          "Add",
+                          style: kTabsTextStyle,
                         ),
                       ),
-                      tabs: [
-                        Tab(
-                          child: Text(
-                            "Add",
-                            style: kTabsTextStyle,
-                          ),
+                      Tab(
+                        child: Text(
+                          "History",
+                          style: kTabsTextStyle,
                         ),
-                        Tab(
-                          child: Text(
-                            "History",
-                            style: kTabsTextStyle,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 IconButton(
@@ -81,7 +75,7 @@ class HubPage extends StatelessWidget {
                       topRight: kTabsRadius,
                     ),
                   ),
-                  child: const SearchAndAddPage(),
+                  child: SearchAndAddPage(),
                 ),
               ),
             ),
