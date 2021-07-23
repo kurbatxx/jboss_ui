@@ -47,7 +47,7 @@ class HubPage extends StatelessWidget {
                 ),
                 IconButton(
                   padding: const EdgeInsets.all(0.0),
-                  hoverColor: Colors.red.shade100,
+                  hoverColor: Colors.white,
                   splashRadius: 16.0,
                   icon: const Icon(
                     Icons.logout,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jboss_ui/util/constant.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../widgets/cards_select_dialog.dart';
 
 class SearchAndAddPage extends StatelessWidget {
   SearchAndAddPage({Key? key}) : super(key: key);
@@ -54,11 +56,8 @@ class SearchAndAddPage extends StatelessWidget {
                       color: Colors.white,
                       size: 20.0,
                     ),
-                    //padding: EdgeInsets.all(10),
                     shape: const CircleBorder(),
                   ),
-                  //icon: Icon(Icons.clear, color: Colors.white),
-                  //child: Text("Найти"),
                 ),
                 const SizedBox(
                   width: 6.0,
@@ -94,6 +93,64 @@ class SearchAndAddPage extends StatelessWidget {
             ],
           ),
           Divider(),
+          Expanded(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                Card(
+                  child: ListTile(
+                    leading: Text("85800035"),
+                    title: Text("Иванова Валерия Антоновна"),
+                    subtitle: Text(
+                      "КГУ Средняя общеобразовательная школа-комплекс эстетического № 8",
+                      style: TextStyle(fontSize: 12.0),
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("50000 тг."),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("Пед. состав"),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: IconButton(
+                              icon: SvgPicture.asset(
+                                "assets/icons/rfid.svg",
+                                color: Colors.grey,
+                                semanticsLabel: 'rfid',
+                                width: 20,
+                                height: 20,
+                              ),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return CardsSelectDialog();
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          splashRadius: 20,
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.arrow_downward_outlined,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Card(),
+              ],
+            ),
+          )
         ],
       ),
     );
