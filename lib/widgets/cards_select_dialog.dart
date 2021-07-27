@@ -128,6 +128,16 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
             SizedBox(
               height: 5.0,
             ),
+            Row(children: const [
+              Checkbox(value: false, onChanged: null),
+              Flexible(
+                child: Text("Выдать бесплано"),
+              ),
+            ]),
+            Text(
+              "Активное устройство будет заблокировано!",
+              style: TextStyle(color: Colors.red),
+            ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
