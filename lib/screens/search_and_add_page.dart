@@ -1,3 +1,4 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:jboss_ui/util/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -97,60 +98,93 @@ class SearchAndAddPage extends StatelessWidget {
             child: ListView(
               shrinkWrap: true,
               children: [
-                Card(
-                  child: ListTile(
-                    leading: Text("85800035"),
-                    title: Text("Иванова Валерия Антоновна"),
-                    subtitle: Text(
-                      "КГУ Средняя общеобразовательная школа-комплекс эстетического № 8",
-                      style: TextStyle(fontSize: 12.0),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("50000 тг."),
-                        SizedBox(
-                          width: 5,
+                ExpandableNotifier(
+                  child: ScrollOnExpand(
+                    child: Card(
+                      //clipBehavior: Clip.antiAlias,
+                      child: Expandable(
+                        collapsed: CardTileWidget(),
+                        expanded: Column(
+                          children: [
+                            CardTileWidget(),
+                            Text("Информация о картах"),
+                          ],
                         ),
-                        Text("Пед. состав"),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: IconButton(
-                              icon: SvgPicture.asset(
-                                "assets/icons/rfid.svg",
-                                color: Colors.grey,
-                                semanticsLabel: 'rfid',
-                                width: 20,
-                                height: 20,
-                              ),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return CardsSelectDialog();
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          splashRadius: 20,
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.arrow_downward_outlined,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-                Card(),
               ],
             ),
           )
+        ],
+      ),
+    );
+  }
+}
+
+class CardTileWidget extends StatelessWidget {
+  const CardTileWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Text("85800035"),
+      title: Text("Иванова Валерия Антоновна"),
+      subtitle: Text(
+        "КГУ Средняя общеобразовательная школа-комплекс эстетического № 8",
+        style: TextStyle(fontSize: 12.0),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("50000 тг."),
+          SizedBox(
+            width: 5,
+          ),
+          Text("Пед. состав"),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Material(
+              color: Colors.transparent,
+              child: IconButton(
+                icon: SvgPicture.asset(
+                  "assets/icons/rfid.svg",
+                  color: Colors.grey,
+                  semanticsLabel: 'rfid',
+                  width: 20,
+                  height: 20,
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CardsSelectDialog();
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          Builder(
+            builder: (BuildContext context) {
+              final controller =
+                  ExpandableController.of(context, required: true)!;
+              return IconButton(
+                splashRadius: 20,
+                onPressed: () {
+                  controller.toggle();
+                },
+                icon: Icon(
+                  controller.expanded
+                      ? Icons.arrow_upward_outlined
+                      : Icons.arrow_downward_outlined,
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
