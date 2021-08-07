@@ -25,20 +25,24 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Ink(
-                  decoration: ShapeDecoration(
-                    color: Colors.red,
-                    shape: CircleBorder(),
-                  ),
-                  child: IconButton(
-                    constraints: BoxConstraints(maxHeight: 32),
-                    iconSize: 16.0,
-                    color: Colors.white,
-                    splashRadius: 16.0,
+                Container(
+                  height: 28,
+                  width: 28,
+                  child: RawMaterialButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.close),
+                    elevation: 0,
+                    hoverElevation: 0,
+                    focusElevation: 0,
+                    highlightElevation: 0,
+                    fillColor: Colors.red.withOpacity(0.8),
+                    child: const Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
+                    shape: const CircleBorder(),
                   ),
                 ),
               ],
