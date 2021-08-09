@@ -5,3 +5,5 @@ const kTopColor = Colors.white;
 
 const kTabsRadius = Radius.circular(10.0);
 const kTabsTextStyle = TextStyle(color: Colors.black);
+
+const kCheckboxRadius = 16.0;

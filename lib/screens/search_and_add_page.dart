@@ -1,16 +1,20 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:jboss_ui/util/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/cards_select_dialog.dart';
+import '../provider/data_provider.dart';
 
-class SearchAndAddPage extends StatelessWidget {
+class SearchAndAddPage extends ConsumerWidget {
   SearchAndAddPage({Key? key}) : super(key: key);
   final _controller = TextEditingController();
   final _searchFocusNode = FocusNode();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
+    final provider = watch(searchDeleteClientCheckboxProvider);
+    final searchDeleteClient = provider.state;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -89,7 +93,15 @@ class SearchAndAddPage extends StatelessWidget {
           ]),
           Row(
             children: [
-              Checkbox(value: false, onChanged: null),
+              Checkbox(
+                splashRadius: kCheckboxRadius,
+                value: searchDeleteClient,
+                onChanged: (value) {
+                  final provider =
+                      context.read(searchDeleteClientCheckboxProvider);
+                  provider.state = !provider.state;
+                },
+              ),
               Text("Показывать выбывших и удаленных")
             ],
           ),

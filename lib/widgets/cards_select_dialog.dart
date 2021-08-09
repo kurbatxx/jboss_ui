@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../provider/data_provider.dart';
+import '../util/constant.dart';
 
 class CardsSelectDialog extends StatefulWidget {
   const CardsSelectDialog({Key? key}) : super(key: key);
@@ -12,7 +15,7 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
       List.generate(3, (int index) => index > 0 ? false : true);
 
   List<bool> isSelectedColor =
-      List.generate(5, (int index) => index > 0 ? false : true);
+      List.generate(10, (int index) => index > 0 ? false : true);
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +126,31 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
                         width: 30,
                         color: Colors.blue,
                       ),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        color: Colors.blue,
+                      ),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        color: Colors.blue,
+                      ),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        color: Colors.blue,
+                      ),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        color: Colors.blue,
+                      ),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        color: Colors.blue,
+                      ),
                     ],
                   )
                 : Container(
@@ -133,7 +161,7 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
               height: 5.0,
             ),
             Row(children: const [
-              Checkbox(value: false, onChanged: null),
+              FreeChecbox(),
               Flexible(
                 child: Text("Выдать бесплано"),
               ),
@@ -151,6 +179,25 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class FreeChecbox extends ConsumerWidget {
+  const FreeChecbox({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, watch) {
+    final provider = watch(freeCheckboxProvider);
+    final freeCheckbox = provider.state;
+    return Checkbox(
+      splashRadius: kCheckboxRadius,
+      value: freeCheckbox,
+      onChanged: (value) {
+        provider.state = !provider.state;
+      },
     );
   }
 }

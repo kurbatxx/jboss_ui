@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends StatelessWidget {
+import '../provider/data_provider.dart';
+import '../util/constant.dart';
+
+class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
+    final provider = watch(loginCheckboxProvider);
+    final checkboxState = provider.state;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -30,7 +36,13 @@ class LoginPage extends StatelessWidget {
                     height: 48.0,
                   ),
                   Row(children: [
-                    Checkbox(value: false, onChanged: null),
+                    Checkbox(
+                        splashRadius: kCheckboxRadius,
+                        value: checkboxState,
+                        onChanged: (value) {
+                          final provider = context.read(loginCheckboxProvider);
+                          provider.state = !provider.state;
+                        }),
                     Flexible(child: Text("Запомнить логин и пароль")),
                   ]),
                   const SizedBox(
