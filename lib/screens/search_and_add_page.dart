@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:jboss_ui/model/school_client.dart';
 import 'package:jboss_ui/util/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/cards_select_dialog.dart';
@@ -15,6 +16,14 @@ class SearchAndAddPage extends ConsumerWidget {
   Widget build(BuildContext context, watch) {
     final provider = watch(searchDeleteClientCheckboxProvider);
     final searchDeleteClient = provider.state;
+
+    final clientProvider = watch(clientsListProvider);
+    final clientList = clientProvider.state;
+
+    final firstSearch = watch(firstSearchProvider);
+
+    final future = watch(futureProvider);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -83,6 +92,7 @@ class SearchAndAddPage extends ConsumerWidget {
                     label: Text("Найти"),
                     icon: Icon(Icons.search, color: Colors.white),
                     onPressed: () {
+                      firstSearch.state = false;
                       _searchFocusNode.requestFocus();
                     },
                     //child: Text("Найти"),
@@ -105,30 +115,60 @@ class SearchAndAddPage extends ConsumerWidget {
               Text("Показывать выбывших и удаленных")
             ],
           ),
-          Divider(),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                ExpandableNotifier(
-                  child: ScrollOnExpand(
-                    child: Card(
-                      //clipBehavior: Clip.antiAlias,
-                      child: Expandable(
-                        collapsed: CardTileWidget(),
-                        expanded: Column(
-                          children: [
-                            CardTileWidget(),
-                            Text("Информация о картах"),
-                          ],
-                        ),
-                      ),
+          const Divider(),
+          firstSearch.state == true
+              ? Text("Тут будут результаты поиска")
+              : Expanded(
+                  child: future.when(
+                    data: (value) => //Text(value.toString()),
+                        ListView.builder(
+                      itemCount: value.length,
+                      itemBuilder: (context, index) {
+                        return ExpandableNotifier(
+                          child: ScrollOnExpand(
+                            child: Card(
+                              //clipBehavior: Clip.antiAlias,
+                              child: Expandable(
+                                collapsed: CardTileWidget(client: value[index]),
+                                expanded: Column(
+                                  children: [
+                                    CardTileWidget(client: value[index]),
+                                    Text("Информация о картах"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+
+                        //Text(value[index].toString());
+                      },
                     ),
+                    loading: () => Center(child: CircularProgressIndicator()),
+                    error: (e, stack) => Text('Error: $e'),
+                    // child: ListView(
+                    //   shrinkWrap: true,
+                    //   children: [
+                    //     ExpandableNotifier(
+                    //       child: ScrollOnExpand(
+                    //         child: Card(
+                    //           //clipBehavior: Clip.antiAlias,
+                    //           child: Expandable(
+                    //             collapsed: CardTileWidget(),
+                    //             expanded: Column(
+                    //               children: [
+                    //                 CardTileWidget(),
+                    //                 Text("Информация о картах"),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                   ),
-                ),
-              ],
-            ),
-          )
+                )
         ],
       ),
     );
@@ -137,26 +177,29 @@ class SearchAndAddPage extends ConsumerWidget {
 
 class CardTileWidget extends StatelessWidget {
   const CardTileWidget({
+    required this.client,
     Key? key,
   }) : super(key: key);
+
+  final SchoolClient client;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text("85800035"),
-      title: Text("Иванова Валерия Антоновна"),
+      leading: Text(client.id),
+      title: Text(client.name),
       subtitle: Text(
-        "КГУ Средняя общеобразовательная школа-комплекс эстетического № 8",
+        client.school,
         style: TextStyle(fontSize: 12.0),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("50000 тг."),
-          SizedBox(
+          Text(client.balance),
+          const SizedBox(
             width: 5,
           ),
-          Text("Пед. состав"),
+          Text(client.group),
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Material(
