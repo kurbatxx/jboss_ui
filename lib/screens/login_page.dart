@@ -8,8 +8,8 @@ class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, watch) {
-    final provider = watch(loginCheckboxProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(loginCheckboxProvider);
     final checkboxState = provider.state;
     return Scaffold(
       body: SafeArea(
@@ -40,7 +40,7 @@ class LoginPage extends ConsumerWidget {
                         splashRadius: kCheckboxRadius,
                         value: checkboxState,
                         onChanged: (value) {
-                          final provider = context.read(loginCheckboxProvider);
+                          final provider = ref.read(loginCheckboxProvider);
                           provider.state = !provider.state;
                         }),
                     Flexible(child: Text("Запомнить логин и пароль")),

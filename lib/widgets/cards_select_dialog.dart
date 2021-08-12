@@ -189,8 +189,8 @@ class FreeChecbox extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, watch) {
-    final provider = watch(freeCheckboxProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(freeCheckboxProvider);
     final freeCheckbox = provider.state;
     return Checkbox(
       splashRadius: kCheckboxRadius,

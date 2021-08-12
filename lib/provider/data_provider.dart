@@ -10,9 +10,9 @@ final searchProvider = StateProvider<bool>((ref) => false);
 
 final textSearchProvider = StateProvider<String>((ref) => "Привет");
 
-final clientsListProvider =
-    StateProvider<List<SchoolClient>>((ref) => <SchoolClient>[]);
+// final clientsListProvider =
+//     StateProvider<List<SchoolClient>>((ref) => <SchoolClient>[]);
 
-final futureProvider = FutureProvider.autoDispose((ref) {
+final futureProvider = FutureProvider((ref) {
   return JbossDataApi.getSearchResult("Text");
 });

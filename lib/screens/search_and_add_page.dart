@@ -13,16 +13,15 @@ class SearchAndAddPage extends ConsumerWidget {
   final _searchFocusNode = FocusNode();
 
   @override
-  Widget build(BuildContext context, watch) {
-    final provider = watch(searchDeleteClientCheckboxProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(searchDeleteClientCheckboxProvider);
     final searchDeleteClient = provider.state;
 
-    final clientProvider = watch(clientsListProvider);
-    final clientList = clientProvider.state;
+    //final clientProvider = ref.watch(clientsListProvider);
 
-    final firstSearch = watch(firstSearchProvider);
+    final firstSearch = ref.watch(firstSearchProvider);
 
-    final future = watch(futureProvider);
+    final future = ref.watch(futureProvider);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -107,8 +106,7 @@ class SearchAndAddPage extends ConsumerWidget {
                 splashRadius: kCheckboxRadius,
                 value: searchDeleteClient,
                 onChanged: (value) {
-                  final provider =
-                      context.read(searchDeleteClientCheckboxProvider);
+                  final provider = ref.read(searchDeleteClientCheckboxProvider);
                   provider.state = !provider.state;
                 },
               ),
