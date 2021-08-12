@@ -20,34 +20,47 @@ class LoginPage extends ConsumerWidget {
             //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                width: 200.0,
-                height: 200.0,
-                color: Colors.red,
+                width: 300.0,
+                height: 300.0,
+                //color: Colors.red,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("assets/images/login.png"),
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 48.0,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const TextField(),
-                  const TextField(),
-                  const SizedBox(
+                children: const [
+                  TextField(),
+                  TextField(),
+                  SizedBox(
                     height: 48.0,
                   ),
-                  Row(children: [
-                    Checkbox(
-                        splashRadius: kCheckboxRadius,
-                        value: checkboxState,
-                        onChanged: (value) {
-                          final provider = ref.read(loginCheckboxProvider);
-                          provider.state = !provider.state;
-                        }),
-                    Flexible(child: Text("Запомнить логин и пароль")),
-                  ]),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
+                ],
+              ),
+
+              //Flexible(child: Text("Запомнить логин и пароль")),
+              CheckboxListTile(
+                controlAffinity: ListTileControlAffinity.leading,
+                title: Text("Запомнить логин и пароль"),
+                //splashRadius: kCheckboxRadius,
+                value: checkboxState,
+                onChanged: (value) {
+                  final provider = ref.read(loginCheckboxProvider);
+                  provider.state = !provider.state;
+                },
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed('/hub');
@@ -55,7 +68,7 @@ class LoginPage extends ConsumerWidget {
                     child: const Text('Войти'),
                   ),
                 ],
-              ),
+              )
             ],
           ),
         ),

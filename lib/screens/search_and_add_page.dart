@@ -20,6 +20,7 @@ class SearchAndAddPage extends ConsumerWidget {
     //final clientProvider = ref.watch(clientsListProvider);
 
     final firstSearch = ref.watch(firstSearchProvider);
+    final searchResponse = ref.watch(textSearchProvider);
 
     final future = ref.watch(futureProvider);
 
@@ -29,6 +30,11 @@ class SearchAndAddPage extends ConsumerWidget {
         children: [
           Stack(alignment: AlignmentDirectional.center, children: [
             TextField(
+              onSubmitted: (value) {
+                searchResponse.state = _controller.text;
+                firstSearch.state = false;
+                _searchFocusNode.requestFocus();
+              },
               focusNode: _searchFocusNode,
               autofocus: true,
               controller: _controller,
@@ -91,6 +97,8 @@ class SearchAndAddPage extends ConsumerWidget {
                     label: Text("Найти"),
                     icon: Icon(Icons.search, color: Colors.white),
                     onPressed: () {
+                      print(_controller.text);
+                      searchResponse.state = _controller.text;
                       firstSearch.state = false;
                       _searchFocusNode.requestFocus();
                     },
@@ -128,12 +136,7 @@ class SearchAndAddPage extends ConsumerWidget {
                               //clipBehavior: Clip.antiAlias,
                               child: Expandable(
                                 collapsed: CardTileWidget(client: value[index]),
-                                expanded: Column(
-                                  children: [
-                                    CardTileWidget(client: value[index]),
-                                    Text("Информация о картах"),
-                                  ],
-                                ),
+                                expanded: CardInfo(client: value[index]),
                               ),
                             ),
                           ),
@@ -144,31 +147,30 @@ class SearchAndAddPage extends ConsumerWidget {
                     ),
                     loading: () => Center(child: CircularProgressIndicator()),
                     error: (e, stack) => Text('Error: $e'),
-                    // child: ListView(
-                    //   shrinkWrap: true,
-                    //   children: [
-                    //     ExpandableNotifier(
-                    //       child: ScrollOnExpand(
-                    //         child: Card(
-                    //           //clipBehavior: Clip.antiAlias,
-                    //           child: Expandable(
-                    //             collapsed: CardTileWidget(),
-                    //             expanded: Column(
-                    //               children: [
-                    //                 CardTileWidget(),
-                    //                 Text("Информация о картах"),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                   ),
                 )
         ],
       ),
+    );
+  }
+}
+
+class CardInfo extends StatelessWidget {
+  const CardInfo({
+    required this.client,
+    Key? key,
+  }) : super(key: key);
+
+  final SchoolClient client;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CardTileWidget(client: client),
+        Divider(),
+        Text("Информация о картах"),
+      ],
     );
   }
 }

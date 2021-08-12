@@ -4,9 +4,8 @@ import '../model/school_client.dart';
 
 class JbossDataApi {
   static Future<List<SchoolClient>> getSearchResult(String resp) async {
-    await Future.delayed(const Duration(seconds: 3));
-    final Uri url = Uri.parse(
-        "https://run.mocky.io/v3/5f2d3639-3624-4de4-880e-f0eb10a314f3");
+    await Future.delayed(const Duration(seconds: 2));
+    final Uri url = Uri.parse("http://127.0.0.1:8000/data/" + resp);
     final response = await http.get(url);
     return schoolClientFromJson(response.body);
   }
