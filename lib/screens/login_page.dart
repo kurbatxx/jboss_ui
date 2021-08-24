@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../provider/data_provider.dart';
-import '../util/constant.dart';
+//import '../util/constant.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -46,8 +46,9 @@ class LoginPage extends ConsumerWidget {
 
               //Flexible(child: Text("Запомнить логин и пароль")),
               CheckboxListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
                 controlAffinity: ListTileControlAffinity.leading,
-                title: Text("Запомнить логин и пароль"),
+                title: const Text("Запомнить логин и пароль"),
                 //splashRadius: kCheckboxRadius,
                 value: checkboxState,
                 onChanged: (value) {
@@ -59,9 +60,14 @@ class LoginPage extends ConsumerWidget {
                 height: 8.0,
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ElevatedButton(
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                        const Size(200, 50),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.of(context).pushNamed('/hub');
                     },
