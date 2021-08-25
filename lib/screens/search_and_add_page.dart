@@ -17,8 +17,6 @@ class SearchAndAddPage extends ConsumerWidget {
     final provider = ref.watch(searchDeleteClientCheckboxProvider);
     final searchDeleteClient = provider.state;
 
-    //final clientProvider = ref.watch(clientsListProvider);
-
     final firstSearch = ref.watch(firstSearchProvider);
     final searchResponse = ref.watch(textSearchProvider);
 
@@ -39,7 +37,8 @@ class SearchAndAddPage extends ConsumerWidget {
               autofocus: true,
               controller: _controller,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.fromLTRB(8.0, 16.0, 140.0, 16.0),
+                contentPadding:
+                    const EdgeInsets.fromLTRB(8.0, 16.0, 140.0, 16.0),
                 hintText: "Введите ФИО или ID",
                 isDense: true,
                 filled: true,
@@ -118,12 +117,12 @@ class SearchAndAddPage extends ConsumerWidget {
                   provider.state = !provider.state;
                 },
               ),
-              Text("Показывать выбывших и удаленных")
+              const Text("Показывать выбывших и удаленных")
             ],
           ),
           const Divider(),
           firstSearch.state == true
-              ? Text("Тут будут результаты поиска")
+              ? const Text("Тут будут результаты поиска")
               : Expanded(
                   child: future.when(
                     data: (value) => //Text(value.toString()),
@@ -145,7 +144,8 @@ class SearchAndAddPage extends ConsumerWidget {
                         //Text(value[index].toString());
                       },
                     ),
-                    loading: () => Center(child: CircularProgressIndicator()),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
                     error: (e, stack) => Text('Error: $e'),
                   ),
                 )
