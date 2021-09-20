@@ -96,7 +96,6 @@ class SearchAndAddPage extends ConsumerWidget {
                     label: Text("Найти"),
                     icon: Icon(Icons.search, color: Colors.white),
                     onPressed: () {
-                      print(_controller.text);
                       searchResponse.state = _controller.text;
                       firstSearch.state = false;
                       _searchFocusNode.requestFocus();

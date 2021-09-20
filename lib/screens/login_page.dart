@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/model/login.dart';
+import 'package:jboss_ui/screens/hub_page.dart';
 
 import '../provider/data_provider.dart';
 //import '../util/constant.dart';
@@ -11,6 +13,13 @@ class LoginPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(loginCheckboxProvider);
     final checkboxState = provider.state;
+
+    final refLogin = ref.watch(loginProvider);
+    final loginProviderState = refLogin.state;
+
+    final futureLogin = ref.watch(futureLoginProvider);
+    final loginFormData = ref.watch(loginFormDataProvider);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -35,12 +44,32 @@ class LoginPage extends ConsumerWidget {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: const [
+                children: [
                   TextField(),
                   TextField(),
-                  SizedBox(
-                    height: 48.0,
-                  ),
+                  loginProviderState == false
+                      ? const SizedBox(
+                          height: 48.0,
+                        )
+                      : Center(
+                          child: futureLogin.when(
+                            data: (value) {
+                              WidgetsBinding.instance!
+                                  .addPostFrameCallback((_) {
+                                final navigator = Navigator.of(context);
+
+                                navigator.push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const HubPage(),
+                                  ),
+                                );
+                              });
+                            },
+                            loading: () => const Center(
+                                child: CircularProgressIndicator()),
+                            error: (e, stack) => Text('Error: $e'),
+                          ),
+                        )
                 ],
               ),
 
@@ -69,7 +98,14 @@ class LoginPage extends ConsumerWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/hub');
+                      final provider = ref.read(loginProvider);
+                      provider.state = true;
+
+                      final mloginProvider = ref.read(loginFormDataProvider);
+                      mloginProvider.state =
+                          Autorization(login: "KAlexey", password: "Rezak1#21");
+
+                      //Navigator.of(context).pushNamed('/hub');
                     },
                     child: const Text('Войти'),
                   ),
