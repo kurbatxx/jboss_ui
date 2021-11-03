@@ -1,5 +1,5 @@
 name: jboss_ui
-description: A new Flutter project.
+description: cadrd_bd_ui.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -36,7 +36,7 @@ dependencies:
   flutter_svg: ^0.22.0
   expandable: ^5.0.1
   http: ^0.13.3
-  flutter_riverpod: ^1.0.0-dev.6
+  flutter_riverpod: ^1.0.0-dev.10
   ffi: ^1.1.2
 
 dev_dependencies:

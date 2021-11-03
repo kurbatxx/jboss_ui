@@ -50,3 +50,6 @@ app.*.map.json
 *.json
 *.dll
 *.exe
+
+#add files
+*.lock

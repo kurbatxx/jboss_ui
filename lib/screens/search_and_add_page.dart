@@ -122,32 +122,7 @@ class SearchAndAddPage extends ConsumerWidget {
           const Divider(),
           firstSearch.state == true
               ? const Text("Тут будут результаты поиска")
-              : Expanded(
-                  child: future.when(
-                    data: (value) => //Text(value.toString()),
-                        ListView.builder(
-                      itemCount: value.length,
-                      itemBuilder: (context, index) {
-                        return ExpandableNotifier(
-                          child: ScrollOnExpand(
-                            child: Card(
-                              //clipBehavior: Clip.antiAlias,
-                              child: Expandable(
-                                collapsed: CardTileWidget(client: value[index]),
-                                expanded: CardInfo(client: value[index]),
-                              ),
-                            ),
-                          ),
-                        );
-
-                        //Text(value[index].toString());
-                      },
-                    ),
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator()),
-                    error: (e, stack) => Text('Error: $e'),
-                  ),
-                )
+              : const Text("_")
         ],
       ),
     );

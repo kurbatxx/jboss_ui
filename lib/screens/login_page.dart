@@ -51,25 +51,7 @@ class LoginPage extends ConsumerWidget {
                       ? const SizedBox(
                           height: 48.0,
                         )
-                      : Center(
-                          child: futureLogin.when(
-                            data: (value) {
-                              WidgetsBinding.instance!
-                                  .addPostFrameCallback((_) {
-                                final navigator = Navigator.of(context);
-
-                                navigator.push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const HubPage(),
-                                  ),
-                                );
-                              });
-                            },
-                            loading: () => const Center(
-                                child: CircularProgressIndicator()),
-                            error: (e, stack) => Text('Error: $e'),
-                          ),
-                        )
+                      : Center()
                 ],
               ),
 
@@ -103,7 +85,7 @@ class LoginPage extends ConsumerWidget {
 
                       final mloginProvider = ref.read(loginFormDataProvider);
                       mloginProvider.state =
-                          Autorization(login: "KAlexey", password: "Rezak1#21");
+                          Autorization(login: "", password: "");
 
                       //Navigator.of(context).pushNamed('/hub');
                     },
