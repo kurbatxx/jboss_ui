@@ -5,7 +5,7 @@ import 'package:jboss_ui/model/school_client.dart';
 import 'package:jboss_ui/util/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/cards_select_dialog.dart';
-import '../provider/data_provider.dart';
+import '../provider/providers.dart';
 
 class SearchAndAddPage extends ConsumerWidget {
   SearchAndAddPage({Key? key}) : super(key: key);
@@ -14,14 +14,6 @@ class SearchAndAddPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(searchDeleteClientCheckboxProvider);
-    final searchDeleteClient = provider.state;
-
-    final firstSearch = ref.watch(firstSearchProvider);
-    final searchResponse = ref.watch(textSearchProvider);
-
-    final future = ref.watch(futureProvider);
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -29,8 +21,6 @@ class SearchAndAddPage extends ConsumerWidget {
           Stack(alignment: AlignmentDirectional.center, children: [
             TextField(
               onSubmitted: (value) {
-                searchResponse.state = _controller.text;
-                firstSearch.state = false;
                 _searchFocusNode.requestFocus();
               },
               focusNode: _searchFocusNode,
@@ -96,8 +86,6 @@ class SearchAndAddPage extends ConsumerWidget {
                     label: Text("Найти"),
                     icon: Icon(Icons.search, color: Colors.white),
                     onPressed: () {
-                      searchResponse.state = _controller.text;
-                      firstSearch.state = false;
                       _searchFocusNode.requestFocus();
                     },
                     //child: Text("Найти"),
@@ -110,19 +98,14 @@ class SearchAndAddPage extends ConsumerWidget {
             children: [
               Checkbox(
                 splashRadius: kCheckboxRadius,
-                value: searchDeleteClient,
-                onChanged: (value) {
-                  final provider = ref.read(searchDeleteClientCheckboxProvider);
-                  provider.state = !provider.state;
-                },
+                onChanged: (value) {},
+                value: null,
               ),
               const Text("Показывать выбывших и удаленных")
             ],
           ),
           const Divider(),
-          firstSearch.state == true
-              ? const Text("Тут будут результаты поиска")
-              : const Text("_")
+          const Text("Тут будут результаты поиска")
         ],
       ),
     );

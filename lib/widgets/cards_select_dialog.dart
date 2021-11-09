@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../provider/data_provider.dart';
+import '../provider/providers.dart';
 import '../util/constant.dart';
 
 class CardsSelectDialog extends StatefulWidget {
@@ -190,14 +190,10 @@ class FreeChecbox extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(freeCheckboxProvider);
-    final freeCheckbox = provider.state;
     return Checkbox(
       splashRadius: kCheckboxRadius,
-      value: freeCheckbox,
-      onChanged: (value) {
-        provider.state = !provider.state;
-      },
+      value: true,
+      onChanged: (value) {},
     );
   }
 }
