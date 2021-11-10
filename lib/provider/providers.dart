@@ -4,21 +4,20 @@ import 'package:jboss_ui/freezed/authorization_state.dart';
 final loginPasswordCheckboxProvider = StateProvider<bool>((ref) => false);
 
 final loginFormProvider = StateProvider((ref) => TextFormProperties("", null));
-
 final passwordFormProvider =
     StateProvider((ref) => TextFormProperties("", null));
 
 class TextFormProperties {
-  String field;
+  String text;
   String? error;
-  TextFormProperties(this.field, this.error);
+  TextFormProperties(this.text, this.error);
 
   TextFormProperties updateField(String value) {
-    field = value.trim();
-    if (field.isEmpty) {
-      return TextFormProperties(field, "Поле не может быть пустым");
+    text = value.trim();
+    if (text.isEmpty) {
+      return TextFormProperties(text, "Поле не может быть пустым");
     }
-    return TextFormProperties(field, null);
+    return TextFormProperties(text, null);
   }
 }
 

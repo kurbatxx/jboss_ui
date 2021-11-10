@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'search_and_add_page.dart';
-import 'all_events_page.dart';
-import '../util/constant.dart';
+import '../search_and_add_page.dart';
+import '../all_events_page.dart';
+import '../../util/constant.dart';
 
 class HubPage extends StatelessWidget {
   const HubPage({Key? key}) : super(key: key);

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import './screens/hub_page.dart';
+import 'screens/hub_page/hub_page.dart';
 import 'screens/login_page/login_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/navigation/main_navigation.dart';
 
 void main() => runApp(const ProviderScope(child: App()));
 
@@ -10,14 +11,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainNavigation = MainNavigation();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'JBOSS_UI',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const LoginPage(), //LoginPage(),
-      routes: {'/hub': (context) => const HubPage()},
+      routes: mainNavigation.routes,
+      initialRoute: mainNavigation.initialRoute,
     );
   }
 }

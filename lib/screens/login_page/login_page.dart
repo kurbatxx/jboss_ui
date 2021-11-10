@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 import '../../provider/providers.dart';
 
 class LoginPage extends StatelessWidget {
@@ -19,8 +18,8 @@ class LoginPage extends StatelessWidget {
               //crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  width: 300.0,
-                  height: 300.0,
+                  width: 250.0,
+                  height: 250.0,
                   //color: Colors.red,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -34,7 +33,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const AuthorizationFields(),
                 const SaveLoginPasswordWidget(),
-                const LoginButton()
+                const LoginButtonSection()
               ],
             ),
           ),
@@ -96,14 +95,14 @@ class SaveLoginPasswordWidget extends ConsumerWidget {
   }
 }
 
-class LoginButton extends ConsumerWidget {
-  const LoginButton({Key? key}) : super(key: key);
+class LoginButtonSection extends ConsumerWidget {
+  const LoginButtonSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginForm = ref.watch(loginFormProvider.state).state;
     final passwordForm = ref.watch(passwordFormProvider.state).state;
-    bool showButton = loginForm.field.isEmpty || passwordForm.field.isEmpty;
+    bool showButton = loginForm.text.isEmpty || passwordForm.text.isEmpty;
 
     final authorizationState = ref.watch(authorizationProvider);
 
