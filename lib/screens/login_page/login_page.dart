@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
+import 'package:jboss_ui/screens/hub_page/hub_page.dart';
 
 import '../../provider/providers.dart';
 
@@ -101,6 +103,7 @@ class LoginButtonSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginForm = ref.watch(loginFormProvider.state).state;
+    print(loginForm);
     final passwordForm = ref.watch(passwordFormProvider.state).state;
     bool showButton = loginForm.text.isEmpty || passwordForm.text.isEmpty;
 
@@ -121,7 +124,7 @@ class LoginButtonSection extends ConsumerWidget {
                     ),
                   ),
                   onPressed: () =>
-                      ref.read(authorizationProvider.notifier).login(),
+                      ref.read(authorizationProvider.notifier).login(context),
                   child: const Text('Войти'),
                 )
               : const SizedBox(),
@@ -136,7 +139,9 @@ class LoginButtonSection extends ConsumerWidget {
           CircularProgressIndicator()
         ],
       ),
-      data: () => Text("Авторизовался"),
+      data: () => const SizedBox(
+        height: 32.0,
+      ),
       error: (value) => Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -154,7 +159,7 @@ class LoginButtonSection extends ConsumerWidget {
                     ),
                   ),
                   onPressed: () =>
-                      ref.read(authorizationProvider.notifier).login(),
+                      ref.read(authorizationProvider.notifier).login(context),
                   child: const Text('Войти'),
                 )
               : const SizedBox(),

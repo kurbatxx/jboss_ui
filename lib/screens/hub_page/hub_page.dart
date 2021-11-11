@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/provider/providers.dart';
 import '../search_and_add_page.dart';
 import '../all_events_page.dart';
 import '../../util/constant.dart';
@@ -45,18 +47,20 @@ class HubPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  padding: const EdgeInsets.all(0.0),
-                  hoverColor: Colors.white,
-                  splashRadius: 16.0,
-                  icon: const Icon(
-                    Icons.logout,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                Consumer(builder: (context, WidgetRef ref, _) {
+                  return IconButton(
+                    padding: const EdgeInsets.all(0.0),
+                    hoverColor: Colors.white,
+                    splashRadius: 16.0,
+                    icon: const Icon(
+                      Icons.logout,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      ref.read(authorizationProvider.notifier).logout(context);
+                    },
+                  );
+                }),
               ],
             ),
           ),

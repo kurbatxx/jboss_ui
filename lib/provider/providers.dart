@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/freezed/authorization_state.dart';
+import 'package:jboss_ui/navigation/main_navigation.dart';
 
 final loginPasswordCheckboxProvider = StateProvider<bool>((ref) => false);
 
@@ -29,13 +31,23 @@ final authorizationProvider =
 class Authorization extends StateNotifier<AuthorizationState> {
   Authorization() : super(const AuthorizationState.initial());
 
-  Future<void> login() async {
+  Future<void> login(BuildContext context) async {
     try {
       state = const AuthorizationState.loading();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 2));
       state = const AuthorizationState.data();
+      Navigator.of(context).pushNamed(MainNavigationRouteNames.hubScreen);
     } catch (e) {
       state = const AuthorizationState.error("Не авторизовался");
+    }
+  }
+
+  Future<void> logout(BuildContext context) async {
+    try {
+      state = const AuthorizationState.initial();
+      Navigator.of(context).pushNamed(MainNavigationRouteNames.loginScreen);
+    } catch (e) {
+      state = const AuthorizationState.error("Что-то не так");
     }
   }
 }
