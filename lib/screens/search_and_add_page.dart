@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:jboss_ui/model/school_client.dart';
+import 'package:jboss_ui/provider/providers.dart';
 import 'package:jboss_ui/util/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/cards_select_dialog.dart';
-import '../provider/providers.dart';
 
 class SearchAndAddPage extends ConsumerWidget {
   SearchAndAddPage({Key? key}) : super(key: key);
@@ -95,19 +95,74 @@ class SearchAndAddPage extends ConsumerWidget {
             )
           ]),
           Row(
-            children: [
-              Checkbox(
-                splashRadius: kCheckboxRadius,
-                onChanged: (value) {},
-                value: null,
-              ),
-              const Text("Показывать выбывших и удаленных")
+            children: const [
+              Text('Наличие карт:'),
+              SizedBox(width: 20),
+              DropDownCards(),
             ],
           ),
+          const DeletePersonSwitcherWidget(),
           const Divider(),
-          const Text("Тут будут результаты поиска")
+          const Text("Тут будут результаты поиска"),
         ],
       ),
+    );
+  }
+}
+
+class DropDownCards extends StatefulWidget {
+  const DropDownCards({Key? key}) : super(key: key);
+
+  @override
+  _DropDownCardsState createState() => _DropDownCardsState();
+}
+
+class _DropDownCardsState extends State<DropDownCards> {
+  final Map<int, String> map2 = {
+    0: "Не имеет значения",
+    1: "Только с картами",
+    2: "Только с картами"
+  };
+  final items = ['Не имеет значения', 'Только без карт', 'Только с картами'];
+  String? _chosenValue = 'Не имеет значения';
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+      elevation: 1,
+      value: _chosenValue,
+      items: items.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (String? value) {
+        setState(
+          () {
+            _chosenValue = value;
+          },
+        );
+      },
+    );
+  }
+}
+
+class DeletePersonSwitcherWidget extends ConsumerWidget {
+  const DeletePersonSwitcherWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final deletePersonSwitcherState =
+        ref.watch(deletePersonSwitcherProvider.state).state;
+
+    return CheckboxListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+      controlAffinity: ListTileControlAffinity.leading,
+      title: const Text("Показывать выбывших и удаленных"),
+      onChanged: (value) => ref.read(deletePersonSwitcherProvider.state).state =
+          value ?? false != value,
+      value: deletePersonSwitcherState,
     );
   }
 }
