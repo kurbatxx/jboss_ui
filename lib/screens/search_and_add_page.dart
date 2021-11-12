@@ -3,7 +3,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:jboss_ui/model/school_client.dart';
 import 'package:jboss_ui/provider/providers.dart';
-import 'package:jboss_ui/util/constant.dart';
+import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/cards_select_dialog.dart';
 

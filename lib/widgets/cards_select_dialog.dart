@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../provider/providers.dart';
-import '../util/constant.dart';
+import '../utils/constant.dart';
 
 class CardsSelectDialog extends StatefulWidget {
   const CardsSelectDialog({Key? key}) : super(key: key);

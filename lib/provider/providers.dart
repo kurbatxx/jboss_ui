@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/freezed/authorization_state.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
-import 'package:jboss_ui/screens/search_and_add_page.dart';
 
 final loginPasswordCheckboxProvider = StateProvider<bool>((ref) => false);
 final deletePersonSwitcherProvider = StateProvider<bool>((ref) => true);

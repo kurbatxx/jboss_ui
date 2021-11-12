@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/providers.dart';
 import '../search_and_add_page.dart';
 import '../all_events_page.dart';
-import '../../util/constant.dart';
+import '../../utils/constant.dart';
 
 class HubPage extends StatelessWidget {
   const HubPage({Key? key}) : super(key: key);

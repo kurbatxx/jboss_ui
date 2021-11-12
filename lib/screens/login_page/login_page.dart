@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 import 'package:jboss_ui/screens/hub_page/hub_page.dart';
+import 'package:jboss_ui/utils/secure.dart';
 
 import '../../provider/providers.dart';
 
@@ -89,9 +90,11 @@ class SaveLoginPasswordWidget extends ConsumerWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
       controlAffinity: ListTileControlAffinity.leading,
       title: const Text("Запомнить логин и пароль"),
-      onChanged: (value) => ref
-          .read(loginPasswordCheckboxProvider.state)
-          .state = value ?? false != value,
+      onChanged: (value) {
+        bool state = value ?? false != value;
+        ref.read(loginPasswordCheckboxProvider.state).state = state;
+        SecureStorage.instance.setSaveLoginState(state);
+      },
       value: loginPasswordCheckboxState,
     );
   }
