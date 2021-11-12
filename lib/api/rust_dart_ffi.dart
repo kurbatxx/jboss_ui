@@ -13,8 +13,9 @@ final DynamicLibrary dynLib = _readDynLib();
 DynamicLibrary _readDynLib() {
   String path = './rust_lib.so';
   if (Platform.isMacOS) path = './rust_lib.dylib';
-  if (Platform.isWindows)
+  if (Platform.isWindows) {
     path = '../ffi_jboss_rust_lib/target/debug/ffi_jboss_rust_lib.dll';
+  }
   return DynamicLibrary.open(path);
 }
 

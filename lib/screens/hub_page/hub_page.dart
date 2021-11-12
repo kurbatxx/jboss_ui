@@ -34,13 +34,13 @@ class HubPage extends StatelessWidget {
                     tabs: [
                       Tab(
                         child: Text(
-                          "Add",
+                          "Поиск",
                           style: kTabsTextStyle,
                         ),
                       ),
                       Tab(
                         child: Text(
-                          "History",
+                          "История заказов",
                           style: kTabsTextStyle,
                         ),
                       ),
