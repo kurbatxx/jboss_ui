@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
-import 'package:jboss_ui/screens/hub_page/hub_page.dart';
 import 'package:jboss_ui/utils/secure.dart';
-
-import '../../provider/providers.dart';
+import 'package:jboss_ui/provider/providers.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -57,7 +55,8 @@ class AuthorizationFields extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextField(
+        TextFormField(
+          initialValue: loginForm.text,
           decoration: InputDecoration(
             hintText: "Логин",
             errorText: loginForm.error,
@@ -65,7 +64,8 @@ class AuthorizationFields extends ConsumerWidget {
           onChanged: (value) => ref.read(loginFormProvider.state).state =
               loginForm.updateField(value),
         ),
-        TextField(
+        TextFormField(
+          initialValue: passwordForm.text,
           decoration: InputDecoration(
             hintText: "Пароль",
             errorText: passwordForm.error,
@@ -126,8 +126,12 @@ class LoginButtonSection extends ConsumerWidget {
                       const Size(300, 50),
                     ),
                   ),
-                  onPressed: () =>
-                      ref.read(authorizationProvider.notifier).login(context),
+                  onPressed: () => ref
+                      .read(authorizationProvider.notifier)
+                      .login(
+                          context: context,
+                          login: loginForm.text,
+                          password: passwordForm.text),
                   child: const Text('Войти'),
                 )
               : const SizedBox(),
@@ -161,8 +165,12 @@ class LoginButtonSection extends ConsumerWidget {
                       const Size(300, 50),
                     ),
                   ),
-                  onPressed: () =>
-                      ref.read(authorizationProvider.notifier).login(context),
+                  onPressed: () => ref
+                      .read(authorizationProvider.notifier)
+                      .login(
+                          context: context,
+                          login: loginForm.text,
+                          password: passwordForm.text),
                   child: const Text('Войти'),
                 )
               : const SizedBox(),

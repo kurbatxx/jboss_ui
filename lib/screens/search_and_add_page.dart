@@ -5,6 +5,7 @@ import 'package:jboss_ui/model/school_client.dart';
 import 'package:jboss_ui/provider/providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jboss_ui/utils/secure.dart';
 import '../widgets/cards_select_dialog.dart';
 
 class SearchAndAddPage extends ConsumerWidget {
@@ -160,8 +161,11 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
       controlAffinity: ListTileControlAffinity.leading,
       title: const Text("Показывать выбывших и удаленных"),
-      onChanged: (value) => ref.read(deletePersonSwitcherProvider.state).state =
-          value ?? false != value,
+      onChanged: (value) {
+        bool state = value ?? false != value;
+        ref.read(deletePersonSwitcherProvider.state).state = state;
+        SecureStorage.instance.setShowDeleteState(state);
+      },
       value: deletePersonSwitcherState,
     );
   }

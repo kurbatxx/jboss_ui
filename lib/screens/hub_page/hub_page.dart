@@ -57,7 +57,9 @@ class HubPage extends StatelessWidget {
                       color: Colors.black,
                     ),
                     onPressed: () {
-                      ref.read(authorizationProvider.notifier).logout(context);
+                      ref
+                          .read(authorizationProvider.notifier)
+                          .logout(context, ref);
                     },
                   );
                 }),

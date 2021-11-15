@@ -7,11 +7,26 @@ import 'package:jboss_ui/utils/secure.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool saveLoginState = await SecureStorage.instance.getSaveLoginState();
+  bool showDeleteState = await SecureStorage.instance.getShowDeleteState();
+
+  String login = '';
+  String password = '';
+  if (saveLoginState) {
+    login = await SecureStorage.instance.getLogin();
+    password = await SecureStorage.instance.getPassword();
+  }
+
   runApp(
     ProviderScope(
       overrides: [
         loginPasswordCheckboxProvider
-            .overrideWithProvider(StateProvider<bool>((ref) => saveLoginState))
+            .overrideWithProvider(StateProvider<bool>((ref) => saveLoginState)),
+        deletePersonSwitcherProvider.overrideWithProvider(
+            StateProvider<bool>((ref) => showDeleteState)),
+        loginFormProvider.overrideWithProvider(
+            StateProvider((ref) => TextFormProperties(login, null))),
+        passwordFormProvider.overrideWithProvider(
+            StateProvider((ref) => TextFormProperties(password, null))),
       ],
       child: const App(),
     ),
