@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/freezed/authorization_state.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/utils/secure.dart';
@@ -44,7 +45,9 @@ class Authorization extends StateNotifier<AuthorizationState> {
       required String password}) async {
     try {
       state = const AuthorizationState.loading();
-      await Future.delayed(const Duration(seconds: 1));
+      //await Future.delayed(const Duration(seconds: 1));
+      String resp = await LoginApi.login(login, password);
+      print(resp);
       state = const AuthorizationState.data();
       Navigator.of(context).pushNamed(MainNavigationRouteNames.hubScreen);
       if (await SecureStorage.instance.getSaveLoginState()) {
@@ -63,7 +66,7 @@ class Authorization extends StateNotifier<AuthorizationState> {
         ref.read(loginFormProvider).text = "";
         ref.read(passwordFormProvider).text = "";
       }
-
+      await LoginApi.logout();
       Navigator.of(context).pushNamed(MainNavigationRouteNames.loginScreen);
     } catch (e) {
       state = const AuthorizationState.error("Что-то не так");

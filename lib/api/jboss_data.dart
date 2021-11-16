@@ -13,11 +13,16 @@ class JbossDataApi {
   }
 }
 
-class AuthorizationApi {
-  static Future<String> authorization(String login, String password) async {
-    await Future.delayed(const Duration(seconds: 2));
+class LoginApi {
+  static Future<String> login(String login, String password) async {
+    await Future.delayed(const Duration(seconds: 1));
     final cookie =
-        auth(login.toNativeUtf8(), password.toNativeUtf8()).toDartString();
+        authFFI(login.toNativeUtf8(), password.toNativeUtf8()).toDartString();
     return cookie;
+  }
+
+  static Future<void> logout() async {
+    //await Future.delayed(const Duration(seconds: 1));
+    logoutFFI();
   }
 }

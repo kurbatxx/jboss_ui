@@ -106,7 +106,6 @@ class LoginButtonSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loginForm = ref.watch(loginFormProvider.state).state;
-    print(loginForm);
     final passwordForm = ref.watch(passwordFormProvider.state).state;
     bool showButton = loginForm.text.isEmpty || passwordForm.text.isEmpty;
 
