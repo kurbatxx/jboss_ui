@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 AuthorizationToken authorizationTokenFromJson(String str) => AuthorizationToken.fromJson(json.decode(str));
@@ -6,20 +5,25 @@ String authorizationTokenToJson(AuthorizationToken data) => json.encode(data.toJ
 
 class AuthorizationToken {
   AuthorizationToken({
-    required this.token,
+    required this.cookie,
     required this.error,
   });
 
-  final String token;
+  final String cookie;
   final String error;
 
   factory AuthorizationToken.fromJson(Map<String, dynamic> json) => AuthorizationToken(
-    token: json["token"],
+    cookie: json["cookie"],
     error: json["error"],
   );
 
   Map<String, dynamic> toJson() => {
-    "token": token,
+    "cookie": cookie,
     "error": error,
   };
+
+  @override
+  String toString() {
+    return 'AuthorizationToken: {cookie: $cookie,\n error: $error}';
+  }
 }

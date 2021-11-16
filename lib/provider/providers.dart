@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/freezed/authorization_state.dart';
+import 'package:jboss_ui/model/authorization_token.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/utils/secure.dart';
 
@@ -43,20 +44,24 @@ class Authorization extends StateNotifier<AuthorizationState> {
       {required BuildContext context,
       required String login,
       required String password}) async {
-    try {
+    //try {
       state = const AuthorizationState.loading();
-      //await Future.delayed(const Duration(seconds: 1));
-      String resp = await LoginApi.login(login, password);
-      print(resp);
-      state = const AuthorizationState.data();
-      Navigator.of(context).pushNamed(MainNavigationRouteNames.hubScreen);
-      if (await SecureStorage.instance.getSaveLoginState()) {
-        await SecureStorage.instance.setLogin(login);
-        await SecureStorage.instance.setPassword(password);
+      await Future.delayed(const Duration(seconds: 0));
+      String loginResponse = await LoginApi.login(login, password);
+      AuthorizationToken authorizationToken = authorizationTokenFromJson(loginResponse);
+      print(authorizationToken);
+      if (authorizationToken.error.isEmpty){
+        state = const AuthorizationState.data();
+        Navigator.of(context).pushNamed(MainNavigationRouteNames.hubScreen);
+        if (await SecureStorage.instance.getSaveLoginState()) {
+          await SecureStorage.instance.setLogin(login);
+          await SecureStorage.instance.setPassword(password);
+        }
       }
-    } catch (e) {
-      state = const AuthorizationState.error("Не авторизовался");
-    }
+
+    // } catch (e) {
+    //   state = const AuthorizationState.error("Не авторизовался");
+    // }
   }
 
   Future<void> logout(BuildContext context, WidgetRef ref) async {
