@@ -17,9 +17,8 @@ DynamicLibrary _readDynLib() {
 
 typedef RustAuth = Pointer<Utf8> Function(Pointer<Utf8>, Pointer<Utf8>);
 typedef DartAuth = Pointer<Utf8> Function(Pointer<Utf8>, Pointer<Utf8>);
-final authFFI = dynLib
-    .lookup<NativeFunction<RustAuth>>('authorization')
-    .asFunction<DartAuth>();
+final loginFFI =
+    dynLib.lookup<NativeFunction<RustAuth>>('login').asFunction<DartAuth>();
 
 typedef RustLogout = Pointer Function();
 typedef DartLogout = Pointer Function();
