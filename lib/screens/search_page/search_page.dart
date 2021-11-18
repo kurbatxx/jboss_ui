@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/model/school_client.dart';
+import 'package:jboss_ui/model/search_response.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,6 +35,27 @@ class SearchPage extends StatelessWidget {
             child: Center(child: Text('Результаты поиска появятся здесь')),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SearchResultWidget extends ConsumerWidget {
+  const SearchResultWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final searchState = ref.watch(searchProvider);
+    return searchState.when(
+      initial: () =>
+          const Center(child: Text('Результаты поиска появятся здесь')),
+      data: () => const SizedBox(
+        height: 100,
+        width: 100,
+      ),
+      error: (value) => Center(child: Text(value)),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
@@ -111,8 +135,9 @@ class SearchFormWidget extends StatelessWidget {
 
               label: const Text("Найти"),
               icon: const Icon(Icons.search, color: Colors.white),
-              onPressed: () {
+              onPressed: () async {
                 print(_controller.text);
+
                 _searchFocusNode.requestFocus();
               },
               //child: Text("Найти"),
@@ -143,7 +168,7 @@ class _DropDownCardsState extends State<DropDownCards> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-      elevation: 1,
+      elevation: 3,
       value: _chosenValue,
       items: items.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem(

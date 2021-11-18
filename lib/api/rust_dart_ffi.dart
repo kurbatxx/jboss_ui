@@ -25,3 +25,9 @@ typedef DartLogout = Pointer Function();
 final logoutFFI = dynLib
     .lookup<NativeFunction<RustLogout>>('logout')
     .asFunction<DartLogout>();
+
+typedef RustSearch = Pointer<Utf8> Function(Pointer<Utf8>);
+typedef DartSearch = Pointer<Utf8> Function(Pointer<Utf8>);
+final searchFFI = dynLib
+    .lookup<NativeFunction<RustSearch>>('search_person')
+    .asFunction<DartSearch>();

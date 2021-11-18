@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/freezed/authorization_state.dart';
 import 'package:jboss_ui/model/authorization_token.dart';
+import 'package:jboss_ui/model/ffi_authorization.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/utils/custom_exception.dart';
 import 'package:jboss_ui/utils/secure.dart';

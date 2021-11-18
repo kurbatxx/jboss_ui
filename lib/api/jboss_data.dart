@@ -1,15 +1,12 @@
+import 'dart:convert';
+
 import 'package:ffi/src/utf8.dart';
 import 'package:http/http.dart' as http;
+import 'package:jboss_ui/model/ffi_authorization.dart';
+import 'package:jboss_ui/model/search_response.dart';
 import './rust_dart_ffi.dart';
 
 import '../model/school_client.dart';
-
-class FFIAuthorization {
-  String login;
-  String password;
-
-  FFIAuthorization({required this.login, required this.password});
-}
 
 class JbossDataApi {
   static Future<List<SchoolClient>> getSearchResult(String responseText) async {
@@ -35,4 +32,9 @@ class LoginApi {
 String computeLogin(FFIAuthorization auth) {
   return loginFFI(auth.login.toNativeUtf8(), auth.password.toNativeUtf8())
       .toDartString();
+}
+
+String computeSearch(SearchResponse resp) {
+  String jsonString = searchResponseToJson(resp);
+  return searchFFI(jsonString.toNativeUtf8()).toDartString();
 }
