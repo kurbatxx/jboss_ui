@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
-import 'package:jboss_ui/provider/providers.dart';
+import 'package:jboss_ui/provider/login_page_providers.dart';
+import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/secure.dart';
 
 void main() async {

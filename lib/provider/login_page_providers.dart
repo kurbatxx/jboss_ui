@@ -9,7 +9,6 @@ import 'package:jboss_ui/utils/custom_exception.dart';
 import 'package:jboss_ui/utils/secure.dart';
 
 final loginPasswordCheckboxProvider = StateProvider<bool>((ref) => false);
-final deletePersonSwitcherProvider = StateProvider<bool>((ref) => true);
 
 final loginFormProvider = StateProvider((ref) => TextFormProperties("", null));
 final passwordFormProvider =

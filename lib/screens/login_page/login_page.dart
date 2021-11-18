@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 import 'package:jboss_ui/utils/secure.dart';
-import 'package:jboss_ui/provider/providers.dart';
+import 'package:jboss_ui/provider/login_page_providers.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);

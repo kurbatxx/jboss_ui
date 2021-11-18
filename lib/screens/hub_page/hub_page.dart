@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/provider/providers.dart';
-import '../search_and_add_page.dart';
-import '../all_events_page.dart';
+import 'package:jboss_ui/provider/login_page_providers.dart';
+import 'package:jboss_ui/screens/search_page/search_page.dart';
 import '../../utils/constant.dart';
 
 class HubPage extends StatelessWidget {
@@ -81,7 +80,10 @@ class HubPage extends StatelessWidget {
                       topRight: kTabsRadius,
                     ),
                   ),
-                  child: SearchAndAddPage(),
+                  child: Container(
+                    color: Colors.transparent,
+                    child: SearchPage(),
+                  ),
                 ),
               ),
             ),
@@ -151,7 +153,9 @@ class HubPage extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.only(topRight: kTabsRadius),
                             ),
-                            child: const AllEventsPage(),
+                            child: Container(
+                              color: Colors.transparent,
+                            ),
                           ),
                         ),
                         Padding(
