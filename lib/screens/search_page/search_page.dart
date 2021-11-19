@@ -2,9 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/model/school_client.dart';
-import 'package:jboss_ui/model/search_response.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,7 +30,7 @@ class SearchPage extends StatelessWidget {
           const DeletePersonSwitcherWidget(),
           const Divider(),
           const Expanded(
-            child: Center(child: Text('Результаты поиска появятся здесь')),
+            child: SearchResultWidget(),
           ),
         ],
       ),
@@ -49,10 +47,15 @@ class SearchResultWidget extends ConsumerWidget {
     return searchState.when(
       initial: () =>
           const Center(child: Text('Результаты поиска появятся здесь')),
-      data: () => const SizedBox(
-        height: 100,
-        width: 100,
-      ),
+      data: (listSchoolClient) => ListView.builder(
+          shrinkWrap: true,
+          itemCount: listSchoolClient.length,
+          itemBuilder: (BuildContext context, int index) {
+            SchoolClient schoolClient = listSchoolClient[index];
+            return ExpandableElement(
+              client: schoolClient,
+            );
+          }),
       error: (value) => Center(child: Text(value)),
       loading: () => const Center(
         child: CircularProgressIndicator(),
@@ -120,32 +123,49 @@ class SearchFormWidget extends StatelessWidget {
           const SizedBox(
             width: 6.0,
           ),
-          Container(
-            height: 45,
-            width: 100,
-            child: ElevatedButton.icon(
-              style: TextButton.styleFrom(
-                elevation: 0,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
-              ),
-
-              label: const Text("Найти"),
-              icon: const Icon(Icons.search, color: Colors.white),
-              onPressed: () async {
-                print(_controller.text);
-
-                _searchFocusNode.requestFocus();
-              },
-              //child: Text("Найти"),
-            ),
-          ),
+          SearchButtonWidget(
+              controller: _controller, searchFocusNode: _searchFocusNode),
         ],
       )
     ]);
+  }
+}
+
+class SearchButtonWidget extends ConsumerWidget {
+  const SearchButtonWidget({
+    Key? key,
+    required TextEditingController controller,
+    required FocusNode searchFocusNode,
+  })  : _controller = controller,
+        _searchFocusNode = searchFocusNode,
+        super(key: key);
+
+  final TextEditingController _controller;
+  final FocusNode _searchFocusNode;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SizedBox(
+      height: 45,
+      width: 100,
+      child: ElevatedButton.icon(
+        style: TextButton.styleFrom(
+          elevation: 0,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+        ),
+        label: const Text("Найти"),
+        icon: const Icon(Icons.search, color: Colors.white),
+        onPressed: () {
+          print(_controller.text);
+          ref.watch(searchProvider.notifier).getSearchResult(context: context);
+          _searchFocusNode.requestFocus();
+        },
+      ),
+    );
   }
 }
 
@@ -209,30 +229,34 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
   }
 }
 
-class CardInfo extends StatelessWidget {
-  const CardInfo({
-    required this.client,
-    Key? key,
-  }) : super(key: key);
+class ExpandableElement extends StatelessWidget {
+  const ExpandableElement({Key? key, required this.client}) : super(key: key);
 
   final SchoolClient client;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CardTileWidget(client: client),
-        Divider(),
-        Text("Информация о картах"),
-      ],
+    return ExpandableNotifier(
+      child: ScrollOnExpand(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            NoExpandedElement(client: client),
+            Expandable(
+              collapsed: const SizedBox(),
+              expanded: const CardsInformation(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class CardTileWidget extends StatelessWidget {
-  const CardTileWidget({
-    required this.client,
+class NoExpandedElement extends StatelessWidget {
+  const NoExpandedElement({
     Key? key,
+    required this.client,
   }) : super(key: key);
 
   final SchoolClient client;
@@ -241,7 +265,7 @@ class CardTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Text(client.id),
-      title: Text(client.name),
+      title: Text('${client.name.name} ${client.name.surname}'),
       subtitle: Text(
         client.school,
         style: TextStyle(fontSize: 12.0),
@@ -299,3 +323,47 @@ class CardTileWidget extends StatelessWidget {
     );
   }
 }
+
+class CardsInformation extends StatelessWidget {
+  const CardsInformation({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 10,
+      color: Colors.red,
+    );
+  }
+}
+
+// class NoExpandedElement extends StatelessWidget {
+//   const NoExpandedElement({
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.end,
+//       children: <Widget>[
+//         Builder(
+//           builder: (context) {
+//             var controller = ExpandableController.of(context, required: true)!;
+//             return TextButton(
+//               child: Text(
+//                 controller.expanded ? "COLLAPSE" : "EXPAND",
+//                 style: Theme.of(context)
+//                     .textTheme
+//                     .button!
+//                     .copyWith(color: Colors.deepPurple),
+//               ),
+//               onPressed: () {
+//                 controller.toggle();
+//               },
+//             );
+//           },
+//         ),
+//       ],
+//     );
+//   }
+// }

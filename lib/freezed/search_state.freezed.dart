@@ -21,8 +21,10 @@ class _$SearchStateTearOff {
     return const Initial();
   }
 
-  Data data() {
-    return const Data();
+  Data data(List<SchoolClient> schoolClients) {
+    return Data(
+      schoolClients,
+    );
   }
 
   Error error(String errorText) {
@@ -44,7 +46,7 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() data,
+    required TResult Function(List<SchoolClient> schoolClients) data,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) =>
@@ -52,7 +54,7 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) =>
@@ -60,7 +62,7 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
@@ -148,7 +150,7 @@ class _$Initial implements Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() data,
+    required TResult Function(List<SchoolClient> schoolClients) data,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
@@ -159,7 +161,7 @@ class _$Initial implements Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) {
@@ -170,7 +172,7 @@ class _$Initial implements Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
@@ -227,6 +229,7 @@ abstract class Initial implements SearchState {
 abstract class $DataCopyWith<$Res> {
   factory $DataCopyWith(Data value, $Res Function(Data) then) =
       _$DataCopyWithImpl<$Res>;
+  $Res call({List<SchoolClient> schoolClients});
 }
 
 /// @nodoc
@@ -237,60 +240,84 @@ class _$DataCopyWithImpl<$Res> extends _$SearchStateCopyWithImpl<$Res>
 
   @override
   Data get _value => super._value as Data;
+
+  @override
+  $Res call({
+    Object? schoolClients = freezed,
+  }) {
+    return _then(Data(
+      schoolClients == freezed
+          ? _value.schoolClients
+          : schoolClients // ignore: cast_nullable_to_non_nullable
+              as List<SchoolClient>,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$Data implements Data {
-  const _$Data();
+  const _$Data(this.schoolClients);
+
+  @override
+  final List<SchoolClient> schoolClients;
 
   @override
   String toString() {
-    return 'SearchState.data()';
+    return 'SearchState.data(schoolClients: $schoolClients)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is Data);
+        (other.runtimeType == runtimeType &&
+            other is Data &&
+            const DeepCollectionEquality()
+                .equals(other.schoolClients, schoolClients));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(schoolClients));
+
+  @JsonKey(ignore: true)
+  @override
+  $DataCopyWith<Data> get copyWith =>
+      _$DataCopyWithImpl<Data>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() data,
+    required TResult Function(List<SchoolClient> schoolClients) data,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
-    return data();
+    return data(schoolClients);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) {
-    return data?.call();
+    return data?.call(schoolClients);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data();
+      return data(schoolClients);
     }
     return orElse();
   }
@@ -334,7 +361,11 @@ class _$Data implements Data {
 }
 
 abstract class Data implements SearchState {
-  const factory Data() = _$Data;
+  const factory Data(List<SchoolClient> schoolClients) = _$Data;
+
+  List<SchoolClient> get schoolClients;
+  @JsonKey(ignore: true)
+  $DataCopyWith<Data> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -400,7 +431,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() data,
+    required TResult Function(List<SchoolClient> schoolClients) data,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
@@ -411,7 +442,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) {
@@ -422,7 +453,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
@@ -518,7 +549,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() data,
+    required TResult Function(List<SchoolClient> schoolClients) data,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
@@ -529,7 +560,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) {
@@ -540,7 +571,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? data,
+    TResult Function(List<SchoolClient> schoolClients)? data,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
