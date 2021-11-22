@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
+import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/screens/search_page/search_page.dart';
 import '../../utils/constant.dart';
 
@@ -59,6 +60,9 @@ class HubPage extends StatelessWidget {
                       ref
                           .read(authorizationProvider.notifier)
                           .logout(context, ref);
+
+                      ref.read(searchProvider.notifier).logout();
+                      ref.read(formSearchControllerProvider).clear();
                     },
                   );
                 }),

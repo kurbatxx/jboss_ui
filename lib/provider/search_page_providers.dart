@@ -7,6 +7,9 @@ import 'package:jboss_ui/model/school_client.dart';
 import 'package:jboss_ui/model/search_response.dart';
 
 final deletePersonSwitcherProvider = StateProvider<bool>((ref) => true);
+final selectCardStatusProvider = StateProvider<int>((ref) => 0);
+final formSearchControllerProvider =
+    StateProvider<TextEditingController>((ref) => TextEditingController());
 
 final searchProvider = StateNotifierProvider<Search, SearchState>(
   (ref) => Search(),
@@ -15,28 +18,24 @@ final searchProvider = StateNotifierProvider<Search, SearchState>(
 class Search extends StateNotifier<SearchState> {
   Search() : super(const SearchState.initial());
 
-  Future<void> getSearchResult({required BuildContext context}) async {
-    // try {
-    state = const SearchState.loading();
-    await Future.delayed(const Duration(seconds: 0));
-    final searchRequest = await compute(
-      computeSearch,
-      SearchResponse(
-        id: 0,
-        response: "Иванов Вла",
-        schoolId: 0,
-        cards: 0,
-        page: 1,
-        showDelete: true,
-      ),
-    );
-    print(searchRequest);
-    List<SchoolClient> schoolClients = schoolClientFromJson(searchRequest);
+  Future<void> getSearchResult(
+      {required BuildContext context,
+      required SearchResponse searchResponse}) async {
+    try {
+      state = const SearchState.loading();
+      await Future.delayed(const Duration(seconds: 0));
+      final searchRequest = await compute(computeSearch, searchResponse);
+      print(searchRequest);
+      List<SchoolClient> schoolClients = schoolClientFromJson(searchRequest);
 
-    state = SearchState.data(schoolClients);
-    // } catch (e) {
-    //   state = const SearchState.error(
-    //       "Непридвиденная ошибка. Перезапустите программу");
-    // }
+      state = SearchState.data(schoolClients);
+    } catch (e) {
+      state = const SearchState.error(
+          "Непридвиденная ошибка. Перезапустите программу");
+    }
+  }
+
+  Future<void> logout() async {
+    state = const SearchState.initial();
   }
 }

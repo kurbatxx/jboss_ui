@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:jboss_ui/model/card_status.dart';
 import 'package:jboss_ui/model/school_client.dart';
+import 'package:jboss_ui/model/search_response.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -64,22 +66,23 @@ class SearchResultWidget extends ConsumerWidget {
   }
 }
 
-class SearchFormWidget extends StatelessWidget {
+class SearchFormWidget extends ConsumerWidget {
   SearchFormWidget({Key? key}) : super(key: key);
 
-  final _controller = TextEditingController();
   final _searchFocusNode = FocusNode();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(formSearchControllerProvider);
     return Stack(alignment: AlignmentDirectional.center, children: [
       TextField(
         onSubmitted: (value) {
+          ref.watch(formSearchControllerProvider).text == value;
           _searchFocusNode.requestFocus();
         },
         focusNode: _searchFocusNode,
         autofocus: true,
-        controller: _controller,
+        controller: ref.watch(formSearchControllerProvider),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(8.0, 16.0, 140.0, 16.0),
           hintText: "Введите ФИО или ID",
@@ -104,7 +107,7 @@ class SearchFormWidget extends StatelessWidget {
             width: 28,
             child: RawMaterialButton(
               onPressed: () {
-                _controller.clear();
+                ref.read(formSearchControllerProvider).clear();
                 _searchFocusNode.requestFocus();
               },
               elevation: 0,
@@ -123,8 +126,7 @@ class SearchFormWidget extends StatelessWidget {
           const SizedBox(
             width: 6.0,
           ),
-          SearchButtonWidget(
-              controller: _controller, searchFocusNode: _searchFocusNode),
+          SearchButtonWidget(searchFocusNode: _searchFocusNode),
         ],
       )
     ]);
@@ -134,17 +136,17 @@ class SearchFormWidget extends StatelessWidget {
 class SearchButtonWidget extends ConsumerWidget {
   const SearchButtonWidget({
     Key? key,
-    required TextEditingController controller,
     required FocusNode searchFocusNode,
-  })  : _controller = controller,
-        _searchFocusNode = searchFocusNode,
+  })  : _searchFocusNode = searchFocusNode,
         super(key: key);
 
-  final TextEditingController _controller;
   final FocusNode _searchFocusNode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(formSearchControllerProvider);
+    ref.watch(deletePersonSwitcherProvider);
+
     return SizedBox(
       height: 45,
       width: 100,
@@ -160,8 +162,16 @@ class SearchButtonWidget extends ConsumerWidget {
         label: const Text("Найти"),
         icon: const Icon(Icons.search, color: Colors.white),
         onPressed: () {
-          print(_controller.text);
-          ref.watch(searchProvider.notifier).getSearchResult(context: context);
+          ref.watch(searchProvider.notifier).getSearchResult(
+                context: context,
+                searchResponse: SearchResponse(
+                    id: 0,
+                    response: ref.read(formSearchControllerProvider).text,
+                    schoolId: 0,
+                    cards: 0,
+                    page: 1,
+                    showDelete: ref.read(deletePersonSwitcherProvider)),
+              );
           _searchFocusNode.requestFocus();
         },
       ),
@@ -169,40 +179,29 @@ class SearchButtonWidget extends ConsumerWidget {
   }
 }
 
-class DropDownCards extends StatefulWidget {
+class DropDownCards extends ConsumerWidget {
   const DropDownCards({Key? key}) : super(key: key);
+  static List<CardStatus> items = [
+    CardStatus(id: 0, name: "Не имеет значения"),
+    CardStatus(id: 1, name: "Только без карт"),
+    CardStatus(id: 2, name: "Только с картами")
+  ];
 
   @override
-  _DropDownCardsState createState() => _DropDownCardsState();
-}
-
-class _DropDownCardsState extends State<DropDownCards> {
-  final Map<int, String> map2 = {
-    0: "Не имеет значения",
-    1: "Только с картами",
-    2: "Только с картами"
-  };
-  final items = ['Не имеет значения', 'Только без карт', 'Только с картами'];
-  String? _chosenValue = 'Не имеет значения';
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DropdownButton(
       elevation: 3,
-      value: _chosenValue,
-      items: items.map<DropdownMenuItem<String>>((String value) {
+      value: ref.watch(selectCardStatusProvider),
+      items: items.map<DropdownMenuItem<int>>((CardStatus value) {
         return DropdownMenuItem(
-          value: value,
-          child: Text(value),
+          value: value.id,
+          child: Text(value.name),
         );
       }).toList(),
-      onChanged: (String? value) {
-        setState(
-          () {
-            _chosenValue = value;
-          },
-        );
-      },
+      // onChanged: (value) {
+      //   print(value);
+      //   ref.watch(selectCardStatusProvider) == value;
+      //   print(ref.watch(selectCardStatusProvider));
     );
   }
 }
@@ -265,7 +264,7 @@ class NoExpandedElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Text(client.id),
-      title: Text('${client.name.name} ${client.name.surname}'),
+      title: Text('${client.name.surname} ${client.name.name}'),
       subtitle: Text(
         client.school,
         style: TextStyle(fontSize: 12.0),
@@ -294,7 +293,7 @@ class NoExpandedElement extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return CardsSelectDialog();
+                      return const CardsSelectDialog();
                     },
                   );
                 },
@@ -312,8 +311,8 @@ class NoExpandedElement extends StatelessWidget {
                 },
                 icon: Icon(
                   controller.expanded
-                      ? Icons.arrow_upward_outlined
-                      : Icons.arrow_downward_outlined,
+                      ? Icons.expand_less_rounded
+                      : Icons.expand_more_rounded,
                 ),
               );
             },
@@ -335,35 +334,3 @@ class CardsInformation extends StatelessWidget {
     );
   }
 }
-
-// class NoExpandedElement extends StatelessWidget {
-//   const NoExpandedElement({
-//     Key? key,
-//   }) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.end,
-//       children: <Widget>[
-//         Builder(
-//           builder: (context) {
-//             var controller = ExpandableController.of(context, required: true)!;
-//             return TextButton(
-//               child: Text(
-//                 controller.expanded ? "COLLAPSE" : "EXPAND",
-//                 style: Theme.of(context)
-//                     .textTheme
-//                     .button!
-//                     .copyWith(color: Colors.deepPurple),
-//               ),
-//               onPressed: () {
-//                 controller.toggle();
-//               },
-//             );
-//           },
-//         ),
-//       ],
-//     );
-//   }
-// }
