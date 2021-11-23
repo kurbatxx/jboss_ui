@@ -58,6 +58,9 @@ class SearchResultWidget extends ConsumerWidget {
               client: schoolClient,
             );
           }),
+      noData: () => const Center(
+        child: Text('Ничего не найдено'),
+      ),
       error: (value) => Center(child: Text(value)),
       loading: () => const Center(
         child: CircularProgressIndicator(),
@@ -79,6 +82,8 @@ class SearchFormWidget extends ConsumerWidget {
         onSubmitted: (value) {
           ref.watch(formSearchControllerProvider).text == value;
           _searchFocusNode.requestFocus();
+          SearchButtonWidget(searchFocusNode: _searchFocusNode)
+              .searchMethod(ref, context);
         },
         focusNode: _searchFocusNode,
         autofocus: true,
@@ -162,20 +167,24 @@ class SearchButtonWidget extends ConsumerWidget {
         label: const Text("Найти"),
         icon: const Icon(Icons.search, color: Colors.white),
         onPressed: () {
-          ref.watch(searchProvider.notifier).getSearchResult(
-                context: context,
-                searchResponse: SearchResponse(
-                    id: 0,
-                    response: ref.read(formSearchControllerProvider).text,
-                    schoolId: 0,
-                    cards: 0,
-                    page: 1,
-                    showDelete: ref.read(deletePersonSwitcherProvider)),
-              );
+          searchMethod(ref, context);
           _searchFocusNode.requestFocus();
         },
       ),
     );
+  }
+
+  void searchMethod(WidgetRef ref, BuildContext context) {
+    ref.watch(searchProvider.notifier).getSearchResult(
+          context: context,
+          searchResponse: SearchResponse(
+              id: 0,
+              response: ref.read(formSearchControllerProvider).text,
+              schoolId: 0,
+              cards: ref.read(selectCardStatusProvider),
+              page: 1,
+              showDelete: ref.read(deletePersonSwitcherProvider)),
+        );
   }
 }
 
@@ -189,20 +198,19 @@ class DropDownCards extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selector = ref.watch(selectCardStatusProvider);
     return DropdownButton(
-      elevation: 3,
-      value: ref.watch(selectCardStatusProvider),
-      items: items.map<DropdownMenuItem<int>>((CardStatus value) {
-        return DropdownMenuItem(
-          value: value.id,
-          child: Text(value.name),
-        );
-      }).toList(),
-      // onChanged: (value) {
-      //   print(value);
-      //   ref.watch(selectCardStatusProvider) == value;
-      //   print(ref.watch(selectCardStatusProvider));
-    );
+        elevation: 3,
+        value: selector,
+        items: items.map<DropdownMenuItem<int>>((CardStatus value) {
+          return DropdownMenuItem(
+            value: value.id,
+            child: Text(value.name),
+          );
+        }).toList(),
+        onChanged: (int? value) {
+          ref.read(selectCardStatusProvider.state).state = value ?? 0;
+        });
   }
 }
 

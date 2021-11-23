@@ -27,8 +27,11 @@ class Search extends StateNotifier<SearchState> {
       final searchRequest = await compute(computeSearch, searchResponse);
       print(searchRequest);
       List<SchoolClient> schoolClients = schoolClientFromJson(searchRequest);
-
-      state = SearchState.data(schoolClients);
+      if (schoolClients.isEmpty) {
+        state = SearchState.noData();
+      } else {
+        state = SearchState.data(schoolClients);
+      }
     } catch (e) {
       state = const SearchState.error(
           "Непридвиденная ошибка. Перезапустите программу");

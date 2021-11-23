@@ -27,6 +27,10 @@ class _$SearchStateTearOff {
     );
   }
 
+  NoData noData() {
+    return const NoData();
+  }
+
   Error error(String errorText) {
     return Error(
       errorText,
@@ -47,6 +51,7 @@ mixin _$SearchState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(List<SchoolClient> schoolClients) data,
+    required TResult Function() noData,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) =>
@@ -55,6 +60,7 @@ mixin _$SearchState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) =>
@@ -63,6 +69,7 @@ mixin _$SearchState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
@@ -72,6 +79,7 @@ mixin _$SearchState {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
+    required TResult Function(NoData value) noData,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
   }) =>
@@ -80,6 +88,7 @@ mixin _$SearchState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
   }) =>
@@ -88,6 +97,7 @@ mixin _$SearchState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
     required TResult orElse(),
@@ -151,6 +161,7 @@ class _$Initial implements Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(List<SchoolClient> schoolClients) data,
+    required TResult Function() noData,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
@@ -162,6 +173,7 @@ class _$Initial implements Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) {
@@ -173,6 +185,7 @@ class _$Initial implements Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
@@ -188,6 +201,7 @@ class _$Initial implements Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
+    required TResult Function(NoData value) noData,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
   }) {
@@ -199,6 +213,7 @@ class _$Initial implements Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
   }) {
@@ -210,6 +225,7 @@ class _$Initial implements Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
     required TResult orElse(),
@@ -290,6 +306,7 @@ class _$Data implements Data {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(List<SchoolClient> schoolClients) data,
+    required TResult Function() noData,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
@@ -301,6 +318,7 @@ class _$Data implements Data {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) {
@@ -312,6 +330,7 @@ class _$Data implements Data {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
@@ -327,6 +346,7 @@ class _$Data implements Data {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
+    required TResult Function(NoData value) noData,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
   }) {
@@ -338,6 +358,7 @@ class _$Data implements Data {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
   }) {
@@ -349,6 +370,7 @@ class _$Data implements Data {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
     required TResult orElse(),
@@ -366,6 +388,126 @@ abstract class Data implements SearchState {
   List<SchoolClient> get schoolClients;
   @JsonKey(ignore: true)
   $DataCopyWith<Data> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NoDataCopyWith<$Res> {
+  factory $NoDataCopyWith(NoData value, $Res Function(NoData) then) =
+      _$NoDataCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$NoDataCopyWithImpl<$Res> extends _$SearchStateCopyWithImpl<$Res>
+    implements $NoDataCopyWith<$Res> {
+  _$NoDataCopyWithImpl(NoData _value, $Res Function(NoData) _then)
+      : super(_value, (v) => _then(v as NoData));
+
+  @override
+  NoData get _value => super._value as NoData;
+}
+
+/// @nodoc
+
+class _$NoData implements NoData {
+  const _$NoData();
+
+  @override
+  String toString() {
+    return 'SearchState.noData()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is NoData);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(List<SchoolClient> schoolClients) data,
+    required TResult Function() noData,
+    required TResult Function(String errorText) error,
+    required TResult Function() loading,
+  }) {
+    return noData();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
+    TResult Function(String errorText)? error,
+    TResult Function()? loading,
+  }) {
+    return noData?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
+    TResult Function(String errorText)? error,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (noData != null) {
+      return noData();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial value) initial,
+    required TResult Function(Data value) data,
+    required TResult Function(NoData value) noData,
+    required TResult Function(Error value) error,
+    required TResult Function(Loading value) loading,
+  }) {
+    return noData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
+    TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
+    TResult Function(Error value)? error,
+    TResult Function(Loading value)? loading,
+  }) {
+    return noData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial value)? initial,
+    TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
+    TResult Function(Error value)? error,
+    TResult Function(Loading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (noData != null) {
+      return noData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NoData implements SearchState {
+  const factory NoData() = _$NoData;
 }
 
 /// @nodoc
@@ -432,6 +574,7 @@ class _$Error implements Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(List<SchoolClient> schoolClients) data,
+    required TResult Function() noData,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
@@ -443,6 +586,7 @@ class _$Error implements Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) {
@@ -454,6 +598,7 @@ class _$Error implements Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
@@ -469,6 +614,7 @@ class _$Error implements Error {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
+    required TResult Function(NoData value) noData,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
   }) {
@@ -480,6 +626,7 @@ class _$Error implements Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
   }) {
@@ -491,6 +638,7 @@ class _$Error implements Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
     required TResult orElse(),
@@ -550,6 +698,7 @@ class _$Loading implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(List<SchoolClient> schoolClients) data,
+    required TResult Function() noData,
     required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
@@ -561,6 +710,7 @@ class _$Loading implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
   }) {
@@ -572,6 +722,7 @@ class _$Loading implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(List<SchoolClient> schoolClients)? data,
+    TResult Function()? noData,
     TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
@@ -587,6 +738,7 @@ class _$Loading implements Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial value) initial,
     required TResult Function(Data value) data,
+    required TResult Function(NoData value) noData,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
   }) {
@@ -598,6 +750,7 @@ class _$Loading implements Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
   }) {
@@ -609,6 +762,7 @@ class _$Loading implements Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial value)? initial,
     TResult Function(Data value)? data,
+    TResult Function(NoData value)? noData,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
     required TResult orElse(),
