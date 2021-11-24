@@ -46,18 +46,35 @@ class SearchResultWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchState = ref.watch(searchProvider);
+    final listSchoolClient = ref.watch(listSchoolClientProvider);
     return searchState.when(
       initial: () =>
           const Center(child: Text('Результаты поиска появятся здесь')),
-      data: (listSchoolClient) => ListView.builder(
-          shrinkWrap: true,
-          itemCount: listSchoolClient.length,
-          itemBuilder: (BuildContext context, int index) {
-            SchoolClient schoolClient = listSchoolClient[index];
-            return ExpandableElement(
-              client: schoolClient,
-            );
-          }),
+      data: () {
+        return ListView.builder(
+            shrinkWrap: true,
+            itemCount: listSchoolClient.length,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == listSchoolClient.length - 5 && index > 20 - 1) {
+                print(index);
+                ref.watch(searchProvider.notifier).getNextPageResult(
+                      ref: ref,
+                      context: context,
+                      searchResponse: SearchResponse(
+                          id: 0,
+                          response: ref.read(formSearchControllerProvider).text,
+                          schoolId: 0,
+                          cards: ref.read(selectCardStatusProvider),
+                          page: 2,
+                          showDelete: ref.read(deletePersonSwitcherProvider)),
+                    );
+              }
+              SchoolClient schoolClient = listSchoolClient[index];
+              return ExpandableElement(
+                client: schoolClient,
+              );
+            });
+      },
       noData: () => const Center(
         child: Text('Ничего не найдено'),
       ),
@@ -176,6 +193,7 @@ class SearchButtonWidget extends ConsumerWidget {
 
   void searchMethod(WidgetRef ref, BuildContext context) {
     ref.watch(searchProvider.notifier).getSearchResult(
+          ref: ref,
           context: context,
           searchResponse: SearchResponse(
               id: 0,
@@ -275,7 +293,7 @@ class NoExpandedElement extends StatelessWidget {
       title: Text('${client.name.surname} ${client.name.name}'),
       subtitle: Text(
         client.school,
-        style: TextStyle(fontSize: 12.0),
+        style: const TextStyle(fontSize: 12.0),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
