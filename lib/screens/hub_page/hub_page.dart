@@ -86,7 +86,7 @@ class HubPage extends StatelessWidget {
                   ),
                   child: Container(
                     color: Colors.transparent,
-                    child: SearchPage(),
+                    child: const SearchPage(),
                   ),
                 ),
               ),

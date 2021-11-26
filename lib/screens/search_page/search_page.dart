@@ -55,20 +55,20 @@ class SearchResultWidget extends ConsumerWidget {
             shrinkWrap: true,
             itemCount: listSchoolClient.length,
             itemBuilder: (BuildContext context, int index) {
-              if (index == listSchoolClient.length - 5 && index > 20 - 1) {
-                print(index);
-                ref.watch(searchProvider.notifier).getNextPageResult(
-                      ref: ref,
-                      context: context,
-                      searchResponse: SearchResponse(
-                          id: 0,
-                          response: ref.read(formSearchControllerProvider).text,
-                          schoolId: 0,
-                          cards: ref.read(selectCardStatusProvider),
-                          page: 2,
-                          showDelete: ref.read(deletePersonSwitcherProvider)),
-                    );
-              }
+              // if (index == listSchoolClient.length - 5) {
+              //   print(index);
+              //   ref.watch(searchProvider.notifier).getNextPageResult(
+              //         ref: ref,
+              //         context: context,
+              //         searchResponse: SearchResponse(
+              //             id: 0,
+              //             response: ref.read(formSearchControllerProvider).text,
+              //             schoolId: 0,
+              //             cards: ref.read(selectCardStatusProvider),
+              //             page: 2,
+              //             showDelete: ref.read(deletePersonSwitcherProvider)),
+              //       );
+              // }
               SchoolClient schoolClient = listSchoolClient[index];
               return ExpandableElement(
                 client: schoolClient,
@@ -210,8 +210,8 @@ class DropDownCards extends ConsumerWidget {
   const DropDownCards({Key? key}) : super(key: key);
   static List<CardStatus> items = [
     CardStatus(id: 0, name: "Не имеет значения"),
-    CardStatus(id: 1, name: "Только без карт"),
-    CardStatus(id: 2, name: "Только с картами")
+    CardStatus(id: 1, name: "Только с картами"),
+    CardStatus(id: 2, name: "Только без карт")
   ];
 
   @override
