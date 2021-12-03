@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/freezed/search_state.dart';
-import 'package:jboss_ui/model/school_client.dart';
 import 'package:jboss_ui/model/search_response.dart';
+import 'package:jboss_ui/model/search_request.dart';
 
 final deletePersonSwitcherProvider = StateProvider<bool>((ref) => true);
 final selectCardStatusProvider = StateProvider<int>((ref) => 0);
@@ -13,7 +13,7 @@ final pageProvider = StateProvider<int>((ref) => 1);
 final formSearchControllerProvider =
     StateProvider<TextEditingController>((ref) => TextEditingController());
 
-final listSchoolClientProvider = StateProvider<List<SchoolClient>>((ref) => []);
+final listSchoolClientProvider = StateProvider<List<Client>>((ref) => []);
 
 final searchProvider = StateNotifierProvider<Search, SearchState>(
   (ref) => Search(),
@@ -25,35 +25,36 @@ class Search extends StateNotifier<SearchState> {
   Future<void> getSearchResult(
       {required BuildContext context,
       required WidgetRef ref,
-      required SearchResponse searchResponse}) async {
-    try {
-      state = const SearchState.loading();
-      ref.read(listSchoolClientProvider.state).state = [];
-      final searchRequest = await compute(computeSearch, searchResponse);
-      print(searchRequest);
-      List<SchoolClient> schoolClients = schoolClientFromJson(searchRequest);
-      schoolClients =
-          ref.read(listSchoolClientProvider.state).state = schoolClients;
-      if (schoolClients.isEmpty) {
-        state = const SearchState.noData();
-      } else {
-        state = const SearchState.data();
-      }
-    } catch (e) {
-      state = const SearchState.error(
-          "Непридвиденная ошибка. Перезапустите программу");
+      required SearchRequest searchRequest}) async {
+    //try {
+    state = const SearchState.loading();
+    ref.read(listSchoolClientProvider.state).state = [];
+    final searchResponse = await compute(computeSearch, searchRequest);
+    print(searchResponse);
+    List<Client> schoolClients = searchResponseFromJson(searchResponse).clients;
+    schoolClients =
+        ref.read(listSchoolClientProvider.state).state = schoolClients;
+    if (schoolClients.isEmpty) {
+      state = const SearchState.noData();
+    } else {
+      state = const SearchState.data();
     }
+    // } catch (e) {
+    //   state = const SearchState.error(
+    //       "Непридвиденная ошибка. Перезапустите программу");
+    // }
   }
 
   Future<void> getNextPageResult(
       {required BuildContext context,
       required WidgetRef ref,
-      required SearchResponse searchResponse}) async {
+      required SearchRequest searchResponse}) async {
     try {
       final searchRequest = await compute(computeSearch, searchResponse);
       print('Новая порция');
       print(searchRequest);
-      List<SchoolClient> schoolClients = schoolClientFromJson(searchRequest);
+      List<Client> schoolClients =
+          searchResponseFromJson(searchRequest).clients;
       schoolClients = ref.read(listSchoolClientProvider.state).state
         ..addAll(schoolClients);
       state = const SearchState.data();

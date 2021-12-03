@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:jboss_ui/model/school_client.dart';
+import 'package:jboss_ui/model/search_response.dart';
 part 'search_state.freezed.dart';
 
 @freezed

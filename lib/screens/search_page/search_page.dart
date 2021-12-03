@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:jboss_ui/model/card_status.dart';
-import 'package:jboss_ui/model/school_client.dart';
 import 'package:jboss_ui/model/search_response.dart';
+import 'package:jboss_ui/model/search_request.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -55,21 +55,21 @@ class SearchResultWidget extends ConsumerWidget {
             shrinkWrap: true,
             itemCount: listSchoolClient.length,
             itemBuilder: (BuildContext context, int index) {
-              // if (index == listSchoolClient.length - 5) {
-              //   print(index);
-              //   ref.watch(searchProvider.notifier).getNextPageResult(
-              //         ref: ref,
-              //         context: context,
-              //         searchResponse: SearchResponse(
-              //             id: 0,
-              //             response: ref.read(formSearchControllerProvider).text,
-              //             schoolId: 0,
-              //             cards: ref.read(selectCardStatusProvider),
-              //             page: 2,
-              //             showDelete: ref.read(deletePersonSwitcherProvider)),
-              //       );
-              // }
-              SchoolClient schoolClient = listSchoolClient[index];
+              if (index == listSchoolClient.length - 5) {
+                print(index);
+                ref.watch(searchProvider.notifier).getNextPageResult(
+                      ref: ref,
+                      context: context,
+                      searchResponse: SearchRequest(
+                          id: 0,
+                          request: ref.read(formSearchControllerProvider).text,
+                          schoolId: 0,
+                          cards: ref.read(selectCardStatusProvider),
+                          page: 2,
+                          showDelete: ref.read(deletePersonSwitcherProvider)),
+                    );
+              }
+              Client schoolClient = listSchoolClient[index];
               return ExpandableElement(
                 client: schoolClient,
               );
@@ -195,9 +195,9 @@ class SearchButtonWidget extends ConsumerWidget {
     ref.watch(searchProvider.notifier).getSearchResult(
           ref: ref,
           context: context,
-          searchResponse: SearchResponse(
+          searchRequest: SearchRequest(
               id: 0,
-              response: ref.read(formSearchControllerProvider).text,
+              request: ref.read(formSearchControllerProvider).text,
               schoolId: 0,
               cards: ref.read(selectCardStatusProvider),
               page: 1,
@@ -257,7 +257,7 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
 class ExpandableElement extends StatelessWidget {
   const ExpandableElement({Key? key, required this.client}) : super(key: key);
 
-  final SchoolClient client;
+  final Client client;
 
   @override
   Widget build(BuildContext context) {
@@ -284,13 +284,13 @@ class NoExpandedElement extends StatelessWidget {
     required this.client,
   }) : super(key: key);
 
-  final SchoolClient client;
+  final Client client;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Text(client.id),
-      title: Text('${client.name.surname} ${client.name.name}'),
+      title: Text('${client.fullname.surname} ${client.fullname.name}'),
       subtitle: Text(
         client.school,
         style: const TextStyle(fontSize: 12.0),
