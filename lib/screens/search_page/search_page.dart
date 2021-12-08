@@ -6,10 +6,11 @@ import 'package:jboss_ui/model/card_status.dart';
 import 'package:jboss_ui/model/search_response.dart';
 import 'package:jboss_ui/model/search_request.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
+import 'package:jboss_ui/provider/search_pagination_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jboss_ui/utils/secure.dart';
-import '../../widgets/cards_select_dialog.dart';
+import 'package:jboss_ui/widgets/cards_select_dialog.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -47,32 +48,44 @@ class SearchResultWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final searchState = ref.watch(searchProvider);
     final listSchoolClient = ref.watch(listSchoolClientProvider);
+    final counter = ref.read(paginationCounterProvider);
+    final limiter = ref.read(paginationLimiterProvider);
+
     return searchState.when(
       initial: () =>
           const Center(child: Text('Результаты поиска появятся здесь')),
       data: () {
         return ListView.builder(
             shrinkWrap: true,
-            itemCount: listSchoolClient.length,
+            itemCount: listSchoolClient.length + 1,
             itemBuilder: (BuildContext context, int index) {
-              if (index == listSchoolClient.length - 5) {
-                print(index);
+              if (index == listSchoolClient.length - 5 && counter < limiter) {
                 ref.watch(searchProvider.notifier).getNextPageResult(
                       ref: ref,
                       context: context,
-                      searchResponse: SearchRequest(
+                      searchRequest: SearchRequest(
                           id: 0,
                           request: ref.read(formSearchControllerProvider).text,
                           schoolId: 0,
                           cards: ref.read(selectCardStatusProvider),
-                          page: 2,
+                          page: counter + 1,
                           showDelete: ref.read(deletePersonSwitcherProvider)),
                     );
               }
-              Client schoolClient = listSchoolClient[index];
-              return ExpandableElement(
-                client: schoolClient,
-              );
+              if (index == listSchoolClient.length && counter < limiter) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (index == listSchoolClient.length &&
+                  counter == limiter) {
+                return Container(
+                  color: Colors.amberAccent,
+                  height: 1,
+                );
+              } else {
+                Client schoolClient = listSchoolClient[index];
+                return ExpandableElement(
+                  client: schoolClient,
+                );
+              }
             });
       },
       noData: () => const Center(
