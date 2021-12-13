@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:jboss_ui/model/card_status.dart';
 import 'package:jboss_ui/model/search_response.dart';
 import 'package:jboss_ui/model/search_request.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
-import 'package:jboss_ui/provider/search_pagination_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jboss_ui/utils/secure.dart';

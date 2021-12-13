@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:ffi/src/utf8.dart';
 import 'package:http/http.dart' as http;
 import 'package:jboss_ui/model/ffi_authorization.dart';
 import 'package:jboss_ui/model/search_request.dart';
 import 'package:jboss_ui/model/search_response.dart';
-import './rust_dart_ffi.dart';
+import 'package:jboss_ui/api/rust_dart_ffi.dart';
 
 class JbossDataApi {
   static Future<SearchResponse> getSearchResult(String responseText) async {
