@@ -11,6 +11,7 @@ class Pagination extends StateNotifier<PaginationState> {
   Future<void> loading() async {
     try {
       state = const PaginationState.loading();
+      print('Я тут');
     } catch (e) {
       state = const PaginationState.error(
           "Непридвиденная ошибка. Перезапустите программу");

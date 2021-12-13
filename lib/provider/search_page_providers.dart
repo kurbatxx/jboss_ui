@@ -58,7 +58,7 @@ class Search extends StateNotifier<SearchState> {
     try {
       print('Понеслась!!!!!!!!!!!!');
       ref.watch(paginationProvider.notifier).loading();
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 2));
       final searchResponse = await compute(computeSearch, searchRequest);
       print('Новая порция');
       List<Client> schoolClients =
@@ -67,7 +67,7 @@ class Search extends StateNotifier<SearchState> {
         ..addAll(schoolClients);
       ref.watch(paginationProvider.notifier).data();
       state = const SearchState.data();
-      ref.read(paginationCounterProvider.state).state = searchRequest.page;
+      ref.watch(paginationCounterProvider.state).state = searchRequest.page;
     } catch (e) {
       state = const SearchState.error(
           "Непридвиденная ошибка. Перезапустите программу");
