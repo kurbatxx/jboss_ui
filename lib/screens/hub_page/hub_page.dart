@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/screens/search_page/search_page.dart';
@@ -47,25 +48,42 @@ class HubPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Consumer(builder: (context, WidgetRef ref, _) {
-                  return IconButton(
-                    padding: const EdgeInsets.all(0.0),
-                    hoverColor: Colors.white,
-                    splashRadius: 16.0,
-                    icon: const Icon(
-                      Icons.logout,
-                      color: Colors.black,
+                Row(
+                  children: [
+                    IconButton(
+                      padding: const EdgeInsets.all(0.0),
+                      hoverColor: Colors.white,
+                      splashRadius: 16.0,
+                      icon: const Icon(
+                        Icons.admin_panel_settings,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, MainNavigationRouteNames.settingsScreen);
+                      },
                     ),
-                    onPressed: () {
-                      ref
-                          .read(authorizationProvider.notifier)
-                          .logout(context, ref);
+                    Consumer(builder: (context, WidgetRef ref, _) {
+                      return IconButton(
+                        padding: const EdgeInsets.all(0.0),
+                        hoverColor: Colors.white,
+                        splashRadius: 16.0,
+                        icon: const Icon(
+                          Icons.logout,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          ref
+                              .read(authorizationProvider.notifier)
+                              .logout(context, ref);
 
-                      ref.read(searchProvider.notifier).logout();
-                      ref.read(formSearchControllerProvider).clear();
-                    },
-                  );
-                }),
+                          ref.read(searchProvider.notifier).logout();
+                          ref.read(formSearchControllerProvider).clear();
+                        },
+                      );
+                    }),
+                  ],
+                ),
               ],
             ),
           ),
