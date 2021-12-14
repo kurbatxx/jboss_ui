@@ -5,7 +5,6 @@ import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/freezed/search_state.dart';
 import 'package:jboss_ui/model/search_response.dart';
 import 'package:jboss_ui/model/search_request.dart';
-import 'package:jboss_ui/provider/search_pagination_providers.dart';
 
 final deletePersonSwitcherProvider = StateProvider<bool>((ref) => true);
 final selectCardStatusProvider = StateProvider<int>((ref) => 0);
@@ -57,7 +56,6 @@ class Search extends StateNotifier<SearchState> {
       required SearchRequest searchRequest}) async {
     try {
       print('Понеслась!!!!!!!!!!!!');
-      ref.watch(paginationProvider.notifier).loading();
       await Future.delayed(const Duration(seconds: 2));
       final searchResponse = await compute(computeSearch, searchRequest);
       print('Новая порция');
@@ -65,7 +63,6 @@ class Search extends StateNotifier<SearchState> {
           searchResponseFromJson(searchResponse).clients;
       schoolClients = ref.read(listSchoolClientProvider.state).state
         ..addAll(schoolClients);
-      ref.watch(paginationProvider.notifier).data();
       state = const SearchState.data();
       ref.watch(paginationCounterProvider.state).state = searchRequest.page;
     } catch (e) {
