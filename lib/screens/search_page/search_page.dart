@@ -251,16 +251,19 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
     final deletePersonSwitcherState =
         ref.watch(deletePersonSwitcherProvider.state).state;
 
-    return CheckboxListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-      controlAffinity: ListTileControlAffinity.leading,
-      title: const Text("Показывать выбывших и удаленных"),
-      onChanged: (value) {
-        bool state = value ?? false != value;
-        ref.read(deletePersonSwitcherProvider.state).state = state;
-        SecureStorage.instance.setShowDeleteState(state);
-      },
-      value: deletePersonSwitcherState,
+    return Material(
+      type: MaterialType.card,
+      child: CheckboxListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+        controlAffinity: ListTileControlAffinity.leading,
+        title: const Text("Показывать выбывших и удаленных"),
+        value: deletePersonSwitcherState,
+        onChanged: (value) {
+          final checkboxState = value ?? false != value;
+          ref.read(deletePersonSwitcherProvider.state).state = checkboxState;
+          SecureStorage.instance.setShowDeleteState(checkboxState);
+        },
+      ),
     );
   }
 }
@@ -366,7 +369,7 @@ class CardsInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 10,
+      height: 50,
       color: Colors.red,
     );
   }

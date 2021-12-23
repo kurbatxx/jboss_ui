@@ -1,7 +1,5 @@
 name: jboss_ui
-description: cadrd_bd_ui.
-
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+description: cards_bd_ui.
 
 version: 1.0.0+1
 
@@ -11,7 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  group_button: ^3.3.1
+  file_picker: ^4.3.0
   objectbox: ^1.3.0
   cupertino_icons: ^1.0.2
   flutter_svg: ^0.22.0
@@ -40,4 +39,4 @@ flutter:
     - assets/
     - assets/images/login.png
     - assets/icons/
-    - assets/icons/rfid.svg
+    - assets/icons/devices_svg/

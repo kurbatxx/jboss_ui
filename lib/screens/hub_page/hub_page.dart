@@ -4,7 +4,7 @@ import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/screens/search_page/search_page.dart';
-import '../../utils/constant.dart';
+import 'package:jboss_ui/utils/constant.dart';
 
 class HubPage extends StatelessWidget {
   const HubPage({Key? key}) : super(key: key);
@@ -89,7 +89,7 @@ class HubPage extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: <Widget>[
+          children: [
             Container(
               color: kBgColor,
               child: Padding(
@@ -102,10 +102,8 @@ class HubPage extends StatelessWidget {
                       topRight: kTabsRadius,
                     ),
                   ),
-                  child: Container(
-                    color: Colors.transparent,
-                    child: const SearchPage(),
-                  ),
+                  child: const SearchPage(),
+                  //const SearchPage(),
                 ),
               ),
             ),
@@ -176,8 +174,8 @@ class HubPage extends StatelessWidget {
                                   BorderRadius.only(topRight: kTabsRadius),
                             ),
                             child: Container(
-                              color: Colors.transparent,
-                            ),
+                                //color: Colors.transparent,
+                                ),
                           ),
                         ),
                         Padding(
