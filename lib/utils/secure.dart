@@ -29,11 +29,19 @@ class SecureStorage {
     return (await _storage.read(key: "password") ?? "");
   }
 
+  Future<String> getAppDir() async {
+    return (await _storage.read(key: "appDir") ?? "***");
+  }
+
   setLogin(String login) async {
     await _storage.write(key: "login", value: login);
   }
 
   setPassword(String password) async {
     await _storage.write(key: "password", value: password);
+  }
+
+  setAppDir(String appDir) async {
+    await _storage.write(key: "appDir", value: appDir);
   }
 }

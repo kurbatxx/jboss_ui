@@ -18,8 +18,10 @@ dependencies:
   http: ^0.13.4
   flutter_riverpod: ^1.0.2
   freezed_annotation: ^0.15.0
-  flutter_secure_storage: ^5.0.0-beta.5
+  flutter_secure_storage: ^5.0.2
   ffi: ^1.1.2
+  get_storage:
+  path_provider: ^2.0.8
 
 
 dev_dependencies:

@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
+class Settings {
+  int id;
+  String appDir;
+
+  Settings({
+    this.id = 0,
+    this.appDir = "",
+  });
+}
+
+@Entity()
 class DeviceColor {
   int id;
   Color color;

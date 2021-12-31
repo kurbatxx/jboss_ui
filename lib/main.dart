@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
@@ -8,9 +10,13 @@ import 'db_model/object_box.dart';
 
 late ObjectBox objectbox;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectbox = await ObjectBox.create();
+
+  final appDir = Directory.current.path.toString();
+  final file = File(Directory.systemTemp.path + "\\jboss.txt");
+  await file.writeAsString(appDir);
 
   bool saveLoginState = await SecureStorage.instance.getSaveLoginState();
   bool showDeleteState = await SecureStorage.instance.getShowDeleteState();
@@ -33,6 +39,8 @@ void main() async {
             StateProvider((ref) => TextFormProperties(login, null))),
         passwordFormProvider.overrideWithProvider(
             StateProvider((ref) => TextFormProperties(password, null))),
+        appDirProvider
+            .overrideWithProvider(StateProvider<String>((ref) => appDir)),
       ],
       child: const App(),
     ),

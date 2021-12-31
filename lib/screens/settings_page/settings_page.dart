@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jboss_ui/db_model/object_box.dart';
 import 'dart:io';
 
 import 'package:jboss_ui/provider/settings_page_providers.dart';
@@ -88,7 +89,6 @@ class DevicesIconsWidget extends ConsumerWidget {
                   if (result != null) {
                     File file = File(result.files.single.name);
                     ref.read(svgFileProvider.state).state = file;
-                    //print(file.readAsStringSync());
                   } else {
                     print('Ничего не выбрано');
                   }

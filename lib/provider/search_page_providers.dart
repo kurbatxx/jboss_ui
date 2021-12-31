@@ -56,7 +56,7 @@ class Search extends StateNotifier<SearchState> {
       required SearchRequest searchRequest}) async {
     try {
       print('Понеслась!!!!!!!!!!!!');
-      await Future.delayed(const Duration(seconds: 2));
+      //await Future.delayed(const Duration(seconds: 2));
       final searchResponse = await compute(computeSearch, searchRequest);
       print('Новая порция');
       List<Client> schoolClients =

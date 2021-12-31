@@ -55,6 +55,25 @@ final _entities = <ModelEntity>[
             flags: 1)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(3, 5835826959139121943),
+      name: 'Settings',
+      lastPropertyId: const IdUid(2, 4098594869245617096),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 6237161878799796147),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 4098594869245617096),
+            name: 'appDir',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -78,7 +97,7 @@ Store openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(2, 2689399643959320265),
+      lastEntityId: const IdUid(3, 5835826959139121943),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -145,6 +164,33 @@ ModelDefinition getObjectBoxModel() {
               id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
 
           return object;
+        }),
+    Settings: EntityDefinition<Settings>(
+        model: _entities[2],
+        toOneRelations: (Settings object) => [],
+        toManyRelations: (Settings object) => {},
+        getId: (Settings object) => object.id,
+        setId: (Settings object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Settings object, fb.Builder fbb) {
+          final appDirOffset = fbb.writeString(object.appDir);
+          fbb.startTable(3);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, appDirOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Settings(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              appDir:
+                  const fb.StringReader().vTableGet(buffer, rootOffset, 6, ''));
+
+          return object;
         })
   };
 
@@ -172,4 +218,14 @@ class DeviceColor_ {
   /// see [DeviceColor.id]
   static final id =
       QueryIntegerProperty<DeviceColor>(_entities[1].properties[0]);
+}
+
+/// [Settings] entity fields to define ObjectBox queries.
+class Settings_ {
+  /// see [Settings.id]
+  static final id = QueryIntegerProperty<Settings>(_entities[2].properties[0]);
+
+  /// see [Settings.appDir]
+  static final appDir =
+      QueryStringProperty<Settings>(_entities[2].properties[1]);
 }
