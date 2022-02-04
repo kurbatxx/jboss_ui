@@ -1,5 +1,4 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:jboss_ui/provider/login_page_providers.dart';
 
 class SecureStorage {
   static SecureStorage instance = SecureStorage._();

@@ -1,9 +1,7 @@
 import 'dart:ffi';
-import 'dart:io';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/provider/login_page_providers.dart';
+
 
 import '../main.dart';
 
@@ -14,10 +12,6 @@ String getUpDir(String dir) {
 }
 
 String getPathToDll() {
-  print("******************");
-  print(appDir);
-  print("******************");
-
   String pathDll = kReleaseMode
       ? appDir + '/ffi_jboss_rust_lib.dll'
       : getUpDir(appDir) +

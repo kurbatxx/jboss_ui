@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/freezed/authorization_state.dart';
-import 'package:jboss_ui/main.dart';
 import 'package:jboss_ui/model/authorization_token.dart';
 import 'package:jboss_ui/model/ffi_authorization.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
@@ -47,14 +46,14 @@ class Authorization extends StateNotifier<AuthorizationState> {
       {required BuildContext context,
       required String login,
       required String password}) async {
-    //try {
+  try {
     state = const AuthorizationState.loading();
     await Future.delayed(const Duration(seconds: 1));
     final loginResponse = await compute(
         computeLogin, FFIAuthorization(login: login, password: password));
     AuthorizationToken authorizationToken =
         authorizationTokenFromJson(loginResponse);
-    print(authorizationToken);
+    //print(authorizationToken);
     if (authorizationToken.error.isEmpty) {
       state = const AuthorizationState.data();
       Navigator.of(context).pushNamed(MainNavigationRouteNames.hubScreen);
@@ -65,12 +64,12 @@ class Authorization extends StateNotifier<AuthorizationState> {
     } else {
       throw RustException(authorizationToken.error);
     }
-    // } on RustException catch (e) {
-    //   state = AuthorizationState.error(e.toString());
-    // } catch (e) {
-    //   state = const AuthorizationState.error(
-    //       "Непридвиденная ошибка. Перезапустите программу");
-    // }
+    } on RustException catch (e) {
+      state = AuthorizationState.error(e.toString());
+    } catch (e) {
+      state = const AuthorizationState.error(
+          "Непридвиденная ошибка. Перезапустите программу");
+    }
   }
 
   Future<void> logout(BuildContext context, WidgetRef ref) async {

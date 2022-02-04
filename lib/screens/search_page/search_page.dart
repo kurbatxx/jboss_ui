@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -303,7 +304,11 @@ class NoExpandedElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(client.id),
+      leading: GestureDetector(
+          child: Text(client.id),
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: client.id));
+          }),
       title: Text('${client.fullname.surname} ${client.fullname.name}'),
       subtitle: Text(
         client.school,

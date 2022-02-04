@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jboss_ui/db_model/object_box.dart';
 import 'dart:io';
 
 import 'package:jboss_ui/provider/settings_page_providers.dart';
@@ -90,7 +89,7 @@ class DevicesIconsWidget extends ConsumerWidget {
                     File file = File(result.files.single.name);
                     ref.read(svgFileProvider.state).state = file;
                   } else {
-                    print('Ничего не выбрано');
+                    //print('Ничего не выбрано');
                   }
                 },
                 child: const Text('Добавить иконку устройства'),
@@ -105,7 +104,7 @@ class DevicesIconsWidget extends ConsumerWidget {
                       onPressed: () {
                         ref.read(svgFileProvider.state).state = null;
                       },
-                      child: Text('Удалить иконку'))
+                      child: const Text('Удалить иконку'))
                 ],
               ),
       ],

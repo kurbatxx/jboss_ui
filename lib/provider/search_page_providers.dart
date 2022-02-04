@@ -55,10 +55,8 @@ class Search extends StateNotifier<SearchState> {
       required WidgetRef ref,
       required SearchRequest searchRequest}) async {
     try {
-      print('Понеслась!!!!!!!!!!!!');
       //await Future.delayed(const Duration(seconds: 2));
       final searchResponse = await compute(computeSearch, searchRequest);
-      print('Новая порция');
       List<Client> schoolClients =
           searchResponseFromJson(searchResponse).clients;
       schoolClients = ref.read(listSchoolClientProvider.state).state

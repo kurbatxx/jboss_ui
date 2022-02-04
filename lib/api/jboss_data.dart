@@ -1,4 +1,4 @@
-import 'package:ffi/src/utf8.dart';
+import 'package:ffi/ffi.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:jboss_ui/model/ffi_authorization.dart';

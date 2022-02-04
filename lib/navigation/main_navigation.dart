@@ -15,6 +15,6 @@ class MainNavigation {
   final routes = <String, Widget Function(BuildContext)>{
     MainNavigationRouteNames.loginScreen: (context) => const LoginPage(),
     MainNavigationRouteNames.hubScreen: (context) => const HubPage(),
-    MainNavigationRouteNames.settingsScreen: (context) => SettingsPage(),
+    MainNavigationRouteNames.settingsScreen: (context) => const SettingsPage(),
   };
 }

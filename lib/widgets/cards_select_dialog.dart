@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../provider/login_page_providers.dart';
 import '../utils/constant.dart';
 
 class CardsSelectDialog extends StatefulWidget {
@@ -20,7 +19,7 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: EdgeInsets.symmetric(vertical: 100, horizontal: 20),
+      insetPadding: const EdgeInsets.symmetric(vertical: 100, horizontal: 20),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -28,7 +27,7 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
+                SizedBox(
                   height: 28,
                   width: 28,
                   child: RawMaterialButton(
@@ -51,7 +50,7 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
               ],
             ),
             ToggleButtons(
-              children: <Widget>[
+              children: const <Widget>[
                 Icon(
                   Icons.credit_card,
                   size: 80,
@@ -80,7 +79,7 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
               },
               isSelected: isSelectedDevice,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
               width: 10,
             ),
@@ -153,11 +152,11 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
                       ),
                     ],
                   )
-                : Container(
+                : const SizedBox(
                     height: 5,
                     width: 5,
                   ),
-            SizedBox(
+            const SizedBox(
               height: 5.0,
             ),
             Row(children: const [
@@ -166,7 +165,7 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
                 child: Text("Выдать бесплано"),
               ),
             ]),
-            Text(
+            const Text(
               "Активное устройство будет заблокировано!",
               style: TextStyle(color: Colors.red),
             ),
@@ -174,7 +173,7 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("Создать заявку"),
+              child: const Text("Создать заявку"),
             ),
           ],
         ),
