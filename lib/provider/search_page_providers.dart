@@ -14,9 +14,7 @@ final paginationLimiterProvider = StateProvider<int>((ref) => 0);
 
 final formSearchControllerProvider =
     StateProvider<TextEditingController>((ref) => TextEditingController());
-
 final listSchoolClientProvider = StateProvider<List<Client>>((ref) => []);
-
 final searchProvider = StateNotifierProvider<Search, SearchState>(
   (ref) => Search(),
 );

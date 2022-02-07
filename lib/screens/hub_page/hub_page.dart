@@ -60,7 +60,7 @@ class HubPage extends StatelessWidget {
                       ),
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, MainNavigationRouteNames.settingsScreen);
+                            context, NavigationRouteNames.settingsScreen);
                       },
                     ),
                     Consumer(builder: (context, WidgetRef ref, _) {

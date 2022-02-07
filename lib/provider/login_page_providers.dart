@@ -56,7 +56,7 @@ class Authorization extends StateNotifier<AuthorizationState> {
     //print(authorizationToken);
     if (authorizationToken.error.isEmpty) {
       state = const AuthorizationState.data();
-      Navigator.of(context).pushNamed(MainNavigationRouteNames.hubScreen);
+      Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);
       if (await SecureStorage.instance.getSaveLoginState()) {
         await SecureStorage.instance.setLogin(login);
         await SecureStorage.instance.setPassword(password);
@@ -80,7 +80,7 @@ class Authorization extends StateNotifier<AuthorizationState> {
         ref.read(passwordFormProvider).text = "";
       }
       await LoginApi.logout();
-      Navigator.of(context).pushNamed(MainNavigationRouteNames.loginScreen);
+      Navigator.of(context).pushNamed(NavigationRouteNames.loginScreen);
     } catch (e) {
       state = const AuthorizationState.error("Что-то не так");
     }

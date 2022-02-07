@@ -58,7 +58,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainNavigation = MainNavigation();
+    final mainNavigation = Navigation();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'JBOSS_UI',
