@@ -4,7 +4,7 @@ description: cards_bd_ui.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.16.0 <3.0.0"
+  sdk: ">=2.16.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -21,7 +21,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   ffi: ^1.1.2
   get_storage:
-  path_provider: ^2.0.8
+  path_provider: ^2.0.9
 
 
 dev_dependencies:

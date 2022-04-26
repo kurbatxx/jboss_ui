@@ -46,24 +46,24 @@ class Authorization extends StateNotifier<AuthorizationState> {
       {required BuildContext context,
       required String login,
       required String password}) async {
-  try {
-    state = const AuthorizationState.loading();
-    await Future.delayed(const Duration(seconds: 1));
-    final loginResponse = await compute(
-        computeLogin, FFIAuthorization(login: login, password: password));
-    AuthorizationToken authorizationToken =
-        authorizationTokenFromJson(loginResponse);
-    //print(authorizationToken);
-    if (authorizationToken.error.isEmpty) {
-      state = const AuthorizationState.data();
-      Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);
-      if (await SecureStorage.instance.getSaveLoginState()) {
-        await SecureStorage.instance.setLogin(login);
-        await SecureStorage.instance.setPassword(password);
+    try {
+      state = const AuthorizationState.loading();
+      await Future.delayed(const Duration(seconds: 1));
+      final loginResponse = await compute(
+          computeLogin, FFIAuthorization(login: login, password: password));
+      AuthorizationToken authorizationToken =
+          authorizationTokenFromJson(loginResponse);
+      //print(authorizationToken);
+      if (authorizationToken.error.isEmpty) {
+        state = const AuthorizationState.data();
+        Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);
+        if (await SecureStorage.instance.getSaveLoginState()) {
+          await SecureStorage.instance.setLogin(login);
+          await SecureStorage.instance.setPassword(password);
+        }
+      } else {
+        throw RustException(authorizationToken.error);
       }
-    } else {
-      throw RustException(authorizationToken.error);
-    }
     } on RustException catch (e) {
       state = AuthorizationState.error(e.toString());
     } catch (e) {

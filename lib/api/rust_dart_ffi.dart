@@ -2,7 +2,6 @@ import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 
-
 import '../main.dart';
 
 String getUpDir(String dir) {
@@ -13,9 +12,8 @@ String getUpDir(String dir) {
 
 String getPathToDll() {
   String pathDll = kReleaseMode
-      ? appDir + '/ffi_jboss_rust_lib.dll'
-      : getUpDir(appDir) +
-          '/ffi_jboss_rust_lib/target/debug/ffi_jboss_rust_lib.dll';
+      ? appDir + '/jboss.dll'
+      : getUpDir(appDir) + '/ffi_jboss_rust_lib/target/debug/jboss.dll';
   return pathDll;
 }
 

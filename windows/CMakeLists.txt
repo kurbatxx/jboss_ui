@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.14)
 project(jboss_ui LANGUAGES CXX)
 
 set(BINARY_NAME "jboss_ui")
