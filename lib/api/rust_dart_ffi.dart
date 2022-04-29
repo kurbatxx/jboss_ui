@@ -19,6 +19,7 @@ String getPathToDll() {
 
 typedef RustInitial = Pointer Function(Pointer<Utf8>);
 typedef DartInitial = Pointer Function(Pointer<Utf8>);
+
 final initialFFI = DynamicLibrary.open(getPathToDll())
     .lookup<NativeFunction<RustInitial>>('initial')
     .asFunction<DartInitial>();

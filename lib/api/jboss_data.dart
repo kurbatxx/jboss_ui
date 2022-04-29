@@ -1,9 +1,9 @@
 import 'package:ffi/ffi.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:jboss_ui/model/ffi_authorization.dart';
-import 'package:jboss_ui/model/search_request.dart';
-import 'package:jboss_ui/model/search_response.dart';
+import 'package:jboss_ui/models/login/ffi_authorization.dart';
+import 'package:jboss_ui/models/search/search_request.dart';
+import 'package:jboss_ui/models/search/search_response.dart';
 import 'package:jboss_ui/api/rust_dart_ffi.dart';
 
 import '../main.dart';

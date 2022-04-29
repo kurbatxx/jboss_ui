@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss_data.dart';
 import 'package:jboss_ui/freezed/search_state.dart';
-import 'package:jboss_ui/model/search_response.dart';
-import 'package:jboss_ui/model/search_request.dart';
+import 'package:jboss_ui/models/search/search_response.dart';
+import 'package:jboss_ui/models/search/search_request.dart';
 
 final deletePersonSwitcherProvider = StateProvider<bool>((ref) => true);
 final selectCardStatusProvider = StateProvider<int>((ref) => 0);

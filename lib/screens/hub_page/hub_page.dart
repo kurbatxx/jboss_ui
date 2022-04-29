@@ -55,6 +55,19 @@ class HubPage extends StatelessWidget {
                       hoverColor: Colors.white,
                       splashRadius: 16.0,
                       icon: const Icon(
+                        Icons.credit_card,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, NavigationRouteNames.registerCardScreen);
+                      },
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.all(0.0),
+                      hoverColor: Colors.white,
+                      splashRadius: 16.0,
+                      icon: const Icon(
                         Icons.admin_panel_settings,
                         color: Colors.black,
                       ),

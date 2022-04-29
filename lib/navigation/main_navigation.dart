@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:jboss_ui/screens/hub_page/hub_page.dart';
 import 'package:jboss_ui/screens/login_page/login_page.dart';
+import 'package:jboss_ui/screens/register_card_page/register_card_page.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 
 abstract class NavigationRouteNames {
   static const loginScreen = '/';
   static const hubScreen = '/hub';
   static const settingsScreen = '/settings';
+  static const registerCardScreen = '/register_card';
 }
 
 class Navigation {
@@ -16,5 +18,7 @@ class Navigation {
     NavigationRouteNames.loginScreen: (context) => const LoginPage(),
     NavigationRouteNames.hubScreen: (context) => const HubPage(),
     NavigationRouteNames.settingsScreen: (context) => const SettingsPage(),
+    NavigationRouteNames.registerCardScreen: (context) =>
+        const RegisterCardPage(),
   };
 }
