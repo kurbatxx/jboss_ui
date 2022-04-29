@@ -17,27 +17,22 @@ String getPathToDll() {
   return pathDll;
 }
 
-typedef RustInitial = Pointer Function(Pointer<Utf8>);
-typedef DartInitial = Pointer Function(Pointer<Utf8>);
+typedef NullPointerFunc = Pointer<Utf8> Function();
+typedef OnePointerFunc = Pointer<Utf8> Function(Pointer<Utf8>);
+typedef TwoPointerFunc = Pointer<Utf8> Function(Pointer<Utf8>, Pointer<Utf8>);
 
 final initialFFI = DynamicLibrary.open(getPathToDll())
-    .lookup<NativeFunction<RustInitial>>('initial')
-    .asFunction<DartInitial>();
+    .lookup<NativeFunction<OnePointerFunc>>('initial')
+    .asFunction<OnePointerFunc>();
 
-typedef RustAuth = Pointer<Utf8> Function(Pointer<Utf8>, Pointer<Utf8>);
-typedef DartAuth = Pointer<Utf8> Function(Pointer<Utf8>, Pointer<Utf8>);
 final loginFFI = DynamicLibrary.open(getPathToDll())
-    .lookup<NativeFunction<RustAuth>>('login')
-    .asFunction<DartAuth>();
+    .lookup<NativeFunction<TwoPointerFunc>>('login')
+    .asFunction<TwoPointerFunc>();
 
-typedef RustLogout = Pointer Function();
-typedef DartLogout = Pointer Function();
 final logoutFFI = DynamicLibrary.open(getPathToDll())
-    .lookup<NativeFunction<RustLogout>>('logout')
-    .asFunction<DartLogout>();
+    .lookup<NativeFunction<NullPointerFunc>>('logout')
+    .asFunction<NullPointerFunc>();
 
-typedef RustSearch = Pointer<Utf8> Function(Pointer<Utf8>);
-typedef DartSearch = Pointer<Utf8> Function(Pointer<Utf8>);
 final searchFFI = DynamicLibrary.open(getPathToDll())
-    .lookup<NativeFunction<RustSearch>>('search_person')
-    .asFunction<DartSearch>();
+    .lookup<NativeFunction<OnePointerFunc>>('search_person')
+    .asFunction<OnePointerFunc>();
