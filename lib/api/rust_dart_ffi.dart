@@ -36,3 +36,7 @@ final logoutFFI = DynamicLibrary.open(getPathToDll())
 final searchFFI = DynamicLibrary.open(getPathToDll())
     .lookup<NativeFunction<OnePointerFunc>>('search_person')
     .asFunction<OnePointerFunc>();
+
+final registerDeviceFFI = DynamicLibrary.open(getPathToDll())
+    .lookup<NativeFunction<OnePointerFunc>>('register_device')
+    .asFunction<OnePointerFunc>();
