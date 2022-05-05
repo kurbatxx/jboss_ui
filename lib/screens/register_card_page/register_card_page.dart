@@ -15,7 +15,7 @@ class RegisterCardPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Регистрация карт"),
       ),
-      body: RegisterPage(),
+      body: const RegisterPage(),
     );
   }
 }

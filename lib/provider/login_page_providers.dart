@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/api/jboss_data.dart';
+import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/freezed/authorization_state.dart';
 import 'package:jboss_ui/models/login/authorization_token.dart';
 import 'package:jboss_ui/models/login/ffi_authorization.dart';
@@ -78,7 +78,7 @@ class Authorization extends StateNotifier<AuthorizationState> {
         ref.read(loginFormProvider).text = "";
         ref.read(passwordFormProvider).text = "";
       }
-      await LoginApi.logout();
+      await JbossApi.logout();
       Navigator.of(context).pushNamed(NavigationRouteNames.loginScreen);
     } catch (e) {
       state = const AuthorizationState.error("Что-то не так");

@@ -8,22 +8,11 @@ import 'package:jboss_ui/api/rust_dart_ffi.dart';
 
 import '../main.dart';
 
-class JbossDataApi {
-  static Future<SearchResponse> getSearchResult(String responseText) async {
-    await Future.delayed(const Duration(seconds: 2));
-    final Uri url = Uri.parse("http://127.0.0.1:8000/data/" + responseText);
-    final response = await http.get(url);
-    return searchResponseFromJson(response.body);
-  }
-}
-
-class InitialApi {
+class JbossApi {
   static Future<void> initial() async {
     initialFFI(appDir.toNativeUtf8());
   }
-}
 
-class LoginApi {
   static Future<String> login(String login, String password) async {
     await Future.delayed(const Duration(seconds: 0));
     return loginFFI(
@@ -34,6 +23,13 @@ class LoginApi {
 
   static Future<void> logout() async {
     logoutFFI();
+  }
+
+  static Future<SearchResponse> getSearchResult(String responseText) async {
+    await Future.delayed(const Duration(seconds: 2));
+    final Uri url = Uri.parse("http://127.0.0.1:8000/data/" + responseText);
+    final response = await http.get(url);
+    return searchResponseFromJson(response.body);
   }
 }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/api/jboss_data.dart';
+import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/freezed/search_state.dart';
 import 'package:jboss_ui/models/search/search_response.dart';
 import 'package:jboss_ui/models/search/search_request.dart';

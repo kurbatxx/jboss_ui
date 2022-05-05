@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/api/jboss_data.dart';
+import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
@@ -16,7 +16,7 @@ final appDir = getAppDir();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   objectbox = await ObjectBox.create();
-  InitialApi.initial();
+  JbossApi.initial();
 
   bool saveLoginState = await SecureStorage.instance.getSaveLoginState();
   bool showDeleteState = await SecureStorage.instance.getShowDeleteState();
