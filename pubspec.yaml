@@ -22,6 +22,7 @@ dependencies:
   ffi: ^1.1.2
   get_storage:
   path_provider: ^2.0.9
+  animated_toggle_switch: ^0.5.2
 
 
 dev_dependencies:

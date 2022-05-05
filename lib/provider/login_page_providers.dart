@@ -48,7 +48,6 @@ class Authorization extends StateNotifier<AuthorizationState> {
       required String password}) async {
     try {
       state = const AuthorizationState.loading();
-      await Future.delayed(const Duration(seconds: 1));
       final loginResponse = await compute(
           computeLogin, FFIAuthorization(login: login, password: password));
       AuthorizationToken authorizationToken =
