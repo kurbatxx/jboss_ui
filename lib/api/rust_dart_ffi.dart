@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 
-import '../main.dart';
+import 'package:jboss_ui/main.dart';
 
 String getUpDir(String dir) {
   int upDirIndex = dir.lastIndexOf('/');

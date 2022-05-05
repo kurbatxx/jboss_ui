@@ -52,7 +52,6 @@ class Authorization extends StateNotifier<AuthorizationState> {
           computeLogin, FFIAuthorization(login: login, password: password));
       AuthorizationToken authorizationToken =
           authorizationTokenFromJson(loginResponse);
-      //print(authorizationToken);
       if (authorizationToken.error.isEmpty) {
         state = const AuthorizationState.data();
         Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);

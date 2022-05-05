@@ -1,35 +1,17 @@
 import 'package:ffi/ffi.dart';
-
-import 'package:http/http.dart' as http;
 import 'package:jboss_ui/models/login/ffi_authorization.dart';
 import 'package:jboss_ui/models/search/search_request.dart';
-import 'package:jboss_ui/models/search/search_response.dart';
 import 'package:jboss_ui/api/rust_dart_ffi.dart';
 
-import '../main.dart';
+import 'package:jboss_ui/main.dart';
 
 class JbossApi {
   static Future<void> initial() async {
     initialFFI(appDir.toNativeUtf8());
   }
 
-  static Future<String> login(String login, String password) async {
-    await Future.delayed(const Duration(seconds: 0));
-    return loginFFI(
-      login.toNativeUtf8(),
-      password.toNativeUtf8(),
-    ).toDartString();
-  }
-
   static Future<void> logout() async {
     logoutFFI();
-  }
-
-  static Future<SearchResponse> getSearchResult(String responseText) async {
-    await Future.delayed(const Duration(seconds: 2));
-    final Uri url = Uri.parse("http://127.0.0.1:8000/data/" + responseText);
-    final response = await http.get(url);
-    return searchResponseFromJson(response.body);
   }
 }
 
@@ -40,7 +22,8 @@ String computeLogin(FFIAuthorization auth) {
   ).toDartString();
 }
 
-String computeSearch(SearchRequest resp) {
-  String jsonString = searchRequestToJson(resp);
-  return searchFFI(jsonString.toNativeUtf8()).toDartString();
+String computeSearch(SearchRequest searchRequest) {
+  return searchFFI(
+    searchRequestToJson(searchRequest).toNativeUtf8(),
+  ).toDartString();
 }

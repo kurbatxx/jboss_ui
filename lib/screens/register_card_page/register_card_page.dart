@@ -5,6 +5,7 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/models/register_device/register_device_request.dart';
 
 class RegisterCardPage extends StatelessWidget {
   const RegisterCardPage({Key? key}) : super(key: key);
@@ -117,13 +118,20 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
   }
 
   void registerDevice() async {
-    print(state.clientId);
-    print(state.rfidId);
     state = state.copyWith(
       loading: true,
       errorMessage: "",
       successMessage: "",
     );
+
+    final registerRequest = RegisterDeviceRequest(
+      clientId: int.parse(state.clientId),
+      rfidId: int.parse(state.rfidId),
+      deviceId: devices[state.devicePosition].value,
+    );
+
+    print(registerRequest.toJson());
+    
     await Future.delayed(const Duration(seconds: 3));
 
     state = state.copyWith(register: true);
