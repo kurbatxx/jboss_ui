@@ -131,7 +131,7 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
     );
 
     print(registerRequest.toJson());
-    
+
     await Future.delayed(const Duration(seconds: 3));
 
     state = state.copyWith(register: true);

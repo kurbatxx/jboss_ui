@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ffi/ffi.dart';
 import 'package:jboss_ui/models/login/login_request.dart';
 import 'package:jboss_ui/models/search/search_request.dart';
@@ -15,9 +17,8 @@ class JbossApi {
   }
 
   static String computeLogin(LoginRequest loginRequest) {
-    print(loginRequest.toJson().toString());
     return loginFFI(
-      loginRequest.toJson().toString().toNativeUtf8(),
+      json.encode(loginRequest.toJson()).toNativeUtf8(),
     ).toDartString();
   }
 
