@@ -24,6 +24,7 @@ dependencies:
   path_provider: ^2.0.9
   animated_toggle_switch: ^0.5.2
   json_serializable: ^6.2.0
+  json_annotation: ^4.5.0
 
 
 dev_dependencies:

@@ -30,7 +30,8 @@ class Search extends StateNotifier<SearchState> {
       state = const SearchState.loading();
       ref.read(paginationCounterProvider.state).state = 1;
       ref.read(listSchoolClientProvider.state).state = [];
-      final searchResponse = await compute(computeSearch, searchRequest);
+      final searchResponse =
+          await compute(JbossApi.computeSearch, searchRequest);
       final searchResponseObjects = searchResponseFromJson(searchResponse);
       ref.read(paginationLimiterProvider.state).state =
           searchResponseObjects.allPages;
@@ -53,8 +54,8 @@ class Search extends StateNotifier<SearchState> {
       required WidgetRef ref,
       required SearchRequest searchRequest}) async {
     try {
-      //await Future.delayed(const Duration(seconds: 2));
-      final searchResponse = await compute(computeSearch, searchRequest);
+      final searchResponse =
+          await compute(JbossApi.computeSearch, searchRequest);
       List<Client> schoolClients =
           searchResponseFromJson(searchResponse).clients;
       schoolClients = ref.read(listSchoolClientProvider.state).state

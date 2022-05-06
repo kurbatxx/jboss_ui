@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/freezed/authorization_state.dart';
-import 'package:jboss_ui/models/login/authorization_token.dart';
-import 'package:jboss_ui/models/login/ffi_authorization.dart';
+import 'package:jboss_ui/models/login/login_response.dart';
+import 'package:jboss_ui/models/login/login_request.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/utils/custom_exception.dart';
 import 'package:jboss_ui/utils/secure.dart';
@@ -48,11 +50,13 @@ class Authorization extends StateNotifier<AuthorizationState> {
       required String password}) async {
     try {
       state = const AuthorizationState.loading();
-      final loginResponse = await compute(
-          computeLogin, FFIAuthorization(login: login, password: password));
-      AuthorizationToken authorizationToken =
-          authorizationTokenFromJson(loginResponse);
-      if (authorizationToken.error.isEmpty) {
+
+      final loginResponseString = await compute(JbossApi.computeLogin,
+          LoginRequest(login: login, password: password));
+      Map<String, dynamic> loginResponseMap = jsonDecode(loginResponseString);
+      LoginResponse loginResponse = LoginResponse.fromJson(loginResponseMap);
+
+      if (loginResponse.error.isEmpty) {
         state = const AuthorizationState.data();
         Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);
         if (await SecureStorage.instance.getSaveLoginState()) {
@@ -60,7 +64,7 @@ class Authorization extends StateNotifier<AuthorizationState> {
           await SecureStorage.instance.setPassword(password);
         }
       } else {
-        throw RustException(authorizationToken.error);
+        throw RustException(loginResponse.error);
       }
     } on RustException catch (e) {
       state = AuthorizationState.error(e.toString());

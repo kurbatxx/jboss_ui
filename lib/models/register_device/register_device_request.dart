@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-
 part 'register_device_request.g.dart';
 
 @JsonSerializable()

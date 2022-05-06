@@ -19,15 +19,14 @@ String getPathToDll() {
 
 typedef NullPointerFunc = Pointer<Utf8> Function();
 typedef OnePointerFunc = Pointer<Utf8> Function(Pointer<Utf8>);
-typedef TwoPointerFunc = Pointer<Utf8> Function(Pointer<Utf8>, Pointer<Utf8>);
 
 final initialFFI = DynamicLibrary.open(getPathToDll())
     .lookup<NativeFunction<OnePointerFunc>>('initial')
     .asFunction<OnePointerFunc>();
 
 final loginFFI = DynamicLibrary.open(getPathToDll())
-    .lookup<NativeFunction<TwoPointerFunc>>('login')
-    .asFunction<TwoPointerFunc>();
+    .lookup<NativeFunction<OnePointerFunc>>('login')
+    .asFunction<OnePointerFunc>();
 
 final logoutFFI = DynamicLibrary.open(getPathToDll())
     .lookup<NativeFunction<NullPointerFunc>>('logout')
