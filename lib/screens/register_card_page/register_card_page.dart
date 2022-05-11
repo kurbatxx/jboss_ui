@@ -130,6 +130,8 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
   void registerDevice({
     required TextEditingController clientIdController,
     required TextEditingController rfidIdController,
+    required FocusNode clientIdNode,
+    required BuildContext context,
   }) async {
     clientIdController.text.log();
 
@@ -152,6 +154,7 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
     state = state.copyWith(register: true);
 
     if (state.register) {
+      FocusScope.of(context).requestFocus(clientIdNode);
       clientIdController.clear();
       rfidIdController.clear();
 
@@ -199,6 +202,10 @@ class RegisterPage extends ConsumerWidget {
   final clientIdController = TextEditingController();
   final rfidIdController = TextEditingController();
 
+  final clientIdNode = FocusNode();
+  final rfidIdNode = FocusNode();
+  final registerButtonNode = FocusNode();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final registerState = ref.watch(registerStateProvider);
@@ -220,6 +227,8 @@ class RegisterPage extends ConsumerWidget {
           ),
           TextFormField(
             controller: clientIdController,
+            autofocus: true,
+            focusNode: clientIdNode,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
@@ -229,17 +238,24 @@ class RegisterPage extends ConsumerWidget {
                       textController: clientIdController,
                       textControllersEnum: TextControllersEnum.clientId,
                     ),
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(rfidIdNode);
+            },
           ),
           TextFormField(
             controller: rfidIdController,
+            focusNode: rfidIdNode,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
-            onChanged: (text) =>
+            onChanged: (_) =>
                 ref.read(registerStateProvider.notifier).updateTextField(
                       textController: rfidIdController,
                       textControllersEnum: TextControllersEnum.rfidId,
                     ),
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(registerButtonNode);
+            },
           ),
           const SizedBox(
             height: 10,
@@ -272,10 +288,13 @@ class RegisterPage extends ConsumerWidget {
               ? registerState.loading
                   ? const CircularProgressIndicator()
                   : TextButton(
+                      focusNode: registerButtonNode,
                       onPressed: () {
                         ref.read(registerStateProvider.notifier).registerDevice(
                               clientIdController: clientIdController,
                               rfidIdController: rfidIdController,
+                              clientIdNode: clientIdNode,
+                              context: context,
                             );
                       },
                       child: const Text(
