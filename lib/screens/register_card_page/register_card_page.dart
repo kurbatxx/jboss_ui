@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/models/register_device/register_device_request.dart';
+import 'package:jboss_ui/models/register_device/register_device_response.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
 
 class RegisterCardPage extends StatelessWidget {
@@ -141,17 +145,24 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
       successMessage: "",
     );
 
-    final registerRequest = RegisterDeviceRequest(
+    final registerDeviceRequest = RegisterDeviceRequest(
       clientId: int.parse(state.clientId),
       rfidId: int.parse(state.rfidId),
       deviceId: devices[state.devicePosition].value,
     );
 
-    registerRequest.toJson().log();
+    registerDeviceRequest.toJson().log();
 
-    await Future.delayed(const Duration(seconds: 3));
+    final registerDeviceResponseString =
+        await compute(JbossApi.computeRegisterDevice, registerDeviceRequest);
+    Map<String, dynamic> registerDeviceResponseMap =
+        jsonDecode(registerDeviceResponseString);
+    RegisterDeviceResponse registerDeviceResponse =
+        RegisterDeviceResponse.fromJson(registerDeviceResponseMap);
 
-    state = state.copyWith(register: true);
+    //await Future.delayed(const Duration(seconds: 3));
+
+    state = state.copyWith(register: registerDeviceResponse.register);
 
     if (state.register) {
       FocusScope.of(context).requestFocus(clientIdNode);
@@ -162,11 +173,11 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
         clientId: clientIdController.text,
         rfidId: rfidIdController.text,
         loading: false,
-        successMessage: "Зарегистрированно",
+        successMessage: registerDeviceResponse.resultMessage,
       );
     } else {
       state = state.copyWith(
-        errorMessage: "Ошибка",
+        errorMessage: registerDeviceResponse.resultMessage,
         loading: false,
       );
     }
