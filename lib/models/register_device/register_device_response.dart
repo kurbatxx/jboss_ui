@@ -5,7 +5,7 @@ part 'register_device_response.g.dart';
 class RegisterDeviceResponse {
   @JsonKey(name: "original_message")
   final String originalMesssage;
-  @JsonKey(name: "rfid_id")
+  @JsonKey(name: "result_message")
   final String resultMessage;
   @JsonKey(name: "client")
   final String client;
