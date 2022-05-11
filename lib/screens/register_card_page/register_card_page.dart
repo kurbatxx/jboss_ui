@@ -16,7 +16,7 @@ class RegisterCardPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Регистрация карт"),
       ),
-      body: const RegisterPage(),
+      body: RegisterPage(),
     );
   }
 }
@@ -41,8 +41,6 @@ final devices = [
 
 @immutable
 class RegisterState {
-  final TextEditingController clientIdcontroller;
-  final TextEditingController rfidIdcontroller;
   final String clientId;
   final String rfidId;
   final bool loading;
@@ -52,8 +50,6 @@ class RegisterState {
   final int devicePosition;
 
   const RegisterState({
-    required this.clientIdcontroller,
-    required this.rfidIdcontroller,
     required this.clientId,
     required this.rfidId,
     required this.loading,
@@ -64,8 +60,6 @@ class RegisterState {
   });
 
   RegisterState copyWith({
-    TextEditingController? clientIdcontroller,
-    TextEditingController? rfidIdcontroller,
     String? clientId,
     String? rfidId,
     bool? loading,
@@ -75,8 +69,6 @@ class RegisterState {
     int? devicePosition,
   }) {
     return RegisterState(
-      clientIdcontroller: clientIdcontroller ?? this.clientIdcontroller,
-      rfidIdcontroller: rfidIdcontroller ?? this.rfidIdcontroller,
       clientId: clientId ?? this.clientId,
       rfidId: rfidId ?? this.rfidId,
       loading: loading ?? this.loading,
@@ -117,7 +109,12 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
     );
   }
 
-  void registerDevice() async {
+  void registerDevice({
+    required TextEditingController clientIdController,
+    required TextEditingController rfidIdController,
+  }) async {
+    print(clientIdController.text);
+
     state = state.copyWith(
       loading: true,
       errorMessage: "",
@@ -137,11 +134,12 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
     state = state.copyWith(register: true);
 
     if (state.register) {
+      clientIdController.clear();
+      rfidIdController.clear();
+
       state = state.copyWith(
-        clientIdcontroller: TextEditingController(text: ""),
-        rfidIdcontroller: TextEditingController(text: ""),
-        clientId: "",
-        rfidId: "",
+        clientId: clientIdController.text,
+        rfidId: rfidIdController.text,
         loading: false,
         successMessage: "Зарегистрированно",
       );
@@ -157,9 +155,7 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
 final registerStateProvider =
     StateNotifierProvider<RegisterStateNotifier, RegisterState>((ref) {
   return RegisterStateNotifier(
-    RegisterState(
-      clientIdcontroller: TextEditingController(text: ""),
-      rfidIdcontroller: TextEditingController(text: ""),
+    const RegisterState(
       clientId: '',
       rfidId: '',
       loading: false,
@@ -180,7 +176,10 @@ class RfidDevice {
 }
 
 class RegisterPage extends ConsumerWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  RegisterPage({Key? key}) : super(key: key);
+
+  final clientIdController = TextEditingController();
+  final rfidIdController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -191,7 +190,8 @@ class RegisterPage extends ConsumerWidget {
       child: Column(
         children: [
           TextFormField(
-            controller: ref.read(registerStateProvider).clientIdcontroller,
+            
+            controller: clientIdController,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
@@ -201,7 +201,7 @@ class RegisterPage extends ConsumerWidget {
                 .updateClientIdField(text),
           ),
           TextFormField(
-            controller: ref.read(registerStateProvider).rfidIdcontroller,
+            controller: rfidIdController,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
@@ -209,12 +209,6 @@ class RegisterPage extends ConsumerWidget {
                 .read(registerStateProvider.notifier)
                 .updateRfidIdField(text),
           ),
-          // Checkbox(
-          //   value: registerState.register,
-          //   onChanged: (value) {
-          //     ref.read(registerStateProvider.notifier).toogle();
-          //   },
-          // ),
           const SizedBox(
             height: 10,
           ),
@@ -247,9 +241,10 @@ class RegisterPage extends ConsumerWidget {
                   ? const CircularProgressIndicator()
                   : TextButton(
                       onPressed: () {
-                        ref
-                            .read(registerStateProvider.notifier)
-                            .registerDevice();
+                        ref.read(registerStateProvider.notifier).registerDevice(
+                              clientIdController: clientIdController,
+                              rfidIdController: rfidIdController,
+                            );
                       },
                       child: const Text(
                         "Зарегистрировать устройство",
