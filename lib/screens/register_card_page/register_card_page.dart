@@ -233,6 +233,7 @@ class RegisterPage extends ConsumerWidget {
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
             maxLength: 8,
+            decoration: const InputDecoration(hintText: "ID Клиента"),
             onChanged: (_) =>
                 ref.read(registerStateProvider.notifier).updateTextField(
                       textController: clientIdController,
@@ -248,13 +249,17 @@ class RegisterPage extends ConsumerWidget {
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
+            maxLength: 10,
+            decoration: const InputDecoration(hintText: "ID устройства"),
             onChanged: (_) =>
                 ref.read(registerStateProvider.notifier).updateTextField(
                       textController: rfidIdController,
                       textControllersEnum: TextControllersEnum.rfidId,
                     ),
             onFieldSubmitted: (_) {
-              FocusScope.of(context).requestFocus(registerButtonNode);
+              if (registerState.rfidId.isNotEmpty) {
+                FocusScope.of(context).requestFocus(registerButtonNode);
+              }
             },
           ),
           const SizedBox(
