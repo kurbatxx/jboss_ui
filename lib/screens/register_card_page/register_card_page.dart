@@ -165,7 +165,6 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
     state = state.copyWith(register: registerDeviceResponse.register);
 
     if (state.register) {
-      FocusScope.of(context).requestFocus(clientIdNode);
       clientIdController.clear();
       rfidIdController.clear();
 
@@ -175,6 +174,8 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
         loading: false,
         successMessage: registerDeviceResponse.resultMessage,
       );
+      if (!mounted) return;
+      FocusScope.of(context).requestFocus(clientIdNode);
     } else {
       state = state.copyWith(
         errorMessage: registerDeviceResponse.resultMessage,

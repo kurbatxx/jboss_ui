@@ -149,12 +149,12 @@ class SearchFormWidget extends ConsumerWidget {
               focusElevation: 0,
               highlightElevation: 0,
               fillColor: Colors.red.withOpacity(0.8),
+              shape: const CircleBorder(),
               child: const Icon(
                 Icons.clear,
                 color: Colors.white,
                 size: 20.0,
               ),
-              shape: const CircleBorder(),
             ),
           ),
           const SizedBox(

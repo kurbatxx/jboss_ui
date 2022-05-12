@@ -12,8 +12,8 @@ String getUpDir(String dir) {
 
 String getPathToDll() {
   String pathDll = kReleaseMode
-      ? appDir + '/jboss.dll'
-      : getUpDir(appDir) + '/ffi_jboss_rust_lib/target/debug/jboss.dll';
+      ? '$appDir/jboss.dll'
+      : '${getUpDir(appDir)}/ffi_jboss_rust_lib/target/debug/jboss.dll';
   return pathDll;
 }
 

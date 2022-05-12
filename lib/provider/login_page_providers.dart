@@ -58,6 +58,7 @@ class Authorization extends StateNotifier<AuthorizationState> {
 
       if (loginResponse.error.isEmpty) {
         state = const AuthorizationState.data();
+        if (!mounted) return;
         Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);
         if (await SecureStorage.instance.getSaveLoginState()) {
           await SecureStorage.instance.setLogin(login);
@@ -82,6 +83,8 @@ class Authorization extends StateNotifier<AuthorizationState> {
         ref.read(passwordFormProvider).text = "";
       }
       await JbossApi.logout();
+
+      if (!mounted) return;
       Navigator.of(context).pushNamed(NavigationRouteNames.loginScreen);
     } catch (e) {
       state = const AuthorizationState.error("Что-то не так");

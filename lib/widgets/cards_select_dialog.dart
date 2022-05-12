@@ -6,10 +6,10 @@ class CardsSelectDialog extends StatefulWidget {
   const CardsSelectDialog({Key? key}) : super(key: key);
 
   @override
-  _CardsSelectDialogState createState() => _CardsSelectDialogState();
+  CardsSelectDialogState createState() => CardsSelectDialogState();
 }
 
-class _CardsSelectDialogState extends State<CardsSelectDialog> {
+class CardsSelectDialogState extends State<CardsSelectDialog> {
   List<bool> isSelectedDevice =
       List.generate(3, (int index) => index > 0 ? false : true);
 
@@ -39,31 +39,17 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
                     focusElevation: 0,
                     highlightElevation: 0,
                     fillColor: Colors.red.withOpacity(0.8),
+                    shape: const CircleBorder(),
                     child: const Icon(
                       Icons.clear,
                       color: Colors.white,
                       size: 20.0,
                     ),
-                    shape: const CircleBorder(),
                   ),
                 ),
               ],
             ),
             ToggleButtons(
-              children: const <Widget>[
-                Icon(
-                  Icons.credit_card,
-                  size: 80,
-                ),
-                Icon(
-                  Icons.watch,
-                  size: 80,
-                ),
-                Icon(
-                  Icons.label,
-                  size: 80,
-                ),
-              ],
               onPressed: (int index) {
                 setState(() {
                   for (int buttonIndex = 0;
@@ -78,6 +64,20 @@ class _CardsSelectDialogState extends State<CardsSelectDialog> {
                 });
               },
               isSelected: isSelectedDevice,
+              children: const <Widget>[
+                Icon(
+                  Icons.credit_card,
+                  size: 80,
+                ),
+                Icon(
+                  Icons.watch,
+                  size: 80,
+                ),
+                Icon(
+                  Icons.label,
+                  size: 80,
+                ),
+              ],
             ),
             const SizedBox(
               height: 10,
