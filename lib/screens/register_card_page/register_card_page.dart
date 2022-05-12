@@ -99,6 +99,7 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
       clientId: "",
       successMessage: "",
       errorMessage: "",
+      clientMessage: "",
       devicePosition: 0,
       register: false,
     );
@@ -126,6 +127,7 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
     state = state.copyWith(
       successMessage: "",
       errorMessage: "",
+      clientMessage: "",
     );
   }
 
@@ -141,8 +143,6 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
     required FocusNode clientIdNode,
     required BuildContext context,
   }) async {
-    clientIdController.text.log();
-
     state = state.copyWith(
       loading: true,
       errorMessage: "",
