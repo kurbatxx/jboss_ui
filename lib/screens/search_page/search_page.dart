@@ -183,7 +183,7 @@ class SearchButtonWidget extends ConsumerWidget {
 
     return SizedBox(
       height: 45,
-      width: 100,
+      width: 120,
       child: ElevatedButton.icon(
         style: TextButton.styleFrom(
           elevation: 0,

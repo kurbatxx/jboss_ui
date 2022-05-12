@@ -54,6 +54,7 @@ class RegisterState {
   final bool register;
   final String errorMessage;
   final String successMessage;
+  final String clientMessage;
   final int devicePosition;
 
   const RegisterState({
@@ -63,6 +64,7 @@ class RegisterState {
     required this.register,
     required this.errorMessage,
     required this.successMessage,
+    required this.clientMessage,
     required this.devicePosition,
   });
 
@@ -73,6 +75,7 @@ class RegisterState {
     bool? register,
     String? errorMessage,
     String? successMessage,
+    String? clientMessage,
     int? devicePosition,
   }) {
     return RegisterState(
@@ -82,6 +85,7 @@ class RegisterState {
       register: register ?? this.register,
       errorMessage: errorMessage ?? this.errorMessage,
       successMessage: successMessage ?? this.successMessage,
+      clientMessage: clientMessage ?? this.clientMessage,
       devicePosition: devicePosition ?? this.devicePosition,
     );
   }
@@ -173,6 +177,7 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
         rfidId: rfidIdController.text,
         loading: false,
         successMessage: registerDeviceResponse.resultMessage,
+        clientMessage: registerDeviceResponse.client,
       );
       if (!mounted) return;
       FocusScope.of(context).requestFocus(clientIdNode);
@@ -195,6 +200,7 @@ final registerStateProvider =
       register: false,
       errorMessage: '',
       successMessage: '',
+      clientMessage: '',
       devicePosition: 0,
     ),
   );
@@ -299,7 +305,7 @@ class RegisterPage extends ConsumerWidget {
             },
           ),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
           registerState.clientId.isNotEmpty && registerState.rfidId.isNotEmpty
               ? registerState.loading
@@ -321,9 +327,22 @@ class RegisterPage extends ConsumerWidget {
                     )
               : const SizedBox(),
           registerState.errorMessage.isEmpty
-              ? Text(
-                  registerState.successMessage,
-                  style: const TextStyle(color: Colors.green),
+              ? Column(
+                  children: [
+                    Text(
+                      registerState.successMessage,
+                      style: const TextStyle(color: Colors.green),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      registerState.clientMessage,
+                      style: TextStyle(
+                        color: Colors.green[700],
+                      ),
+                    ),
+                  ],
                 )
               : Text(
                   registerState.errorMessage,
