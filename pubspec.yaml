@@ -38,8 +38,17 @@ dev_dependencies:
   objectbox_generator:
   freezed: ^2.0.3
   
+  flutter_launcher_icons_maker: "^0.10.2"
+
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  windows: true
+  image_path: "assets/images/login.png"
+
+
 
 flutter:
   uses-material-design: true
