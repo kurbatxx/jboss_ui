@@ -8,14 +8,13 @@ import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/secure.dart';
-import 'db_model/object_box.dart';
 
-late ObjectBox objectbox;
+
+
 final appDir = getAppDir();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  objectbox = await ObjectBox.create();
   JbossApi.initial();
 
   bool saveLoginState = await SecureStorage.instance.getSaveLoginState();
