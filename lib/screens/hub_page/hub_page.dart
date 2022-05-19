@@ -87,7 +87,7 @@ class HubPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           ref
-                              .read(authorizationProvider.notifier)
+                              .read(loginScreenStateProvider.notifier)
                               .logout(context, ref);
 
                           ref.read(searchProvider.notifier).logout();

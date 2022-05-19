@@ -8,12 +8,13 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
+import 'package:jboss_ui/freezed/register_device_screen_state.dart';
 import 'package:jboss_ui/models/register_device/register_device_request.dart';
 import 'package:jboss_ui/models/register_device/register_device_response.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
 
-class RegisterCardPage extends StatelessWidget {
-  const RegisterCardPage({Key? key}) : super(key: key);
+class RegisterDevicePage extends StatelessWidget {
+  const RegisterDevicePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,53 +47,25 @@ enum TextControllersEnum {
   rfidId,
 }
 
-@immutable
-class RegisterState {
-  final String clientId;
-  final String rfidId;
-  final bool loading;
-  final bool register;
-  final String errorMessage;
-  final String successMessage;
-  final String clientMessage;
-  final int devicePosition;
+final registerDeviceScreenStateProvider = StateNotifierProvider<
+    RegisterDeviceScreenStateNotifier, RegisterDeviceState>(
+  (ref) => RegisterDeviceScreenStateNotifier(
+    const RegisterDeviceState(
+      clientId: '',
+      rfidId: '',
+      loading: false,
+      register: false,
+      errorMessage: '',
+      successMessage: '',
+      clientMessage: '',
+      devicePosition: 0,
+    ),
+  ),
+);
 
-  const RegisterState({
-    required this.clientId,
-    required this.rfidId,
-    required this.loading,
-    required this.register,
-    required this.errorMessage,
-    required this.successMessage,
-    required this.clientMessage,
-    required this.devicePosition,
-  });
-
-  RegisterState copyWith({
-    String? clientId,
-    String? rfidId,
-    bool? loading,
-    bool? register,
-    String? errorMessage,
-    String? successMessage,
-    String? clientMessage,
-    int? devicePosition,
-  }) {
-    return RegisterState(
-      clientId: clientId ?? this.clientId,
-      rfidId: rfidId ?? this.rfidId,
-      loading: loading ?? this.loading,
-      register: register ?? this.register,
-      errorMessage: errorMessage ?? this.errorMessage,
-      successMessage: successMessage ?? this.successMessage,
-      clientMessage: clientMessage ?? this.clientMessage,
-      devicePosition: devicePosition ?? this.devicePosition,
-    );
-  }
-}
-
-class RegisterStateNotifier extends StateNotifier<RegisterState> {
-  RegisterStateNotifier(RegisterState state) : super(state);
+class RegisterDeviceScreenStateNotifier
+    extends StateNotifier<RegisterDeviceState> {
+  RegisterDeviceScreenStateNotifier(RegisterDeviceState state) : super(state);
 
   clearState() {
     state = state.copyWith(
@@ -190,22 +163,6 @@ class RegisterStateNotifier extends StateNotifier<RegisterState> {
   }
 }
 
-final registerStateProvider =
-    StateNotifierProvider<RegisterStateNotifier, RegisterState>((ref) {
-  return RegisterStateNotifier(
-    const RegisterState(
-      clientId: '',
-      rfidId: '',
-      loading: false,
-      register: false,
-      errorMessage: '',
-      successMessage: '',
-      clientMessage: '',
-      devicePosition: 0,
-    ),
-  );
-});
-
 class RfidDevice {
   final int value;
   final String name;
@@ -226,7 +183,7 @@ class RegisterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final registerState = ref.watch(registerStateProvider);
+    final registerState = ref.watch(registerDeviceScreenStateProvider);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -237,7 +194,9 @@ class RegisterPage extends ConsumerWidget {
             children: [
               TextButton(
                   onPressed: () {
-                    ref.read(registerStateProvider.notifier).clearState();
+                    ref
+                        .read(registerDeviceScreenStateProvider.notifier)
+                        .clearState();
                     Navigator.pop(context);
                   },
                   child: const Text("Закончить регистрацию устройств"))
@@ -252,11 +211,12 @@ class RegisterPage extends ConsumerWidget {
             ],
             maxLength: 8,
             decoration: const InputDecoration(hintText: "ID Клиента"),
-            onChanged: (_) =>
-                ref.read(registerStateProvider.notifier).updateTextField(
-                      textController: clientIdController,
-                      textControllersEnum: TextControllersEnum.clientId,
-                    ),
+            onChanged: (_) => ref
+                .read(registerDeviceScreenStateProvider.notifier)
+                .updateTextField(
+                  textController: clientIdController,
+                  textControllersEnum: TextControllersEnum.clientId,
+                ),
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(rfidIdNode);
             },
@@ -269,11 +229,12 @@ class RegisterPage extends ConsumerWidget {
             ],
             maxLength: 10,
             decoration: const InputDecoration(hintText: "ID устройства"),
-            onChanged: (_) =>
-                ref.read(registerStateProvider.notifier).updateTextField(
-                      textController: rfidIdController,
-                      textControllersEnum: TextControllersEnum.rfidId,
-                    ),
+            onChanged: (_) => ref
+                .read(registerDeviceScreenStateProvider.notifier)
+                .updateTextField(
+                  textController: rfidIdController,
+                  textControllersEnum: TextControllersEnum.rfidId,
+                ),
             onFieldSubmitted: (_) {
               if (registerState.rfidId.isNotEmpty) {
                 FocusScope.of(context).requestFocus(registerButtonNode);
@@ -301,7 +262,9 @@ class RegisterPage extends ConsumerWidget {
             },
             onChanged: (position) {
               position.log();
-              ref.read(registerStateProvider.notifier).switchDevice(position);
+              ref
+                  .read(registerDeviceScreenStateProvider.notifier)
+                  .switchDevice(position);
             },
           ),
           const SizedBox(
@@ -313,7 +276,9 @@ class RegisterPage extends ConsumerWidget {
                   : TextButton(
                       focusNode: registerButtonNode,
                       onPressed: () {
-                        ref.read(registerStateProvider.notifier).registerDevice(
+                        ref
+                            .read(registerDeviceScreenStateProvider.notifier)
+                            .registerDevice(
                               clientIdController: clientIdController,
                               rfidIdController: rfidIdController,
                               clientIdNode: clientIdNode,

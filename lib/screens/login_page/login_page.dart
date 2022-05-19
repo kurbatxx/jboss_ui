@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/utils/secure.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
+import 'package:jboss_ui/utils/secure.dart';
+
+enum TextControllersEnum {
+  login,
+  password,
+}
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,12 +20,10 @@ class LoginPage extends StatelessWidget {
             padding: const EdgeInsets.all(32.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                  width: 250.0,
-                  height: 250.0,
-                  //color: Colors.red,
+                  width: 200.0,
+                  height: 200.0,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.fill,
@@ -29,7 +32,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 48.0,
+                  height: 32.0,
                 ),
                 const AuthorizationFields(),
                 const SaveLoginPasswordWidget(),
@@ -48,30 +51,50 @@ class AuthorizationFields extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginForm = ref.watch(loginFormProvider.state).state;
-    final passwordForm = ref.watch(passwordFormProvider.state).state;
+    final loginController = TextEditingController();
+    final passwordController = TextEditingController();
+
+    final state = ref.watch(loginScreenStateProvider);
+
+    loginController.value = TextEditingValue(
+      text: state.login,
+      selection: TextSelection.collapsed(offset: state.login.length),
+    );
+
+    passwordController.value = TextEditingValue(
+      text: state.password,
+      selection: TextSelection.collapsed(offset: state.password.length),
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        !state.isIninitial
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : TextFormField(
+                controller: loginController,
+                decoration: const InputDecoration(
+                  hintText: "Логин",
+                ),
+                onChanged: (_) =>
+                    ref.read(loginScreenStateProvider.notifier).updateTextField(
+                          textController: loginController,
+                          textControllersEnum: TextControllersEnum.login,
+                        ),
+              ),
         TextFormField(
-          initialValue: loginForm.text,
-          decoration: InputDecoration(
-            hintText: "Логин",
-            errorText: loginForm.error,
-          ),
-          onChanged: (value) => ref.read(loginFormProvider.state).state =
-              loginForm.updateField(value),
-        ),
-        TextFormField(
-          initialValue: passwordForm.text,
-          decoration: InputDecoration(
+          controller: passwordController,
+          decoration: const InputDecoration(
             hintText: "Пароль",
-            errorText: passwordForm.error,
           ),
           obscureText: true,
-          onChanged: (value) => ref.read(passwordFormProvider.state).state =
-              passwordForm.updateField(value),
+          onChanged: (_) =>
+              ref.read(loginScreenStateProvider.notifier).updateTextField(
+                    textController: passwordController,
+                    textControllersEnum: TextControllersEnum.password,
+                  ),
         ),
       ],
     );
@@ -83,18 +106,16 @@ class SaveLoginPasswordWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginPasswordCheckboxState =
-        ref.watch(loginPasswordCheckboxProvider.state).state;
+    final state = ref.watch(loginScreenStateProvider);
     return CheckboxListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
       controlAffinity: ListTileControlAffinity.leading,
       title: const Text("Запомнить логин и пароль"),
-      onChanged: (value) {
-        bool state = value ?? false != value;
-        ref.read(loginPasswordCheckboxProvider.state).state = state;
-        SecureStorage.instance.setSaveLoginState(state);
+      onChanged: (_) {
+        ref.read(loginScreenStateProvider.notifier).toogle();
+        SecureStorage.instance.setSaveLoginState(state.save);
       },
-      value: loginPasswordCheckboxState,
+      value: state.save,
     );
   }
 }
@@ -104,76 +125,35 @@ class LoginButtonSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginForm = ref.watch(loginFormProvider.state).state;
-    final passwordForm = ref.watch(passwordFormProvider.state).state;
-    bool showButton = loginForm.text.isEmpty || passwordForm.text.isEmpty;
+    final state = ref.watch(loginScreenStateProvider);
 
-    final authorizationState = ref.watch(authorizationProvider);
-
-    return authorizationState.when(
-      initial: () => Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 32.0,
-          ),
-          !showButton
-              ? ElevatedButton(
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(
-                      const Size(300, 50),
-                    ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(
+          height: 32.0,
+        ),
+        state.isLoading
+            ? const CircularProgressIndicator()
+            : ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                    const Size(300, 50),
                   ),
-                  onPressed: () => ref
-                      .read(authorizationProvider.notifier)
-                      .login(
-                          context: context,
-                          login: loginForm.text,
-                          password: passwordForm.text),
-                  child: const Text('Войти'),
-                )
-              : const SizedBox(),
-        ],
-      ),
-      loading: () => Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          SizedBox(
-            height: 32.0,
-          ),
-          CircularProgressIndicator()
-        ],
-      ),
-      data: () => const SizedBox(
-        height: 32.0,
-      ),
-      error: (value) => Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 32.0,
-            child: Center(
-              child: Text(value),
-            ),
-          ),
-          !showButton
-              ? ElevatedButton(
-                  style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all(
-                      const Size(300, 50),
-                    ),
-                  ),
-                  onPressed: () => ref
-                      .read(authorizationProvider.notifier)
-                      .login(
-                          context: context,
-                          login: loginForm.text,
-                          password: passwordForm.text),
-                  child: const Text('Войти'),
-                )
-              : const SizedBox(),
-        ],
-      ),
+                ),
+                onPressed: () => ref
+                    .read(loginScreenStateProvider.notifier)
+                    .login(
+                        context: context,
+                        login: state.login,
+                        password: state.password),
+                child: const Text('Войти'),
+              ),
+        const SizedBox(
+          height: 32,
+        ),
+        state.error.isNotEmpty ? const Text('data') : const SizedBox()
+      ],
     );
   }
 }
