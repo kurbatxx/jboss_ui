@@ -257,7 +257,7 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "2.0.0-dev.7"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -358,7 +358,7 @@ packages:
       name: group_button
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.1"
+    version: "5.0.1"
   http:
     dependency: "direct main"
     description:
@@ -415,13 +415,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.2.0"
-  lint:
-    dependency: transitive
-    description:
-      name: lint
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.8.2"
   lints:
     dependency: transitive
     description:
@@ -465,16 +458,9 @@ packages:
     source: hosted
     version: "1.0.2"
   objectbox:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: objectbox
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.5.0"
-  objectbox_flutter_libs:
-    dependency: "direct main"
-    description:
-      name: objectbox_flutter_libs
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.0"
@@ -617,7 +603,7 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "2.0.0-dev.7"
   shelf:
     dependency: transitive
     description:
@@ -772,4 +758,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.17.0 <3.0.0"
-  flutter: ">=2.8.1"
+  flutter: ">=3.0.0"
