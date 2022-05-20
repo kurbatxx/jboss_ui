@@ -34,9 +34,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(
                   height: 32.0,
                 ),
-                const AuthorizationFields(),
-                const SaveLoginPasswordWidget(),
-                const LoginButtonSection()
+                const LoginConsumer(),
               ],
             ),
           ),
@@ -46,8 +44,8 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class AuthorizationFields extends ConsumerWidget {
-  const AuthorizationFields({Key? key}) : super(key: key);
+class LoginConsumer extends ConsumerWidget {
+  const LoginConsumer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,21 +67,17 @@ class AuthorizationFields extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        !state.isIninitial
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : TextFormField(
-                controller: loginController,
-                decoration: const InputDecoration(
-                  hintText: "Логин",
-                ),
-                onChanged: (_) =>
-                    ref.read(loginScreenStateProvider.notifier).updateTextField(
-                          textController: loginController,
-                          textControllersEnum: TextControllersEnum.login,
-                        ),
-              ),
+        TextFormField(
+          controller: loginController,
+          decoration: const InputDecoration(
+            hintText: "Логин",
+          ),
+          onChanged: (_) =>
+              ref.read(loginScreenStateProvider.notifier).updateTextField(
+                    textController: loginController,
+                    textControllersEnum: TextControllersEnum.login,
+                  ),
+        ),
         TextFormField(
           controller: passwordController,
           decoration: const InputDecoration(
@@ -96,63 +90,45 @@ class AuthorizationFields extends ConsumerWidget {
                     textControllersEnum: TextControllersEnum.password,
                   ),
         ),
-      ],
-    );
-  }
-}
-
-class SaveLoginPasswordWidget extends ConsumerWidget {
-  const SaveLoginPasswordWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(loginScreenStateProvider);
-    return CheckboxListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-      controlAffinity: ListTileControlAffinity.leading,
-      title: const Text("Запомнить логин и пароль"),
-      onChanged: (_) {
-        ref.read(loginScreenStateProvider.notifier).toogle();
-        SecureStorage.instance.setSaveLoginState(state.save);
-      },
-      value: state.save,
-    );
-  }
-}
-
-class LoginButtonSection extends ConsumerWidget {
-  const LoginButtonSection({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(loginScreenStateProvider);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(
-          height: 32.0,
-        ),
-        state.isLoading
-            ? const CircularProgressIndicator()
-            : ElevatedButton(
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(
-                    const Size(300, 50),
+        state.login.isNotEmpty && state.password.isNotEmpty
+            ? Column(
+                children: [
+                  CheckboxListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: const Text("Запомнить логин и пароль"),
+                    onChanged: (_) {
+                      ref.read(loginScreenStateProvider.notifier).toogle();
+                      SecureStorage.instance.setSaveLoginState(state.save);
+                    },
+                    value: state.save,
                   ),
-                ),
-                onPressed: () => ref
-                    .read(loginScreenStateProvider.notifier)
-                    .login(
-                        context: context,
-                        login: state.login,
-                        password: state.password),
-                child: const Text('Войти'),
-              ),
-        const SizedBox(
-          height: 32,
-        ),
-        state.error.isNotEmpty ? const Text('data') : const SizedBox()
+                  const SizedBox(
+                    height: 32.0,
+                  ),
+                  state.isLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all(
+                              const Size(300, 50),
+                            ),
+                          ),
+                          onPressed: () => ref
+                              .read(loginScreenStateProvider.notifier)
+                              .login(
+                                  context: context,
+                                  login: state.login,
+                                  password: state.password),
+                          child: const Text('Войти'),
+                        ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  state.error.isNotEmpty ? Text(state.error) : const SizedBox()
+                ],
+              )
+            : const SizedBox(),
       ],
     );
   }

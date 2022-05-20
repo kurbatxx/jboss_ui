@@ -17,7 +17,6 @@ final loginScreenStateProvider =
     const LoginScreenState(
       login: '',
       password: '',
-      isIninitial: true,
       isLoading: false,
       error: '',
       save: false,
@@ -29,20 +28,6 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
   LoginScreenStateNotifer(
     LoginScreenState state,
   ) : super(state);
-
-  initial() async {
-    state = state.copyWith(isIninitial: true);
-
-    state =
-        state.copyWith(save: await SecureStorage.instance.getSaveLoginState());
-    if (state.save) {
-      state = state.copyWith(
-        login: await SecureStorage.instance.getLogin(),
-        password: await SecureStorage.instance.getLogin(),
-      );
-    }
-    state = state.copyWith(isIninitial: false);
-  }
 
   toogle() {
     state = state.copyWith(save: !state.save);
@@ -89,10 +74,12 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
       if (!mounted) return;
       Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);
 
-      if (await SecureStorage.instance.getSaveLoginState()) {
-        await SecureStorage.instance.setLogin(login);
-        await SecureStorage.instance.setPassword(password);
+      if (state.save) {
+        await SecureStorage.instance.setLogin(state.login);
+        await SecureStorage.instance.setPassword(state.password);
+        await SecureStorage.instance.setSaveLoginState(state.save);
       }
+
       await Future.delayed(const Duration(milliseconds: 100));
       state = state.copyWith(isLoading: false);
     } catch (e) {

@@ -7,7 +7,6 @@ class LoginScreenState with _$LoginScreenState {
     required String login,
     required String password,
     required bool save,
-    required bool isIninitial,
     required bool isLoading,
     required String error,
   }) = _LoginScreenState;

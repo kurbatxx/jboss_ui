@@ -19,7 +19,6 @@ mixin _$LoginScreenState {
   String get login => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   bool get save => throw _privateConstructorUsedError;
-  bool get isIninitial => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
 
@@ -34,12 +33,7 @@ abstract class $LoginScreenStateCopyWith<$Res> {
           LoginScreenState value, $Res Function(LoginScreenState) then) =
       _$LoginScreenStateCopyWithImpl<$Res>;
   $Res call(
-      {String login,
-      String password,
-      bool save,
-      bool isIninitial,
-      bool isLoading,
-      String error});
+      {String login, String password, bool save, bool isLoading, String error});
 }
 
 /// @nodoc
@@ -56,7 +50,6 @@ class _$LoginScreenStateCopyWithImpl<$Res>
     Object? login = freezed,
     Object? password = freezed,
     Object? save = freezed,
-    Object? isIninitial = freezed,
     Object? isLoading = freezed,
     Object? error = freezed,
   }) {
@@ -72,10 +65,6 @@ class _$LoginScreenStateCopyWithImpl<$Res>
       save: save == freezed
           ? _value.save
           : save // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isIninitial: isIninitial == freezed
-          ? _value.isIninitial
-          : isIninitial // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoading: isLoading == freezed
           ? _value.isLoading
@@ -97,12 +86,7 @@ abstract class _$$_LoginScreenStateCopyWith<$Res>
       __$$_LoginScreenStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String login,
-      String password,
-      bool save,
-      bool isIninitial,
-      bool isLoading,
-      String error});
+      {String login, String password, bool save, bool isLoading, String error});
 }
 
 /// @nodoc
@@ -121,7 +105,6 @@ class __$$_LoginScreenStateCopyWithImpl<$Res>
     Object? login = freezed,
     Object? password = freezed,
     Object? save = freezed,
-    Object? isIninitial = freezed,
     Object? isLoading = freezed,
     Object? error = freezed,
   }) {
@@ -137,10 +120,6 @@ class __$$_LoginScreenStateCopyWithImpl<$Res>
       save: save == freezed
           ? _value.save
           : save // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isIninitial: isIninitial == freezed
-          ? _value.isIninitial
-          : isIninitial // ignore: cast_nullable_to_non_nullable
               as bool,
       isLoading: isLoading == freezed
           ? _value.isLoading
@@ -161,7 +140,6 @@ class _$_LoginScreenState implements _LoginScreenState {
       {required this.login,
       required this.password,
       required this.save,
-      required this.isIninitial,
       required this.isLoading,
       required this.error});
 
@@ -172,15 +150,13 @@ class _$_LoginScreenState implements _LoginScreenState {
   @override
   final bool save;
   @override
-  final bool isIninitial;
-  @override
   final bool isLoading;
   @override
   final String error;
 
   @override
   String toString() {
-    return 'LoginScreenState(login: $login, password: $password, save: $save, isIninitial: $isIninitial, isLoading: $isLoading, error: $error)';
+    return 'LoginScreenState(login: $login, password: $password, save: $save, isLoading: $isLoading, error: $error)';
   }
 
   @override
@@ -191,8 +167,6 @@ class _$_LoginScreenState implements _LoginScreenState {
             const DeepCollectionEquality().equals(other.login, login) &&
             const DeepCollectionEquality().equals(other.password, password) &&
             const DeepCollectionEquality().equals(other.save, save) &&
-            const DeepCollectionEquality()
-                .equals(other.isIninitial, isIninitial) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.error, error));
   }
@@ -203,7 +177,6 @@ class _$_LoginScreenState implements _LoginScreenState {
       const DeepCollectionEquality().hash(login),
       const DeepCollectionEquality().hash(password),
       const DeepCollectionEquality().hash(save),
-      const DeepCollectionEquality().hash(isIninitial),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(error));
 
@@ -218,7 +191,6 @@ abstract class _LoginScreenState implements LoginScreenState {
       {required final String login,
       required final String password,
       required final bool save,
-      required final bool isIninitial,
       required final bool isLoading,
       required final String error}) = _$_LoginScreenState;
 
@@ -228,8 +200,6 @@ abstract class _LoginScreenState implements LoginScreenState {
   String get password => throw _privateConstructorUsedError;
   @override
   bool get save => throw _privateConstructorUsedError;
-  @override
-  bool get isIninitial => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
   @override

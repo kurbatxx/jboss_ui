@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
+import 'package:jboss_ui/api/ui.dart';
+
 import 'package:jboss_ui/navigation/main_navigation.dart';
+import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/utils/app_dir.dart';
 
 final appDir = getAppDir();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   JbossApi.initial();
+  final initialState = await UiApi.initial();
 
   runApp(
-    const ProviderScope(
-      child: App(),
+    ProviderScope(
+      overrides: [
+        loginScreenStateProvider.overrideWithValue(
+          LoginScreenStateNotifer(initialState),
+        ),
+      ],
+      child: const App(),
     ),
   );
 }
