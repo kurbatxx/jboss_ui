@@ -6,7 +6,6 @@ import 'package:jboss_ui/models/card_status.dart';
 import 'package:jboss_ui/models/search/search_response.dart';
 import 'package:jboss_ui/models/search/search_request.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
-import 'package:jboss_ui/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jboss_ui/utils/secure.dart';
 import 'package:jboss_ui/widgets/cards_select_dialog.dart';
@@ -122,7 +121,7 @@ class SearchFormWidget extends ConsumerWidget {
           hintText: "Введите ФИО или ID",
           isDense: true,
           filled: true,
-          fillColor: kBgColor,
+          fillColor: Colors.blue,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(10),

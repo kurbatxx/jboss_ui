@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../utils/constant.dart';
 
 class CardsSelectDialog extends StatefulWidget {
   const CardsSelectDialog({Key? key}) : super(key: key);
@@ -190,7 +189,7 @@ class FreeChecbox extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Checkbox(
-      splashRadius: kCheckboxRadius,
+      //splashRadius: kCheckboxRadius,
       value: true,
       onChanged: (value) {},
     );
