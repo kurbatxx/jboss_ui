@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/utils/bitsdojo.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
 
@@ -42,6 +43,7 @@ class HubScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
+          const BitsDojoTitleBar(),
           ConstrainedBox(
             constraints: const BoxConstraints(maxHeight: kTabBarHeight),
             child: Row(

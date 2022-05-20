@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
+import 'package:jboss_ui/utils/bitsdojo.dart';
 import 'package:jboss_ui/utils/secure.dart';
 
 enum TextControllersEnum {
@@ -15,29 +16,33 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 200.0,
-                  height: 200.0,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage("assets/images/login.png"),
+        child: Column(
+          children: [
+            const BitsDojoTitleBar(),
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 200.0,
+                      height: 200.0,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage("assets/images/login.png"),
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 24.0,
+                    ),
+                    const LoginConsumer(),
+                  ],
                 ),
-                const SizedBox(
-                  height: 32.0,
-                ),
-                const LoginConsumer(),
-              ],
-            ),
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
