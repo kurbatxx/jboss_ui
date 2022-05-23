@@ -16,22 +16,16 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: Column(
         //: MainAxisSize.min,
         children: [
           SearchFormWidget(),
-          Row(
-            children: const [
-              Text('Наличие карт:'),
-              SizedBox(width: 20),
-              DropDownCards(),
-            ],
-          ),
+          const SizedBox(height: 2),
           const DeletePersonSwitcherWidget(),
           const Divider(),
           const Expanded(
-            child: SearchResultWidget(),
+            child: NewSearchResultWidget(),
           ),
         ],
       ),
@@ -107,37 +101,39 @@ class SearchFormWidget extends ConsumerWidget {
     ref.watch(formSearchControllerProvider);
     return Stack(alignment: AlignmentDirectional.center, children: [
       TextField(
+        focusNode: _searchFocusNode,
+        autofocus: true,
+        controller: ref.watch(formSearchControllerProvider),
+        decoration: InputDecoration(
+          constraints: const BoxConstraints(maxHeight: 32),
+          contentPadding: const EdgeInsets.fromLTRB(8.0, 10.0, 140.0, 10.0),
+          hintText: "Введите ФИО или ID",
+          isCollapsed: true,
+          isDense: true,
+          filled: true,
+          fillColor: Colors.grey[50],
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ),
         onSubmitted: (value) {
           ref.watch(formSearchControllerProvider).text == value;
           _searchFocusNode.requestFocus();
           SearchButtonWidget(searchFocusNode: _searchFocusNode)
               .searchMethod(ref, context);
         },
-        focusNode: _searchFocusNode,
-        autofocus: true,
-        controller: ref.watch(formSearchControllerProvider),
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.fromLTRB(8.0, 16.0, 140.0, 16.0),
-          hintText: "Введите ФИО или ID",
-          isDense: true,
-          filled: true,
-          fillColor: Colors.blue,
-          border: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.green, width: 2.0),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-        ),
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            height: 28,
-            width: 28,
+            height: 24,
+            width: 24,
             child: RawMaterialButton(
               onPressed: () {
                 ref.read(formSearchControllerProvider).clear();
@@ -157,7 +153,7 @@ class SearchFormWidget extends ConsumerWidget {
             ),
           ),
           const SizedBox(
-            width: 6.0,
+            width: 4.0,
           ),
           SearchButtonWidget(searchFocusNode: _searchFocusNode),
         ],
@@ -181,23 +177,29 @@ class SearchButtonWidget extends ConsumerWidget {
     ref.watch(deletePersonSwitcherProvider);
 
     return SizedBox(
-      height: 45,
-      width: 120,
-      child: ElevatedButton.icon(
+      height: 32,
+      width: 60,
+      child: ElevatedButton(
         style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
           elevation: 0,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(10),
+              Radius.circular(4),
             ),
           ),
         ),
-        label: const Text("Найти"),
-        icon: const Icon(Icons.search, color: Colors.white),
         onPressed: () {
           searchMethod(ref, context);
           _searchFocusNode.requestFocus();
         },
+        child: const FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            "Найти",
+            overflow: TextOverflow.clip,
+          ),
+        ),
       ),
     );
   }
@@ -248,23 +250,52 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deletePersonSwitcherState =
-        ref.watch(deletePersonSwitcherProvider.state).state;
-
-    return Material(
-      type: MaterialType.card,
-      child: CheckboxListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-        controlAffinity: ListTileControlAffinity.leading,
-        title: const Text("Показывать выбывших и удаленных"),
-        value: deletePersonSwitcherState,
-        onChanged: (value) {
-          final checkboxState = value ?? false != value;
-          ref.read(deletePersonSwitcherProvider.state).state = checkboxState;
-          SecureStorage.instance.setShowDeleteState(checkboxState);
-        },
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(4),
+          onTap: () {
+            print('///');
+          },
+          child: Row(
+            children: [
+              Checkbox(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                splashRadius: 0,
+                value: false,
+                onChanged: (value) {
+                  print(value);
+                },
+              ),
+              const Center(child: Text('Показывать выбывших'))
+            ],
+          ),
+        ),
       ),
     );
+    // final deletePersonSwitcherState =
+    //     ref.watch(deletePersonSwitcherProvider.state).state;
+
+    // return Material(
+    //   type: MaterialType.card,
+    //   child: CheckboxListTile(
+    //     enableFeedback: true,
+    //     contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+    //     controlAffinity: ListTileControlAffinity.leading,
+    //     title: const Text("Показывать выбывших и удаленных"),
+    //     value: deletePersonSwitcherState,
+    //     onChanged: (value) {
+    //       final checkboxState = value ?? false != value;
+    //       ref.read(deletePersonSwitcherProvider.state).state = checkboxState;
+    //       SecureStorage.instance.setShowDeleteState(checkboxState);
+    //     },
+    //   ),
+    // );
   }
 }
 
@@ -375,6 +406,59 @@ class CardsInformation extends StatelessWidget {
     return Container(
       height: 50,
       color: Colors.red,
+    );
+  }
+}
+
+class NewSearchResultWidget extends StatelessWidget {
+  const NewSearchResultWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.blueGrey,
+      child: ListView(
+        children: [
+          Container(
+            color: Colors.white,
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Text("12345678"),
+                        const Text("Петров Сидор Семёнович"),
+                      ],
+                    ),
+                    Column(
+                      children: const [
+                        Text(
+                          "КГУ «Средняя общеобразовательная школа-комплекс эстетического воспитания №8»",
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 100,
+                      color: Colors.red,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

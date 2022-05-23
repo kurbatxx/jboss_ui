@@ -59,6 +59,10 @@ class HubScreen extends StatelessWidget {
                 Container(
                   color: Colors.red,
                   width: kTabBarHeight,
+                  child: RawMaterialButton(
+                    onPressed: () {},
+                    child: const Icon(Icons.exit_to_app),
+                  ),
                 ),
               ],
             ),
