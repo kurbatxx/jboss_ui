@@ -194,9 +194,9 @@ class RegisterPage extends ConsumerWidget {
             autofocus: true,
             focusNode: clientIdNode,
             inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(8),
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
-            maxLength: 8,
             decoration: const InputDecoration(hintText: "ID Клиента"),
             onChanged: (_) => ref
                 .read(registerDeviceScreenStateProvider.notifier)
@@ -212,9 +212,9 @@ class RegisterPage extends ConsumerWidget {
             controller: rfidIdController,
             focusNode: rfidIdNode,
             inputFormatters: <TextInputFormatter>[
+              LengthLimitingTextInputFormatter(10),
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
-            maxLength: 10,
             decoration: const InputDecoration(hintText: "ID устройства"),
             onChanged: (_) => ref
                 .read(registerDeviceScreenStateProvider.notifier)
