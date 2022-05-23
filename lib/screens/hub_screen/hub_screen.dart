@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/screens/register_device_page/register_device_page.dart';
+import 'package:jboss_ui/screens/search_page/search_page.dart';
 import 'package:jboss_ui/utils/bitsdojo.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
@@ -12,7 +14,7 @@ final navBarPositionProvider = StateProvider((ref) => 0);
 enum NavBarOptions {
   search(
     icon: Icons.search,
-    screen: ClearScreenOne(),
+    screen: SearchPage(),
   ),
   history(
     icon: Icons.data_thresholding,
@@ -20,7 +22,7 @@ enum NavBarOptions {
   ),
   registerDevice(
     icon: Icons.data_thresholding,
-    screen: ClearScreenOne(),
+    screen: RegisterDevicePage(),
   ),
   setting(
     icon: Icons.settings,

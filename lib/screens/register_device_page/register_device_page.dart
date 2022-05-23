@@ -189,19 +189,6 @@ class RegisterPage extends ConsumerWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                  onPressed: () {
-                    ref
-                        .read(registerDeviceScreenStateProvider.notifier)
-                        .clearState();
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Закончить регистрацию устройств"))
-            ],
-          ),
           TextFormField(
             controller: clientIdController,
             autofocus: true,

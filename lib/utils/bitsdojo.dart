@@ -22,7 +22,6 @@ class BitsDojoTitleBar extends StatelessWidget {
   }
 }
 
-
 const titlebarColor = Color.fromARGB(255, 223, 223, 223);
 
 final buttonColors = WindowButtonColors(
