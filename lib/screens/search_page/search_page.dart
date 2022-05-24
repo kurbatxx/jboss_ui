@@ -7,6 +7,7 @@ import 'package:jboss_ui/models/search/search_response.dart';
 import 'package:jboss_ui/models/search/search_request.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/secure.dart';
 import 'package:jboss_ui/widgets/cards_select_dialog.dart';
 
@@ -23,7 +24,9 @@ class SearchPage extends StatelessWidget {
           SearchFormWidget(),
           const SizedBox(height: 2),
           const DeletePersonSwitcherWidget(),
-          const Divider(),
+          const Divider(
+            height: 4.0,
+          ),
           const Expanded(
             child: NewSearchResultWidget(),
           ),
@@ -251,14 +254,14 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: kMinimumRadius,
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: kMinimumRadius,
           onTap: () {
             print('///');
           },
@@ -415,49 +418,116 @@ class NewSearchResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blueGrey,
-      child: ListView(
-        children: [
-          Container(
-            color: Colors.white,
-            child: Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Text("12345678"),
-                        const Text("Петров Сидор Семёнович"),
-                      ],
-                    ),
-                    Column(
-                      children: const [
-                        Text(
-                          "КГУ «Средняя общеобразовательная школа-комплекс эстетического воспитания №8»",
-                          maxLines: 2,
-                          style: TextStyle(
-                            fontSize: 10,
+    return ClipRRect(
+      borderRadius: kMinimumRadius,
+      child: Container(
+        color: Colors.blueGrey,
+        child: ListView(
+          children: [
+            ClipRRect(
+              borderRadius: kMinimumRadius,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: kMinimumHorPadding,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      minimumSize: Size.zero,
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                    ),
+                                    onPressed: () {},
+                                    child: Text("12345678"),
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  const Expanded(
+                                      child: FittedBox(
+                                          alignment: Alignment.bottomLeft,
+                                          fit: BoxFit.scaleDown,
+                                          child: Text("Администрация"))),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  const Text("100000 тг."),
+                                ],
+                              ),
+                              const Text(
+                                "Петров Сидор Семёнович Ибн Хоттаб",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const Divider(
+                                height: 1,
+                              ),
+                              Row(
+                                children: const [
+                                  Expanded(
+                                    child: Text(
+                                      "КГУ «Средняя общеобразовательная школа-комплекс эстетического воспитания №8»",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                  ],
+                        ),
+                      ),
+                      ClipRRect(
+                        borderRadius: kMinimumRadius,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey[50],
+                          ),
+                          width: 60,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  'Создать\n заявку',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: const Text('Карты'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Column(
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 100,
-                      color: Colors.red,
-                    )
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
