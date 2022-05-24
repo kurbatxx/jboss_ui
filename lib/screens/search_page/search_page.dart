@@ -19,14 +19,11 @@ class SearchPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Column(
-        //: MainAxisSize.min,
         children: [
           SearchFormWidget(),
           const SizedBox(height: 2),
           const DeletePersonSwitcherWidget(),
-          const Divider(
-            height: 4.0,
-          ),
+          const SizedBox(height: 4),
           const Expanded(
             child: NewSearchResultWidget(),
           ),
@@ -181,7 +178,7 @@ class SearchButtonWidget extends ConsumerWidget {
 
     return SizedBox(
       height: 32,
-      width: 60,
+      width: 50,
       child: ElevatedButton(
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,
@@ -253,54 +250,32 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: kMinimumRadius,
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: kMinimumRadius,
-          onTap: () {
-            print('///');
-          },
-          child: Row(
-            children: [
-              Checkbox(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                splashRadius: 0,
-                value: false,
-                onChanged: (value) {
-                  print(value);
-                },
-              ),
-              const Center(child: Text('Показывать выбывших'))
-            ],
+    return ClipRRect(
+      borderRadius: kMinimumRadius,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              print('///');
+            },
+            child: Row(
+              children: const [
+                Icon(Icons.check_box_outline_blank_rounded),
+                Center(child: Text('Показывать выбывших'))
+              ],
+            ),
           ),
         ),
       ),
     );
-    // final deletePersonSwitcherState =
-    //     ref.watch(deletePersonSwitcherProvider.state).state;
-
-    // return Material(
-    //   type: MaterialType.card,
-    //   child: CheckboxListTile(
-    //     enableFeedback: true,
-    //     contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
-    //     controlAffinity: ListTileControlAffinity.leading,
-    //     title: const Text("Показывать выбывших и удаленных"),
-    //     value: deletePersonSwitcherState,
-    //     onChanged: (value) {
-    //       final checkboxState = value ?? false != value;
-    //       ref.read(deletePersonSwitcherProvider.state).state = checkboxState;
-    //       SecureStorage.instance.setShowDeleteState(checkboxState);
-    //     },
-    //   ),
-    // );
   }
 }
+
+//SecureStorage.instance.setShowDeleteState(checkboxState);
 
 class ExpandableElement extends StatelessWidget {
   const ExpandableElement({Key? key, required this.client}) : super(key: key);
