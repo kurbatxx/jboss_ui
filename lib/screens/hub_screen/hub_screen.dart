@@ -86,28 +86,35 @@ class NavBarSwithcer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final position = ref.watch(navBarPositionProvider);
 
-    return AnimatedToggleSwitch<int>.size(
-      current: position,
-      values: Iterable<int>.generate(NavBarOptions.values.length).toList(),
-      iconOpacity: 0.5,
-      indicatorSize: const Size.fromWidth(300),
-      iconAnimationType: AnimationType.onHover,
-      indicatorAnimationType: AnimationType.onHover,
-      animationDuration: const Duration(milliseconds: 250),
-      borderWidth: 0.0,
-      indicatorBorderRadius: kTabBarButtonRadius,
-      borderRadius: kTabBarButtonRadius,
-      borderColor: Colors.transparent,
-      iconBuilder: (position, size) {
-        return Icon(
-          NavBarOptions.values.elementAt(position).icon,
-          size: min(size.width, size.height),
-        );
-      },
-      onChanged: (position) {
-        position.log();
-        ref.read(navBarPositionProvider.state).state = position;
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: AnimatedToggleSwitch<int>.size(
+        current: position,
+        height: kTabSize.height,
+        fittingMode: FittingMode.preventHorizontalOverlapping,
+        values: Iterable<int>.generate(NavBarOptions.values.length).toList(),
+        iconOpacity: 0.6,
+        indicatorSize: kTabSize,
+        iconAnimationType: AnimationType.onHover,
+        indicatorAnimationType: AnimationType.onHover,
+        animationDuration: const Duration(milliseconds: 250),
+        borderWidth: 0.0,
+        indicatorBorderRadius: kMinimumRadius,
+        borderRadius: kZeroRadius,
+        borderColor: Colors.transparent,
+        iconSize: const Size(28, 28),
+        selectedIconSize: const Size(32, 32),
+        iconBuilder: (position, size) {
+          return Icon(
+            NavBarOptions.values.elementAt(position).icon,
+            size: min(size.width, size.height),
+          );
+        },
+        onChanged: (position) {
+          position.log();
+          ref.read(navBarPositionProvider.state).state = position;
+        },
+      ),
     );
   }
 }
