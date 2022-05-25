@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/screens/register_device_page/register_device_page.dart';
 import 'package:jboss_ui/screens/search_page/search_page.dart';
 import 'package:jboss_ui/utils/bitsdojo.dart';
@@ -63,10 +64,7 @@ class HubScreen extends StatelessWidget {
                     child: Container(
                       color: Colors.red,
                       width: kTabBarHeight,
-                      child: RawMaterialButton(
-                        onPressed: () {},
-                        child: const Icon(Icons.exit_to_app),
-                      ),
+                      child: const LogoutConsumerButton(),
                     ),
                   ),
                 ),
@@ -150,6 +148,22 @@ class ClearScreenTwo extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text('Clear screen 2'),
+    );
+  }
+}
+
+class LogoutConsumerButton extends ConsumerWidget {
+  const LogoutConsumerButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return RawMaterialButton(
+      onPressed: () {
+        ref.read(searchPageStateProvider.notifier).clearState();
+      },
+      child: const Icon(Icons.exit_to_app),
     );
   }
 }
