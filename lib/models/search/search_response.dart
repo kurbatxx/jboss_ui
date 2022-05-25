@@ -4,12 +4,13 @@ part 'search_response.g.dart';
 @JsonSerializable(explicitToJson: true)
 class SearchResponse {
   final List<Client> clients;
-  final int allPages;
+  @JsonKey(name: "max_page")
+  final int maxPage;
   final String error;
 
   SearchResponse({
     required this.clients,
-    required this.allPages,
+    required this.maxPage,
     required this.error,
   });
 
@@ -22,14 +23,15 @@ class SearchResponse {
 @JsonSerializable()
 class Client {
   final String id;
-  final Fullname fullname;
+  @JsonKey(name: "full_name")
+  final FullName fullName;
   final String group;
   final String school;
   final String balance;
 
   Client({
     required this.id,
-    required this.fullname,
+    required this.fullName,
     required this.group,
     required this.school,
     required this.balance,
@@ -41,19 +43,19 @@ class Client {
 }
 
 @JsonSerializable()
-class Fullname {
+class FullName {
   final String name;
   final String surname;
   final String patronymic;
 
-  Fullname({
+  FullName({
     required this.name,
     required this.surname,
     required this.patronymic,
   });
 
-  factory Fullname.fromJson(Map<String, dynamic> json) =>
-      _$FullnameFromJson(json);
+  factory FullName.fromJson(Map<String, dynamic> json) =>
+      _$FullNameFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FullnameToJson(this);
+  Map<String, dynamic> toJson() => _$FullNameToJson(this);
 }

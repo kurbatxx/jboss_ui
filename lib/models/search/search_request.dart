@@ -7,16 +7,16 @@ class SearchRequest {
   final String searchString;
   @JsonKey(name: "school_id")
   final int schoolId;
-  @JsonKey(name: "page")
+  @JsonKey(name: "page_number")
   final int page;
-  @JsonKey(name: "show_delete")
-  final bool showDelete;
+  @JsonKey(name: "show_deleted")
+  final bool showDeleted;
 
   SearchRequest({
     required this.searchString,
     required this.schoolId,
     required this.page,
-    required this.showDelete,
+    required this.showDeleted,
   });
 
   factory SearchRequest.fromJson(Map<String, dynamic> json) =>

@@ -9,6 +9,7 @@ class SearchPageState with _$SearchPageState {
       required String searchString,
       required bool showDeleted,
       required int pageNumber,
+      required int maxPage,
       required bool isLoading,
       required String error,
       required List<Client> clientList,

@@ -20,6 +20,7 @@ mixin _$SearchPageState {
   String get searchString => throw _privateConstructorUsedError;
   bool get showDeleted => throw _privateConstructorUsedError;
   int get pageNumber => throw _privateConstructorUsedError;
+  int get maxPage => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   List<Client> get clientList => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $SearchPageStateCopyWith<$Res> {
       String searchString,
       bool showDeleted,
       int pageNumber,
+      int maxPage,
       bool isLoading,
       String error,
       List<Client> clientList,
@@ -61,6 +63,7 @@ class _$SearchPageStateCopyWithImpl<$Res>
     Object? searchString = freezed,
     Object? showDeleted = freezed,
     Object? pageNumber = freezed,
+    Object? maxPage = freezed,
     Object? isLoading = freezed,
     Object? error = freezed,
     Object? clientList = freezed,
@@ -82,6 +85,10 @@ class _$SearchPageStateCopyWithImpl<$Res>
       pageNumber: pageNumber == freezed
           ? _value.pageNumber
           : pageNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxPage: maxPage == freezed
+          ? _value.maxPage
+          : maxPage // ignore: cast_nullable_to_non_nullable
               as int,
       isLoading: isLoading == freezed
           ? _value.isLoading
@@ -115,6 +122,7 @@ abstract class _$$_SearchPageStateCopyWith<$Res>
       String searchString,
       bool showDeleted,
       int pageNumber,
+      int maxPage,
       bool isLoading,
       String error,
       List<Client> clientList,
@@ -138,6 +146,7 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
     Object? searchString = freezed,
     Object? showDeleted = freezed,
     Object? pageNumber = freezed,
+    Object? maxPage = freezed,
     Object? isLoading = freezed,
     Object? error = freezed,
     Object? clientList = freezed,
@@ -159,6 +168,10 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
       pageNumber: pageNumber == freezed
           ? _value.pageNumber
           : pageNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxPage: maxPage == freezed
+          ? _value.maxPage
+          : maxPage // ignore: cast_nullable_to_non_nullable
               as int,
       isLoading: isLoading == freezed
           ? _value.isLoading
@@ -185,6 +198,7 @@ class _$_SearchPageState implements _SearchPageState {
       required this.searchString,
       required this.showDeleted,
       required this.pageNumber,
+      required this.maxPage,
       required this.isLoading,
       required this.error,
       required final List<Client> clientList,
@@ -199,6 +213,8 @@ class _$_SearchPageState implements _SearchPageState {
   final bool showDeleted;
   @override
   final int pageNumber;
+  @override
+  final int maxPage;
   @override
   final bool isLoading;
   @override
@@ -215,7 +231,7 @@ class _$_SearchPageState implements _SearchPageState {
 
   @override
   String toString() {
-    return 'SearchPageState(isInitial: $isInitial, searchString: $searchString, showDeleted: $showDeleted, pageNumber: $pageNumber, isLoading: $isLoading, error: $error, clientList: $clientList, required: $required)';
+    return 'SearchPageState(isInitial: $isInitial, searchString: $searchString, showDeleted: $showDeleted, pageNumber: $pageNumber, maxPage: $maxPage, isLoading: $isLoading, error: $error, clientList: $clientList, required: $required)';
   }
 
   @override
@@ -230,6 +246,7 @@ class _$_SearchPageState implements _SearchPageState {
                 .equals(other.showDeleted, showDeleted) &&
             const DeepCollectionEquality()
                 .equals(other.pageNumber, pageNumber) &&
+            const DeepCollectionEquality().equals(other.maxPage, maxPage) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.error, error) &&
             const DeepCollectionEquality()
@@ -244,6 +261,7 @@ class _$_SearchPageState implements _SearchPageState {
       const DeepCollectionEquality().hash(searchString),
       const DeepCollectionEquality().hash(showDeleted),
       const DeepCollectionEquality().hash(pageNumber),
+      const DeepCollectionEquality().hash(maxPage),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(error),
       const DeepCollectionEquality().hash(_clientList),
@@ -261,6 +279,7 @@ abstract class _SearchPageState implements SearchPageState {
       required final String searchString,
       required final bool showDeleted,
       required final int pageNumber,
+      required final int maxPage,
       required final bool isLoading,
       required final String error,
       required final List<Client> clientList,
@@ -274,6 +293,8 @@ abstract class _SearchPageState implements SearchPageState {
   bool get showDeleted => throw _privateConstructorUsedError;
   @override
   int get pageNumber => throw _privateConstructorUsedError;
+  @override
+  int get maxPage => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
   @override
