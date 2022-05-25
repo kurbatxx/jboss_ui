@@ -1,42 +1,26 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+part 'search_request.g.dart';
 
-SearchRequest searchRequestFromJson(String str) =>
-    SearchRequest.fromJson(json.decode(str));
-
-String searchRequestToJson(SearchRequest data) => json.encode(data.toJson());
-
+@JsonSerializable()
 class SearchRequest {
+  @JsonKey(name: "search_string")
+  final String searchString;
+  @JsonKey(name: "school_id")
+  final int schoolId;
+  @JsonKey(name: "page")
+  final int page;
+  @JsonKey(name: "show_delete")
+  final bool showDelete;
+
   SearchRequest({
-    required this.id,
-    required this.request,
+    required this.searchString,
     required this.schoolId,
-    required this.cards,
     required this.page,
     required this.showDelete,
   });
 
-  final int id;
-  final String request;
-  final int schoolId;
-  final int cards;
-  final int page;
-  final bool showDelete;
+  factory SearchRequest.fromJson(Map<String, dynamic> json) =>
+      _$SearchRequestFromJson(json);
 
-  factory SearchRequest.fromJson(Map<String, dynamic> json) => SearchRequest(
-        id: json["id"],
-        request: json["request"],
-        schoolId: json["school_id"],
-        cards: json["cards"],
-        page: json["page"],
-        showDelete: json["show_delete"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "request": request,
-        "school_id": schoolId,
-        "cards": cards,
-        "page": page,
-        "show_delete": showDelete,
-      };
+  Map<String, dynamic> toJson() => _$SearchRequestToJson(this);
 }

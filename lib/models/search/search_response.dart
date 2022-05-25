@@ -1,35 +1,32 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'search_response.g.dart';
 
-SearchResponse searchResponseFromJson(String str) =>
-    SearchResponse.fromJson(json.decode(str));
-String searchResponseToJson(SearchResponse data) => json.encode(data.toJson());
-
+@JsonSerializable(explicitToJson: true)
 class SearchResponse {
+  final List<Client> clients;
+  final int allPages;
+  final String error;
+
   SearchResponse({
     required this.clients,
     required this.allPages,
     required this.error,
   });
 
-  final List<Client> clients;
-  final int allPages;
-  final String error;
+  factory SearchResponse.fromJson(Map<String, dynamic> json) =>
+      _$SearchResponseFromJson(json);
 
-  factory SearchResponse.fromJson(Map<String, dynamic> json) => SearchResponse(
-        clients:
-            List<Client>.from(json["clients"].map((x) => Client.fromJson(x))),
-        allPages: json["all_pages"],
-        error: json["error"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "clients": List<dynamic>.from(clients.map((x) => x.toJson())),
-        "all_pages": allPages,
-        "error": error,
-      };
+  Map<String, dynamic> toJson() => _$SearchResponseToJson(this);
 }
 
+@JsonSerializable()
 class Client {
+  final String id;
+  final Fullname fullname;
+  final String group;
+  final String school;
+  final String balance;
+
   Client({
     required this.id,
     required this.fullname,
@@ -38,49 +35,25 @@ class Client {
     required this.balance,
   });
 
-  final String id;
-  final Fullname fullname;
-  final String group;
-  final String school;
-  final String balance;
+  factory Client.fromJson(Map<String, dynamic> json) => _$ClientFromJson(json);
 
-  factory Client.fromJson(Map<String, dynamic> json) => Client(
-        id: json["id"],
-        fullname: Fullname.fromJson(json["fullname"]),
-        group: json["group"],
-        school: json["school"],
-        balance: json["balance"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "fullname": fullname.toJson(),
-        "group": group,
-        "school": school,
-        "balance": balance,
-      };
+  Map<String, dynamic> toJson() => _$ClientToJson(this);
 }
 
+@JsonSerializable()
 class Fullname {
+  final String name;
+  final String surname;
+  final String patronymic;
+
   Fullname({
     required this.name,
     required this.surname,
     required this.patronymic,
   });
 
-  final String name;
-  final String surname;
-  final String patronymic;
+  factory Fullname.fromJson(Map<String, dynamic> json) =>
+      _$FullnameFromJson(json);
 
-  factory Fullname.fromJson(Map<String, dynamic> json) => Fullname(
-        name: json["name"],
-        surname: json["surname"],
-        patronymic: json["patronymic"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "surname": surname,
-        "patronymic": patronymic,
-      };
+  Map<String, dynamic> toJson() => _$FullnameToJson(this);
 }

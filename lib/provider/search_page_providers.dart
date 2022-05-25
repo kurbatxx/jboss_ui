@@ -1,13 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/freezed/search_page_state.dart';
-import 'package:jboss_ui/models/search/search_response.dart';
-import 'package:jboss_ui/models/search/search_request.dart';
 
 final searchPageStateProvider =
     StateNotifierProvider<SearchPageStateNotifer, SearchPageState>(
   (ref) => SearchPageStateNotifer(
-    const SearchPageState(searchRequest: ''),
+    const SearchPageState(
+      isInitial: true,
+      searchString: '',
+      showDeleted: false,
+      pageNumber: 0,
+      clientList: [],
+      isLoading: false,
+      error: '',
+    ),
   ),
 );
 
@@ -16,7 +21,6 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
     SearchPageState state,
   ) : super(state);
 }
-
 
 // final 
 // = StateProvider<bool>((ref) => true);

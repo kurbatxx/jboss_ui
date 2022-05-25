@@ -25,7 +25,7 @@ class JbossApi {
 
   static String computeSearch(SearchRequest searchRequest) {
     return searchFFI(
-      searchRequestToJson(searchRequest).toNativeUtf8(),
+      json.encode(searchRequest.toJson()).toNativeUtf8(),
     ).toDartString();
   }
 
