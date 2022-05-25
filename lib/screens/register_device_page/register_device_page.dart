@@ -1,16 +1,9 @@
-import 'dart:convert';
 import 'dart:math';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/api/jboss.dart';
-import 'package:jboss_ui/freezed/register_device_screen_state.dart';
-import 'package:jboss_ui/models/register_device/register_device_request.dart';
-import 'package:jboss_ui/models/register_device/register_device_response.dart';
 import 'package:jboss_ui/provider/register_device_screen_provider.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
 
