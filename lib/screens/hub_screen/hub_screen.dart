@@ -50,18 +50,24 @@ class HubScreen extends StatelessWidget {
             constraints: const BoxConstraints(maxHeight: kTabBarHeight),
             child: Row(
               children: [
-                Expanded(
-                  child: Container(
-                    color: Colors.green,
-                    child: const NavBarSwithcer(),
+                const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4.0),
+                    child: NavBarSwithcer(),
                   ),
                 ),
-                Container(
-                  color: Colors.red,
-                  width: kTabBarHeight,
-                  child: RawMaterialButton(
-                    onPressed: () {},
-                    child: const Icon(Icons.exit_to_app),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 2, 4, 2),
+                  child: ClipRRect(
+                    borderRadius: kMinimumRadius,
+                    child: Container(
+                      color: Colors.red,
+                      width: kTabBarHeight,
+                      child: RawMaterialButton(
+                        onPressed: () {},
+                        child: const Icon(Icons.exit_to_app),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -86,35 +92,32 @@ class NavBarSwithcer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final position = ref.watch(navBarPositionProvider);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: AnimatedToggleSwitch<int>.size(
-        current: position,
-        height: kTabSize.height,
-        fittingMode: FittingMode.preventHorizontalOverlapping,
-        values: Iterable<int>.generate(NavBarOptions.values.length).toList(),
-        iconOpacity: 0.6,
-        indicatorSize: kTabSize,
-        iconAnimationType: AnimationType.onHover,
-        indicatorAnimationType: AnimationType.onHover,
-        animationDuration: const Duration(milliseconds: 250),
-        borderWidth: 0.0,
-        indicatorBorderRadius: kMinimumRadius,
-        borderRadius: kZeroRadius,
-        borderColor: Colors.transparent,
-        iconSize: const Size(28, 28),
-        selectedIconSize: const Size(32, 32),
-        iconBuilder: (position, size) {
-          return Icon(
-            NavBarOptions.values.elementAt(position).icon,
-            size: min(size.width, size.height),
-          );
-        },
-        onChanged: (position) {
-          position.log();
-          ref.read(navBarPositionProvider.state).state = position;
-        },
-      ),
+    return AnimatedToggleSwitch<int>.size(
+      current: position,
+      height: kTabSize.height,
+      fittingMode: FittingMode.preventHorizontalOverlapping,
+      values: Iterable<int>.generate(NavBarOptions.values.length).toList(),
+      iconOpacity: 0.6,
+      indicatorSize: kTabSize,
+      iconAnimationType: AnimationType.onHover,
+      indicatorAnimationType: AnimationType.onHover,
+      animationDuration: const Duration(milliseconds: 250),
+      borderWidth: 0.0,
+      indicatorBorderRadius: kMinimumRadius,
+      borderRadius: kZeroRadius,
+      borderColor: Colors.transparent,
+      iconSize: const Size(28, 28),
+      selectedIconSize: const Size(32, 32),
+      iconBuilder: (position, size) {
+        return Icon(
+          NavBarOptions.values.elementAt(position).icon,
+          size: min(size.width, size.height),
+        );
+      },
+      onChanged: (position) {
+        position.log();
+        ref.read(navBarPositionProvider.state).state = position;
+      },
     );
   }
 }
