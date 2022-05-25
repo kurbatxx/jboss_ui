@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:jboss_ui/freezed/search_page_state.dart';
+import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 
 class SearchPage extends StatelessWidget {
@@ -15,9 +17,7 @@ class SearchPage extends StatelessWidget {
           const SizedBox(height: 2),
           const DeletePersonSwitcherWidget(),
           const SizedBox(height: 4),
-          const Expanded(
-            child: NewSearchResultWidget(),
-          ),
+          const NewSearchResultWidget(),
         ],
       ),
     );
@@ -33,7 +33,7 @@ class SearchFormWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Stack(alignment: AlignmentDirectional.center, children: [
-      TextField(
+      TextFormField(
         focusNode: _searchFocusNode,
         autofocus: true,
         controller: searchController,
@@ -54,7 +54,8 @@ class SearchFormWidget extends ConsumerWidget {
             borderRadius: kMinimumRadius,
           ),
         ),
-        onSubmitted: (value) {
+        onFieldSubmitted: (value) {
+          ref.read(searchPageStateProvider.notifier).search(paginated: false);
           _searchFocusNode.requestFocus();
         },
       ),
@@ -66,7 +67,7 @@ class SearchFormWidget extends ConsumerWidget {
             width: 24,
             child: RawMaterialButton(
               onPressed: () {
-                //ref.read(formSearchControllerProvider).clear();
+                searchController.clear();
                 _searchFocusNode.requestFocus();
               },
               elevation: 0,
@@ -85,48 +86,38 @@ class SearchFormWidget extends ConsumerWidget {
           const SizedBox(
             width: 4.0,
           ),
-          SearchButtonWidget(searchFocusNode: _searchFocusNode),
+          SizedBox(
+            height: 32,
+            width: 50,
+            child: ElevatedButton(
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                elevation: 0,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: kMinimumRadius,
+                ),
+              ),
+              onPressed: () {
+                ref
+                    .read(searchPageStateProvider.notifier)
+                    .setSearchString(text: searchController.text);
+                ref
+                    .read(searchPageStateProvider.notifier)
+                    .search(paginated: false);
+                _searchFocusNode.requestFocus();
+              },
+              child: const FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  "Найти",
+                  overflow: TextOverflow.clip,
+                ),
+              ),
+            ),
+          ),
         ],
       )
     ]);
-  }
-}
-
-class SearchButtonWidget extends ConsumerWidget {
-  const SearchButtonWidget({
-    Key? key,
-    required FocusNode searchFocusNode,
-  })  : _searchFocusNode = searchFocusNode,
-        super(key: key);
-
-  final FocusNode _searchFocusNode;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-      height: 32,
-      width: 50,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          padding: EdgeInsets.zero,
-          elevation: 0,
-          shape: const RoundedRectangleBorder(
-            borderRadius: kMinimumRadius,
-          ),
-        ),
-        onPressed: () {
-          //searchMethod(ref, context);
-          _searchFocusNode.requestFocus();
-        },
-        child: const FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Text(
-            "Найти",
-            overflow: TextOverflow.clip,
-          ),
-        ),
-      ),
-    );
   }
 }
 
@@ -135,6 +126,9 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final showDeleted =
+        ref.watch(searchPageStateProvider.select((state) => state.showDeleted));
+
     return ClipRRect(
       borderRadius: kMinimumRadius,
       child: Container(
@@ -144,11 +138,17 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              ref.read(searchPageStateProvider.notifier).showDeletedtoogle();
+            },
             child: Row(
-              children: const [
-                Icon(Icons.check_box_outline_blank_rounded),
-                Center(child: Text('Показывать выбывших'))
+              children: [
+                showDeleted
+                    ? const Icon(Icons.check_box)
+                    : const Icon(Icons.check_box_outline_blank_rounded),
+                const Center(
+                  child: Text('Показывать выбывших'),
+                )
               ],
             ),
           ),
@@ -160,122 +160,153 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
 
 //SecureStorage.instance.setShowDeleteState(checkboxState);
 
-class NewSearchResultWidget extends StatelessWidget {
+class NewSearchResultWidget extends ConsumerWidget {
   const NewSearchResultWidget({Key? key}) : super(key: key);
 
   @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(searchPageStateProvider);
+
+    return Expanded(
+      child: ClipRRect(
+        borderRadius: kMinimumRadius,
+        child: Container(
+            color: Colors.blueGrey,
+            child: showWidget(state) //const SearchResultListWidget(),
+            ),
+      ),
+    );
+  }
+
+  showWidget(SearchPageState state) {
+    if (state.isInitial) {
+      return const Center(
+        child: Text("Здесь будут отображаться результаты поиска"),
+      );
+    } else if (state.isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    } else if (state.clientList.isEmpty && !state.isLoading) {
+      return const Center(
+        child: Text("Ничего не найдено"),
+      );
+    }
+  }
+}
+
+class SearchResultListWidget extends StatelessWidget {
+  const SearchResultListWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: kMinimumRadius,
-      child: Container(
-        color: Colors.blueGrey,
-        child: ListView(
-          children: [
-            ClipRRect(
-              borderRadius: kMinimumRadius,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: kMinimumHorPadding,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      padding: EdgeInsets.zero,
-                                      minimumSize: Size.zero,
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                    onPressed: () {},
-                                    child: const Text("12345678"),
-                                  ),
-                                  const SizedBox(
-                                    width: 4,
-                                  ),
-                                  const Expanded(
-                                      child: FittedBox(
-                                          alignment: Alignment.bottomLeft,
-                                          fit: BoxFit.scaleDown,
-                                          child: Text("Администрация"))),
-                                  const SizedBox(
-                                    width: 4,
-                                  ),
-                                  const Text("100000 тг."),
-                                ],
-                              ),
-                              const Text(
-                                "Петров Сидор Семёнович Ибн Хоттаб",
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const Divider(
-                                height: 1,
-                              ),
-                              Row(
-                                children: const [
-                                  Expanded(
-                                    child: Text(
-                                      "КГУ «Средняя общеобразовательная школа-комплекс эстетического воспитания №8»",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      ClipRRect(
-                        borderRadius: kMinimumRadius,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blueGrey[50],
-                          ),
-                          width: 60,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return ListView(
+      children: [
+        ClipRRect(
+          borderRadius: kMinimumRadius,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: kMinimumHorPadding,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             children: [
                               TextButton(
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: Size.zero,
+                                  tapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
                                 onPressed: () {},
-                                child: const Text(
-                                  'Создать\n заявку',
+                                child: const Text("12345678"),
+                              ),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              const Expanded(
+                                  child: FittedBox(
+                                      alignment: Alignment.bottomLeft,
+                                      fit: BoxFit.scaleDown,
+                                      child: Text("Администрация"))),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              const Text("100000 тг."),
+                            ],
+                          ),
+                          const Text(
+                            "Петров Сидор Семёнович Ибн Хоттаб",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                          const Divider(
+                            height: 1,
+                          ),
+                          Row(
+                            children: const [
+                              Expanded(
+                                child: Text(
+                                  "КГУ «Средняя общеобразовательная школа-комплекс эстетического воспитания №8»",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    fontSize: 11,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ),
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text('Карты'),
-                              ),
                             ],
-                          ),
-                        ),
+                          )
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  ClipRRect(
+                    borderRadius: kMinimumRadius,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blueGrey[50],
+                      ),
+                      width: 60,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Создать\n заявку',
+                              style: TextStyle(
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text('Карты'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
