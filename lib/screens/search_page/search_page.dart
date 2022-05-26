@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jboss_ui/freezed/search_page_state.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
+import 'package:jboss_ui/utils/dev_log.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -54,7 +55,10 @@ class SearchFormWidget extends ConsumerWidget {
             borderRadius: kMinimumRadius,
           ),
         ),
-        onFieldSubmitted: (value) {
+        onFieldSubmitted: (_) {
+          ref
+              .read(searchPageStateProvider.notifier)
+              .setSearchString(text: searchController.text);
           ref.read(searchPageStateProvider.notifier).search(paginated: false);
           _searchFocusNode.requestFocus();
         },
