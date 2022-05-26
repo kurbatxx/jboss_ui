@@ -114,8 +114,4 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
       error: '',
     );
   }
-
-  void dummy() {
-    'Сработал'.log();
-  }
 }

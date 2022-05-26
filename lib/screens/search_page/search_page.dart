@@ -163,8 +163,6 @@ class DeletePersonSwitcherWidget extends ConsumerWidget {
   }
 }
 
-//SecureStorage.instance.setShowDeleteState(checkboxState);
-
 class NewSearchResultWidget extends ConsumerWidget {
   const NewSearchResultWidget({Key? key}) : super(key: key);
 
@@ -227,24 +225,36 @@ class SearchResultListWidget extends ConsumerWidget {
             const SizedBox(
               height: 2,
             ),
-            list.length == index + 1
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Column(
-                      children: const [
-                        SizedBox(
-                          height: 16.0,
-                          width: 16.0,
-                          child: CircularProgressIndicator(),
-                        ),
-                      ],
-                    ),
-                  )
-                : const SizedBox()
+            list.length == index + 1 ? showWidget(state) : const SizedBox(),
           ],
         );
       },
     );
+  }
+
+  showWidget(SearchPageState state) {
+    if (state.isLoading) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4.0),
+        child: SizedBox(
+          height: 16.0,
+          width: 16.0,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else if (state.pageNumber == state.maxPage) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4.0),
+        child: Text('Все результаты загружены'),
+      );
+    } else if (state.error.isNotEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Text(state.error),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }
 
