@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:jboss_ui/freezed/search_page_state.dart';
+import 'package:jboss_ui/models/search/search_response.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
@@ -187,7 +188,7 @@ class NewSearchResultWidget extends ConsumerWidget {
       return const Center(
         child: Text("Здесь будут отображаться результаты поиска"),
       );
-    } else if (state.isLoading) {
+    } else if (state.isLoading && state.clientList.isEmpty) {
       return const Center(
         child: CircularProgressIndicator(),
       );
@@ -195,122 +196,168 @@ class NewSearchResultWidget extends ConsumerWidget {
       return const Center(
         child: Text("Ничего не найдено"),
       );
+    } else {
+      return const SearchResultListWidget();
     }
   }
 }
 
-class SearchResultListWidget extends StatelessWidget {
+class SearchResultListWidget extends ConsumerWidget {
   const SearchResultListWidget({
     Key? key,
   }) : super(key: key);
 
   @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(searchPageStateProvider);
+
+    final list = state.clientList;
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (BuildContext context, int index) {
+        final client = list[index];
+        if (index == list.length - 5 && state.pageNumber < state.maxPage) {
+          ref.read(searchPageStateProvider.notifier).search(paginated: true);
+        }
+        return Column(
+          children: [
+            ClientSearchCardWidget(
+              client: client,
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            list.length == index + 1
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Column(
+                      children: const [
+                        SizedBox(
+                          height: 16.0,
+                          width: 16.0,
+                          child: CircularProgressIndicator(),
+                        ),
+                      ],
+                    ),
+                  )
+                : const SizedBox()
+          ],
+        );
+      },
+    );
+  }
+}
+
+class ClientSearchCardWidget extends StatelessWidget {
+  final Client client;
+
+  const ClientSearchCardWidget({
+    required this.client,
+    Key? key,
+  }) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        ClipRRect(
-          borderRadius: kMinimumRadius,
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: kMinimumHorPadding,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                  minimumSize: Size.zero,
-                                  tapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                ),
-                                onPressed: () {},
-                                child: const Text("12345678"),
-                              ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              const Expanded(
-                                  child: FittedBox(
-                                      alignment: Alignment.bottomLeft,
-                                      fit: BoxFit.scaleDown,
-                                      child: Text("Администрация"))),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              const Text("100000 тг."),
-                            ],
-                          ),
-                          const Text(
-                            "Петров Сидор Семёнович Ибн Хоттаб",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          const Divider(
-                            height: 1,
-                          ),
-                          Row(
-                            children: const [
-                              Expanded(
-                                child: Text(
-                                  "КГУ «Средняя общеобразовательная школа-комплекс эстетического воспитания №8»",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  ClipRRect(
-                    borderRadius: kMinimumRadius,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey[50],
-                      ),
-                      width: 60,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return ClipRRect(
+      borderRadius: kMinimumRadius,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: kMinimumHorPadding,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         children: [
                           TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
                             onPressed: () {},
-                            child: const Text(
-                              'Создать\n заявку',
-                              style: TextStyle(
-                                fontSize: 11,
+                            child: Text(client.id),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          Expanded(
+                              child: FittedBox(
+                                  alignment: Alignment.bottomLeft,
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(client.group))),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          Text("${client.balance} тг."),
+                        ],
+                      ),
+                      Text(
+                        "${client.fullName.surname} ${client.fullName.name} ${client.fullName.patronymic}",
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                      const Divider(
+                        height: 1,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              client.school,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 12,
                               ),
                             ),
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text('Карты'),
-                          ),
                         ],
-                      ),
-                    ),
+                      )
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              ClipRRect(
+                borderRadius: kMinimumRadius,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blueGrey[50],
+                  ),
+                  width: 60,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Создать\n заявку',
+                          style: TextStyle(
+                            fontSize: 11,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text('Карты'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

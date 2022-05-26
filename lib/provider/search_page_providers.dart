@@ -33,6 +33,12 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
     state = state.copyWith(showDeleted: !state.showDeleted);
 
     if (state.searchString.isNotEmpty) {
+      state = state.copyWith(
+        pageNumber: 1,
+        maxPage: 1,
+        clientList: [],
+      );
+
       search(paginated: false);
     }
   }
@@ -42,12 +48,19 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
   }
 
   search({required bool paginated}) async {
+    'Ищу'.log();
+    if (state.isLoading) return;
     if (state.searchString.isEmpty) return;
+
+    await Future.delayed(const Duration(seconds: 0));
     if (paginated && !state.isLoading) {
-      state.copyWith(
+      state = state.copyWith(
         pageNumber: state.pageNumber + 1,
       );
     }
+
+    "page_: ${state.pageNumber}".log();
+
     state = state.copyWith(
       isLoading: true,
       isInitial: false,
@@ -76,9 +89,15 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
     List<Client> clientList = [];
     if (!paginated) {
       clientList = clientList..addAll(searchResponse.clients);
+    } else {
+      clientList = clientList
+        ..addAll(state.clientList)
+        ..addAll(searchResponse.clients);
     }
 
+    "page: ${state.pageNumber}".log();
     state = state.copyWith(
+      maxPage: searchResponse.maxPage,
       clientList: clientList,
       isLoading: false,
     );
@@ -94,5 +113,9 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
       isLoading: false,
       error: '',
     );
+  }
+
+  void dummy() {
+    'Сработал'.log();
   }
 }
