@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SearchPageState {
   bool get isInitial => throw _privateConstructorUsedError;
   String get searchString => throw _privateConstructorUsedError;
+  String get switchersSearchString => throw _privateConstructorUsedError;
   bool get showDeleted => throw _privateConstructorUsedError;
   int get pageNumber => throw _privateConstructorUsedError;
   int get maxPage => throw _privateConstructorUsedError;
@@ -39,6 +40,7 @@ abstract class $SearchPageStateCopyWith<$Res> {
   $Res call(
       {bool isInitial,
       String searchString,
+      String switchersSearchString,
       bool showDeleted,
       int pageNumber,
       int maxPage,
@@ -61,6 +63,7 @@ class _$SearchPageStateCopyWithImpl<$Res>
   $Res call({
     Object? isInitial = freezed,
     Object? searchString = freezed,
+    Object? switchersSearchString = freezed,
     Object? showDeleted = freezed,
     Object? pageNumber = freezed,
     Object? maxPage = freezed,
@@ -77,6 +80,10 @@ class _$SearchPageStateCopyWithImpl<$Res>
       searchString: searchString == freezed
           ? _value.searchString
           : searchString // ignore: cast_nullable_to_non_nullable
+              as String,
+      switchersSearchString: switchersSearchString == freezed
+          ? _value.switchersSearchString
+          : switchersSearchString // ignore: cast_nullable_to_non_nullable
               as String,
       showDeleted: showDeleted == freezed
           ? _value.showDeleted
@@ -120,6 +127,7 @@ abstract class _$$_SearchPageStateCopyWith<$Res>
   $Res call(
       {bool isInitial,
       String searchString,
+      String switchersSearchString,
       bool showDeleted,
       int pageNumber,
       int maxPage,
@@ -144,6 +152,7 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
   $Res call({
     Object? isInitial = freezed,
     Object? searchString = freezed,
+    Object? switchersSearchString = freezed,
     Object? showDeleted = freezed,
     Object? pageNumber = freezed,
     Object? maxPage = freezed,
@@ -160,6 +169,10 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
       searchString: searchString == freezed
           ? _value.searchString
           : searchString // ignore: cast_nullable_to_non_nullable
+              as String,
+      switchersSearchString: switchersSearchString == freezed
+          ? _value.switchersSearchString
+          : switchersSearchString // ignore: cast_nullable_to_non_nullable
               as String,
       showDeleted: showDeleted == freezed
           ? _value.showDeleted
@@ -196,6 +209,7 @@ class _$_SearchPageState implements _SearchPageState {
   const _$_SearchPageState(
       {required this.isInitial,
       required this.searchString,
+      required this.switchersSearchString,
       required this.showDeleted,
       required this.pageNumber,
       required this.maxPage,
@@ -209,6 +223,8 @@ class _$_SearchPageState implements _SearchPageState {
   final bool isInitial;
   @override
   final String searchString;
+  @override
+  final String switchersSearchString;
   @override
   final bool showDeleted;
   @override
@@ -231,7 +247,7 @@ class _$_SearchPageState implements _SearchPageState {
 
   @override
   String toString() {
-    return 'SearchPageState(isInitial: $isInitial, searchString: $searchString, showDeleted: $showDeleted, pageNumber: $pageNumber, maxPage: $maxPage, isLoading: $isLoading, error: $error, clientList: $clientList, required: $required)';
+    return 'SearchPageState(isInitial: $isInitial, searchString: $searchString, switchersSearchString: $switchersSearchString, showDeleted: $showDeleted, pageNumber: $pageNumber, maxPage: $maxPage, isLoading: $isLoading, error: $error, clientList: $clientList, required: $required)';
   }
 
   @override
@@ -242,6 +258,8 @@ class _$_SearchPageState implements _SearchPageState {
             const DeepCollectionEquality().equals(other.isInitial, isInitial) &&
             const DeepCollectionEquality()
                 .equals(other.searchString, searchString) &&
+            const DeepCollectionEquality()
+                .equals(other.switchersSearchString, switchersSearchString) &&
             const DeepCollectionEquality()
                 .equals(other.showDeleted, showDeleted) &&
             const DeepCollectionEquality()
@@ -259,6 +277,7 @@ class _$_SearchPageState implements _SearchPageState {
       runtimeType,
       const DeepCollectionEquality().hash(isInitial),
       const DeepCollectionEquality().hash(searchString),
+      const DeepCollectionEquality().hash(switchersSearchString),
       const DeepCollectionEquality().hash(showDeleted),
       const DeepCollectionEquality().hash(pageNumber),
       const DeepCollectionEquality().hash(maxPage),
@@ -277,6 +296,7 @@ abstract class _SearchPageState implements SearchPageState {
   const factory _SearchPageState(
       {required final bool isInitial,
       required final String searchString,
+      required final String switchersSearchString,
       required final bool showDeleted,
       required final int pageNumber,
       required final int maxPage,
@@ -289,6 +309,8 @@ abstract class _SearchPageState implements SearchPageState {
   bool get isInitial => throw _privateConstructorUsedError;
   @override
   String get searchString => throw _privateConstructorUsedError;
+  @override
+  String get switchersSearchString => throw _privateConstructorUsedError;
   @override
   bool get showDeleted => throw _privateConstructorUsedError;
   @override

@@ -14,6 +14,7 @@ final searchPageStateProvider =
     const SearchPageState(
       isInitial: true,
       searchString: '',
+      switchersSearchString: '',
       showDeleted: false,
       pageNumber: 1,
       maxPage: 1,
@@ -32,8 +33,9 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
   showDeletedtoogle() {
     state = state.copyWith(showDeleted: !state.showDeleted);
 
-    if (state.searchString.isNotEmpty) {
+    if (state.switchersSearchString.isNotEmpty) {
       state = state.copyWith(
+        searchString: state.switchersSearchString,
         pageNumber: 1,
         maxPage: 1,
         clientList: [],
@@ -45,6 +47,10 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
 
   setSearchString({required String text}) {
     state = state.copyWith(searchString: text);
+  }
+
+  setSwitchersSearchString({required String text}) {
+    state = state.copyWith(switchersSearchString: text);
   }
 
   search({required bool paginated}) async {
@@ -72,6 +78,8 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
       page: state.pageNumber,
       showDeleted: state.showDeleted,
     );
+
+    searchRequest.searchString.log();
 
     final searchResponseString =
         await compute(JbossApi.computeSearch, searchRequest);
@@ -107,6 +115,7 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
     state = state.copyWith(
       isInitial: true,
       searchString: '',
+      switchersSearchString: '',
       showDeleted: false,
       pageNumber: 1,
       clientList: [],

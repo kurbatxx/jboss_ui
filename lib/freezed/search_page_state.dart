@@ -7,6 +7,7 @@ class SearchPageState with _$SearchPageState {
   const factory SearchPageState(
       {required bool isInitial,
       required String searchString,
+      required String switchersSearchString,
       required bool showDeleted,
       required int pageNumber,
       required int maxPage,

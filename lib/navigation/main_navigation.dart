@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jboss_ui/screens/hub_screen/hub_screen.dart';
 import 'package:jboss_ui/screens/login_page/login_page.dart';
 import 'package:jboss_ui/screens/register_device_page/register_device_page.dart';
-import 'package:jboss_ui/screens/settings_page/settings_page.dart';
+import 'package:jboss_ui/screens/settings_page/pages/add_devices_settings_page.dart';
 
 abstract class NavigationRouteNames {
   static const loginScreen = '/';
@@ -18,7 +18,7 @@ class Navigation {
   final routes = <String, Widget Function(BuildContext)>{
     NavigationRouteNames.loginScreen: (context) => const LoginPage(),
     NavigationRouteNames.hubScreen: (context) => const HubScreen(),
-    NavigationRouteNames.settingsScreen: (context) => const SettingsPage(),
+    NavigationRouteNames.settingsScreen: (context) => const DevicesAddWidget(),
     NavigationRouteNames.registerCardScreen: (context) =>
         const RegisterDevicePage(),
   };
