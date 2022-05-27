@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
 import 'package:jboss_ui/screens/register_device_page/register_device_page.dart';
 import 'package:jboss_ui/screens/search_page/search_page.dart';
+import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 import 'package:jboss_ui/utils/bitsdojo.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
@@ -18,16 +19,16 @@ enum NavBarOptions {
     screen: SearchPage(),
   ),
   history(
-    icon: Icons.data_thresholding,
+    icon: Icons.analytics_outlined,
     screen: ClearScreenTwo(),
   ),
   registerDevice(
-    icon: Icons.data_thresholding,
+    icon: Icons.devices_other_rounded,
     screen: RegisterDevicePage(),
   ),
   setting(
     icon: Icons.settings,
-    screen: ClearScreenOne(),
+    screen: SettingsPage(),
   );
 
   final IconData icon;
@@ -44,6 +45,7 @@ class HubScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           const BitsDojoTitleBar(),
@@ -71,11 +73,8 @@ class HubScreen extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Container(
-              color: Colors.amber,
-              child: const NavBarScreen(),
-            ),
+          const Expanded(
+            child: NavBarScreen(),
           )
         ],
       ),
