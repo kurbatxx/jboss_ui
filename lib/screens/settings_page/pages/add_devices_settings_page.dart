@@ -8,8 +8,8 @@ import 'package:jboss_ui/provider/settings_page_providers.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 import 'package:jboss_ui/utils/constant.dart';
 
-class DevicesAddWidget extends ConsumerWidget {
-  const DevicesAddWidget({Key? key}) : super(key: key);
+class AddDevicesSettingsPage extends ConsumerWidget {
+  const AddDevicesSettingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,11 +47,19 @@ class DevicesAddWidget extends ConsumerWidget {
                             hintText: 'Название устройства'),
                       ),
                       TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: 'Цена устройства')),
+                        decoration:
+                            const InputDecoration(hintText: 'Цена устройства'),
+                      ),
                       TextButton(
                         onPressed: () {},
-                        child: const Text('Сохранить устройство'),
+                        child: const Text('Тип устройства'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          ref.read(settingNavigationProvider.state).state =
+                              SettingsScreenOption.availableColors;
+                        },
+                        child: const Text('Выбрать цвета'),
                       )
                     ],
                   ),
@@ -59,6 +67,14 @@ class DevicesAddWidget extends ConsumerWidget {
               ],
             ),
           ),
+        ),
+        Column(
+          children: [
+            TextButton(
+              onPressed: () {},
+              child: const Text('Сохранить устройство'),
+            ),
+          ],
         )
       ],
     );
@@ -100,8 +116,17 @@ class DevicesIconsWidget extends ConsumerWidget {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: () {
-                            //ref.read(searchPageStateProvider.notifier).showDeletedtoogle();
+                          onTap: () async {
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: ['svg'],
+                            );
+
+                            if (result != null) {
+                              File file = File(result.files.single.name);
+                              ref.read(svgFileProvider.state).state = file;
+                            }
                           },
                           child: Center(
                             child: SvgPicture.file(

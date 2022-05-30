@@ -18,7 +18,8 @@ class Navigation {
   final routes = <String, Widget Function(BuildContext)>{
     NavigationRouteNames.loginScreen: (context) => const LoginPage(),
     NavigationRouteNames.hubScreen: (context) => const HubScreen(),
-    NavigationRouteNames.settingsScreen: (context) => const DevicesAddWidget(),
+    NavigationRouteNames.settingsScreen: (context) =>
+        const AddDevicesSettingsPage(),
     NavigationRouteNames.registerCardScreen: (context) =>
         const RegisterDevicePage(),
   };
