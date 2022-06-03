@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/provider/new_task_page_rovider.dart';
+import 'package:jboss_ui/provider/new_task_page_provider.dart';
 import 'package:jboss_ui/states/search_page_state.dart';
 import 'package:jboss_ui/models/search/search_response.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
@@ -57,11 +58,11 @@ class SearchFormWidget extends ConsumerWidget {
           ),
         ),
         onChanged: (value) {
-          if (value.isEmpty) {
-            ref
-                .read(searchPageStateProvider.notifier)
-                .setSearchString(text: searchController.text);
-          }
+          // if (value.isEmpty) {
+          //   ref
+          //       .read(searchPageStateProvider.notifier)
+          //       .setSearchString(text: searchController.text);
+          // }
           ref
               .read(searchPageStateProvider.notifier)
               .setSwitchersSearchString(text: searchController.text);

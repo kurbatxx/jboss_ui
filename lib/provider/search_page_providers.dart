@@ -40,7 +40,7 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
         maxPage: 1,
         clientList: [],
       );
-
+      state.switchersSearchString.log();
       search(paginated: false);
     }
   }
@@ -57,6 +57,10 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
     'Ищу'.log();
     if (state.isLoading) return;
     if (state.searchString.isEmpty) return;
+
+    if (!paginated) {
+      state = state.copyWith(clientList: []);
+    }
 
     await Future.delayed(const Duration(seconds: 0));
     if (paginated && !state.isLoading) {
