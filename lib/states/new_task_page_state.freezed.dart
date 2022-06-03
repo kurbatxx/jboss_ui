@@ -19,6 +19,7 @@ mixin _$NewTaskPageState {
   Client get client => throw _privateConstructorUsedError;
   int get position => throw _privateConstructorUsedError;
   int get dbDeviceId => throw _privateConstructorUsedError;
+  List<TypeDevice> get listDevices => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NewTaskPageStateCopyWith<NewTaskPageState> get copyWith =>
@@ -30,7 +31,11 @@ abstract class $NewTaskPageStateCopyWith<$Res> {
   factory $NewTaskPageStateCopyWith(
           NewTaskPageState value, $Res Function(NewTaskPageState) then) =
       _$NewTaskPageStateCopyWithImpl<$Res>;
-  $Res call({Client client, int position, int dbDeviceId});
+  $Res call(
+      {Client client,
+      int position,
+      int dbDeviceId,
+      List<TypeDevice> listDevices});
 }
 
 /// @nodoc
@@ -47,6 +52,7 @@ class _$NewTaskPageStateCopyWithImpl<$Res>
     Object? client = freezed,
     Object? position = freezed,
     Object? dbDeviceId = freezed,
+    Object? listDevices = freezed,
   }) {
     return _then(_value.copyWith(
       client: client == freezed
@@ -61,6 +67,10 @@ class _$NewTaskPageStateCopyWithImpl<$Res>
           ? _value.dbDeviceId
           : dbDeviceId // ignore: cast_nullable_to_non_nullable
               as int,
+      listDevices: listDevices == freezed
+          ? _value.listDevices
+          : listDevices // ignore: cast_nullable_to_non_nullable
+              as List<TypeDevice>,
     ));
   }
 }
@@ -72,7 +82,11 @@ abstract class _$$_NewTaskPageStateCopyWith<$Res>
           _$_NewTaskPageState value, $Res Function(_$_NewTaskPageState) then) =
       __$$_NewTaskPageStateCopyWithImpl<$Res>;
   @override
-  $Res call({Client client, int position, int dbDeviceId});
+  $Res call(
+      {Client client,
+      int position,
+      int dbDeviceId,
+      List<TypeDevice> listDevices});
 }
 
 /// @nodoc
@@ -91,6 +105,7 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
     Object? client = freezed,
     Object? position = freezed,
     Object? dbDeviceId = freezed,
+    Object? listDevices = freezed,
   }) {
     return _then(_$_NewTaskPageState(
       client: client == freezed
@@ -105,6 +120,10 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
           ? _value.dbDeviceId
           : dbDeviceId // ignore: cast_nullable_to_non_nullable
               as int,
+      listDevices: listDevices == freezed
+          ? _value._listDevices
+          : listDevices // ignore: cast_nullable_to_non_nullable
+              as List<TypeDevice>,
     ));
   }
 }
@@ -113,7 +132,11 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
 
 class _$_NewTaskPageState implements _NewTaskPageState {
   const _$_NewTaskPageState(
-      {required this.client, required this.position, required this.dbDeviceId});
+      {required this.client,
+      required this.position,
+      required this.dbDeviceId,
+      required final List<TypeDevice> listDevices})
+      : _listDevices = listDevices;
 
   @override
   final Client client;
@@ -121,10 +144,16 @@ class _$_NewTaskPageState implements _NewTaskPageState {
   final int position;
   @override
   final int dbDeviceId;
+  final List<TypeDevice> _listDevices;
+  @override
+  List<TypeDevice> get listDevices {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listDevices);
+  }
 
   @override
   String toString() {
-    return 'NewTaskPageState(client: $client, position: $position, dbDeviceId: $dbDeviceId)';
+    return 'NewTaskPageState(client: $client, position: $position, dbDeviceId: $dbDeviceId, listDevices: $listDevices)';
   }
 
   @override
@@ -135,7 +164,9 @@ class _$_NewTaskPageState implements _NewTaskPageState {
             const DeepCollectionEquality().equals(other.client, client) &&
             const DeepCollectionEquality().equals(other.position, position) &&
             const DeepCollectionEquality()
-                .equals(other.dbDeviceId, dbDeviceId));
+                .equals(other.dbDeviceId, dbDeviceId) &&
+            const DeepCollectionEquality()
+                .equals(other._listDevices, _listDevices));
   }
 
   @override
@@ -143,7 +174,8 @@ class _$_NewTaskPageState implements _NewTaskPageState {
       runtimeType,
       const DeepCollectionEquality().hash(client),
       const DeepCollectionEquality().hash(position),
-      const DeepCollectionEquality().hash(dbDeviceId));
+      const DeepCollectionEquality().hash(dbDeviceId),
+      const DeepCollectionEquality().hash(_listDevices));
 
   @JsonKey(ignore: true)
   @override
@@ -155,7 +187,8 @@ abstract class _NewTaskPageState implements NewTaskPageState {
   const factory _NewTaskPageState(
       {required final Client client,
       required final int position,
-      required final int dbDeviceId}) = _$_NewTaskPageState;
+      required final int dbDeviceId,
+      required final List<TypeDevice> listDevices}) = _$_NewTaskPageState;
 
   @override
   Client get client => throw _privateConstructorUsedError;
@@ -163,6 +196,8 @@ abstract class _NewTaskPageState implements NewTaskPageState {
   int get position => throw _privateConstructorUsedError;
   @override
   int get dbDeviceId => throw _privateConstructorUsedError;
+  @override
+  List<TypeDevice> get listDevices => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NewTaskPageStateCopyWith<_$_NewTaskPageState> get copyWith =>
