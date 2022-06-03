@@ -29,7 +29,7 @@ class Client {
   final String school;
   final String balance;
 
-  Client({
+  const Client({
     required this.id,
     required this.fullName,
     required this.group,
@@ -48,7 +48,7 @@ class FullName {
   final String surname;
   final String patronymic;
 
-  FullName({
+  const FullName({
     required this.name,
     required this.surname,
     required this.patronymic,
