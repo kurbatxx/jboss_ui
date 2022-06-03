@@ -10,15 +10,12 @@ import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/utils/app_dir.dart';
 
-//late PostgreSQLConnection postgress;
 final appDir = getAppDir();
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DbApi.initial();
-  await DbApi.initial();
-  await DbApi.getDevices();
-
+  await DbApi.instance.conn.open();
+  
   JbossApi.initial();
   final initialState = await UiApi.initial();
 
