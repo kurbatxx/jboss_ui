@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
-import 'package:jboss_ui/freezed/search_page_state.dart';
+import 'package:jboss_ui/states/search_page_state.dart';
 import 'package:jboss_ui/models/search/search_request.dart';
 import 'package:jboss_ui/models/search/search_response.dart';
 import 'package:jboss_ui/utils/dev_log.dart';

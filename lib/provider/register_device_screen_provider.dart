@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
-import 'package:jboss_ui/freezed/register_device_screen_state.dart';
+import 'package:jboss_ui/states/register_device_screen_state.dart';
 import 'package:jboss_ui/models/register_device/register_device_request.dart';
 import 'package:jboss_ui/models/register_device/register_device_response.dart';
 import 'package:jboss_ui/screens/register_device_screen/register_device_screen.dart';
