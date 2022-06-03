@@ -7,7 +7,8 @@ import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/freezed/register_device_screen_state.dart';
 import 'package:jboss_ui/models/register_device/register_device_request.dart';
 import 'package:jboss_ui/models/register_device/register_device_response.dart';
-import 'package:jboss_ui/screens/register_device_page/register_device_page.dart';
+import 'package:jboss_ui/screens/register_device_screen/register_device_screen.dart';
+
 import 'package:jboss_ui/utils/dev_log.dart';
 
 final registerDeviceScreenStateProvider = StateNotifierProvider<

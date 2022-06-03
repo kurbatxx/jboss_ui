@@ -7,7 +7,7 @@ import 'package:jboss_ui/freezed/login_screen_state.dart';
 import 'package:jboss_ui/models/login/login_response.dart';
 import 'package:jboss_ui/models/login/login_request.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
-import 'package:jboss_ui/screens/login_page/login_page.dart';
+import 'package:jboss_ui/screens/login_screen/login_screen.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
 import 'package:jboss_ui/utils/secure.dart';
 

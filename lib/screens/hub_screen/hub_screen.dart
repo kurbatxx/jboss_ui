@@ -4,8 +4,9 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/search_page_providers.dart';
-import 'package:jboss_ui/screens/register_device_page/register_device_page.dart';
-import 'package:jboss_ui/screens/search_page/search_page.dart';
+
+import 'package:jboss_ui/screens/register_device_screen/register_device_screen.dart';
+import 'package:jboss_ui/screens/search_screen/search_screen.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 import 'package:jboss_ui/utils/bitsdojo.dart';
 import 'package:jboss_ui/utils/constant.dart';
@@ -16,7 +17,7 @@ final navBarPositionProvider = StateProvider((ref) => 0);
 enum NavBarOptions {
   search(
     icon: Icons.search,
-    screen: SearchPage(),
+    screen: SearchScreen(),
   ),
   history(
     icon: Icons.analytics_outlined,
@@ -24,11 +25,11 @@ enum NavBarOptions {
   ),
   registerDevice(
     icon: Icons.devices_other_rounded,
-    screen: RegisterDevicePage(),
+    screen: RegisterDeviceScreen(),
   ),
   setting(
     icon: Icons.settings,
-    screen: SettingsPage(),
+    screen: SettingsScreen(),
   );
 
   final IconData icon;

@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/register_device_screen_provider.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
 
-class RegisterDevicePage extends StatelessWidget {
-  const RegisterDevicePage({Key? key}) : super(key: key);
+class RegisterDeviceScreen extends StatelessWidget {
+  const RegisterDeviceScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

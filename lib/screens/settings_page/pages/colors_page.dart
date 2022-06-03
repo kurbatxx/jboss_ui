@@ -26,7 +26,6 @@ class ColorsPage extends ConsumerWidget {
             Container(
               height: 50,
               width: 200,
-              color: Colors.red,
             )
           ],
         ),
