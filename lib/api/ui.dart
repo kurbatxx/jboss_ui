@@ -1,4 +1,4 @@
-import 'package:jboss_ui/freezed/login_screen_state.dart';
+import 'package:jboss_ui/states/login_screen_state.dart';
 import 'package:jboss_ui/utils/secure.dart';
 
 class UiApi {
