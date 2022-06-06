@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/new_task_page_provider.dart';
 import 'package:jboss_ui/screens/search_screen/search_screen.dart';
+import 'package:jboss_ui/utils/constant.dart';
 
 class NewTaskPage extends ConsumerWidget {
   const NewTaskPage({Key? key}) : super(key: key);
@@ -32,22 +33,95 @@ class NewTaskPage extends ConsumerWidget {
         ),
         state.listDevices.isEmpty
             ? const Text('Установите устройства в настройках')
-            : Expanded(
-                child: ListView.builder(
-                  itemCount: state.listDevices.length,
-                  itemBuilder: (context, index) {
-                    final device = state.listDevices[index];
-                    return ListTile(
-                      leading: SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: device.svgIcon,
+            : Wrap(
+                spacing: 4,
+                children: List.generate(
+                  state.listDevices.length,
+                  (index) {
+                    return ClipRRect(
+                      borderRadius: kMinimumRadius,
+                      child: Material(
+                        color: state.devicePosition == index
+                            ? Colors.green
+                            : Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            ref
+                                .read(newTaskStateProvider.notifier)
+                                .selectDevice(selected: index);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: SizedBox(
+                              width: 50,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 40,
+                                    child: state.listDevices[index].svgIcon,
+                                  ),
+                                  Text(index.toString())
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                      title: Text(device.deviceName),
                     );
                   },
                 ),
-              )
+              ),
+        Wrap(
+          spacing: 4,
+          children: List.generate(
+            state.listColoredDevices.length,
+            (index) {
+              return ClipRRect(
+                borderRadius: kMinimumRadius,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      ref
+                          .read(newTaskStateProvider.notifier)
+                          .selectColor(selected: index);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: state.listColoredDevices[index].color,
+                                borderRadius: kMinimumRadius,
+                              ),
+                            ),
+                            state.colorPosition == index
+                                ? const Center(
+                                    child: Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 35.0,
+                                    ),
+                                  )
+                                : const SizedBox()
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: const Text('Создать заявку'),
+        )
       ],
     );
   }

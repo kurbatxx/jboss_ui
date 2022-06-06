@@ -17,9 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$NewTaskPageState {
   Client get client => throw _privateConstructorUsedError;
-  int get position => throw _privateConstructorUsedError;
+  int get devicePosition => throw _privateConstructorUsedError;
+  int get colorPosition => throw _privateConstructorUsedError;
   int get dbDeviceId => throw _privateConstructorUsedError;
   List<TypeDevice> get listDevices => throw _privateConstructorUsedError;
+  List<ColoredDevice> get listColoredDevices =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NewTaskPageStateCopyWith<NewTaskPageState> get copyWith =>
@@ -33,9 +36,11 @@ abstract class $NewTaskPageStateCopyWith<$Res> {
       _$NewTaskPageStateCopyWithImpl<$Res>;
   $Res call(
       {Client client,
-      int position,
+      int devicePosition,
+      int colorPosition,
       int dbDeviceId,
-      List<TypeDevice> listDevices});
+      List<TypeDevice> listDevices,
+      List<ColoredDevice> listColoredDevices});
 }
 
 /// @nodoc
@@ -50,18 +55,24 @@ class _$NewTaskPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? client = freezed,
-    Object? position = freezed,
+    Object? devicePosition = freezed,
+    Object? colorPosition = freezed,
     Object? dbDeviceId = freezed,
     Object? listDevices = freezed,
+    Object? listColoredDevices = freezed,
   }) {
     return _then(_value.copyWith(
       client: client == freezed
           ? _value.client
           : client // ignore: cast_nullable_to_non_nullable
               as Client,
-      position: position == freezed
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
+      devicePosition: devicePosition == freezed
+          ? _value.devicePosition
+          : devicePosition // ignore: cast_nullable_to_non_nullable
+              as int,
+      colorPosition: colorPosition == freezed
+          ? _value.colorPosition
+          : colorPosition // ignore: cast_nullable_to_non_nullable
               as int,
       dbDeviceId: dbDeviceId == freezed
           ? _value.dbDeviceId
@@ -71,6 +82,10 @@ class _$NewTaskPageStateCopyWithImpl<$Res>
           ? _value.listDevices
           : listDevices // ignore: cast_nullable_to_non_nullable
               as List<TypeDevice>,
+      listColoredDevices: listColoredDevices == freezed
+          ? _value.listColoredDevices
+          : listColoredDevices // ignore: cast_nullable_to_non_nullable
+              as List<ColoredDevice>,
     ));
   }
 }
@@ -84,9 +99,11 @@ abstract class _$$_NewTaskPageStateCopyWith<$Res>
   @override
   $Res call(
       {Client client,
-      int position,
+      int devicePosition,
+      int colorPosition,
       int dbDeviceId,
-      List<TypeDevice> listDevices});
+      List<TypeDevice> listDevices,
+      List<ColoredDevice> listColoredDevices});
 }
 
 /// @nodoc
@@ -103,18 +120,24 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? client = freezed,
-    Object? position = freezed,
+    Object? devicePosition = freezed,
+    Object? colorPosition = freezed,
     Object? dbDeviceId = freezed,
     Object? listDevices = freezed,
+    Object? listColoredDevices = freezed,
   }) {
     return _then(_$_NewTaskPageState(
       client: client == freezed
           ? _value.client
           : client // ignore: cast_nullable_to_non_nullable
               as Client,
-      position: position == freezed
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
+      devicePosition: devicePosition == freezed
+          ? _value.devicePosition
+          : devicePosition // ignore: cast_nullable_to_non_nullable
+              as int,
+      colorPosition: colorPosition == freezed
+          ? _value.colorPosition
+          : colorPosition // ignore: cast_nullable_to_non_nullable
               as int,
       dbDeviceId: dbDeviceId == freezed
           ? _value.dbDeviceId
@@ -124,6 +147,10 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
           ? _value._listDevices
           : listDevices // ignore: cast_nullable_to_non_nullable
               as List<TypeDevice>,
+      listColoredDevices: listColoredDevices == freezed
+          ? _value._listColoredDevices
+          : listColoredDevices // ignore: cast_nullable_to_non_nullable
+              as List<ColoredDevice>,
     ));
   }
 }
@@ -133,15 +160,20 @@ class __$$_NewTaskPageStateCopyWithImpl<$Res>
 class _$_NewTaskPageState implements _NewTaskPageState {
   const _$_NewTaskPageState(
       {required this.client,
-      required this.position,
+      required this.devicePosition,
+      required this.colorPosition,
       required this.dbDeviceId,
-      required final List<TypeDevice> listDevices})
-      : _listDevices = listDevices;
+      required final List<TypeDevice> listDevices,
+      required final List<ColoredDevice> listColoredDevices})
+      : _listDevices = listDevices,
+        _listColoredDevices = listColoredDevices;
 
   @override
   final Client client;
   @override
-  final int position;
+  final int devicePosition;
+  @override
+  final int colorPosition;
   @override
   final int dbDeviceId;
   final List<TypeDevice> _listDevices;
@@ -151,9 +183,16 @@ class _$_NewTaskPageState implements _NewTaskPageState {
     return EqualUnmodifiableListView(_listDevices);
   }
 
+  final List<ColoredDevice> _listColoredDevices;
+  @override
+  List<ColoredDevice> get listColoredDevices {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listColoredDevices);
+  }
+
   @override
   String toString() {
-    return 'NewTaskPageState(client: $client, position: $position, dbDeviceId: $dbDeviceId, listDevices: $listDevices)';
+    return 'NewTaskPageState(client: $client, devicePosition: $devicePosition, colorPosition: $colorPosition, dbDeviceId: $dbDeviceId, listDevices: $listDevices, listColoredDevices: $listColoredDevices)';
   }
 
   @override
@@ -162,20 +201,27 @@ class _$_NewTaskPageState implements _NewTaskPageState {
         (other.runtimeType == runtimeType &&
             other is _$_NewTaskPageState &&
             const DeepCollectionEquality().equals(other.client, client) &&
-            const DeepCollectionEquality().equals(other.position, position) &&
+            const DeepCollectionEquality()
+                .equals(other.devicePosition, devicePosition) &&
+            const DeepCollectionEquality()
+                .equals(other.colorPosition, colorPosition) &&
             const DeepCollectionEquality()
                 .equals(other.dbDeviceId, dbDeviceId) &&
             const DeepCollectionEquality()
-                .equals(other._listDevices, _listDevices));
+                .equals(other._listDevices, _listDevices) &&
+            const DeepCollectionEquality()
+                .equals(other._listColoredDevices, _listColoredDevices));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(client),
-      const DeepCollectionEquality().hash(position),
+      const DeepCollectionEquality().hash(devicePosition),
+      const DeepCollectionEquality().hash(colorPosition),
       const DeepCollectionEquality().hash(dbDeviceId),
-      const DeepCollectionEquality().hash(_listDevices));
+      const DeepCollectionEquality().hash(_listDevices),
+      const DeepCollectionEquality().hash(_listColoredDevices));
 
   @JsonKey(ignore: true)
   @override
@@ -185,19 +231,27 @@ class _$_NewTaskPageState implements _NewTaskPageState {
 
 abstract class _NewTaskPageState implements NewTaskPageState {
   const factory _NewTaskPageState(
-      {required final Client client,
-      required final int position,
-      required final int dbDeviceId,
-      required final List<TypeDevice> listDevices}) = _$_NewTaskPageState;
+          {required final Client client,
+          required final int devicePosition,
+          required final int colorPosition,
+          required final int dbDeviceId,
+          required final List<TypeDevice> listDevices,
+          required final List<ColoredDevice> listColoredDevices}) =
+      _$_NewTaskPageState;
 
   @override
   Client get client => throw _privateConstructorUsedError;
   @override
-  int get position => throw _privateConstructorUsedError;
+  int get devicePosition => throw _privateConstructorUsedError;
+  @override
+  int get colorPosition => throw _privateConstructorUsedError;
   @override
   int get dbDeviceId => throw _privateConstructorUsedError;
   @override
   List<TypeDevice> get listDevices => throw _privateConstructorUsedError;
+  @override
+  List<ColoredDevice> get listColoredDevices =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_NewTaskPageStateCopyWith<_$_NewTaskPageState> get copyWith =>
