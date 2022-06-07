@@ -15,7 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DbApi.initial();
   await DbApi.instance.conn.open();
-  
+
   JbossApi.initial();
   final initialState = await UiApi.initial();
 

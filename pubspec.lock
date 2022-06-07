@@ -299,7 +299,7 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.7"
+    version: "2.0.0-dev.9"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -652,7 +652,7 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0-dev.7"
+    version: "2.0.0-dev.9"
   sasl_scram:
     dependency: transitive
     description:

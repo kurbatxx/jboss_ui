@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_riverpod: ^2.0.0-dev.7
+  flutter_riverpod: ^2.0.0-dev.9
 
   json_serializable: ^6.2.0
   json_annotation: ^4.5.0

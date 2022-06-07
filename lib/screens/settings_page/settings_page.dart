@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/provider/device_list_page_provider.dart';
 import 'package:jboss_ui/screens/settings_page/pages/add_devices_settings_page.dart';
 import 'package:jboss_ui/screens/settings_page/pages/available_colors.page.dart';
 import 'package:jboss_ui/screens/settings_page/pages/colors_page.dart';
-import 'package:jboss_ui/screens/settings_page/pages/devices_list_widget.dart';
+import 'package:jboss_ui/screens/settings_page/pages/devices_list_page.dart';
 import 'package:jboss_ui/utils/constant.dart';
 
 final settingNavigationProvider =
@@ -14,7 +15,7 @@ enum SettingsScreenOption {
     screen: SettingSelectorWidget(),
   ),
   devices(
-    screen: DevicesListWidget(),
+    screen: DevicesListPage(),
   ),
   addDevice(
     screen: AddDevicesSettingsPage(),
@@ -79,6 +80,7 @@ class SettingSelectorWidget extends ConsumerWidget {
                 onPressed: () {
                   ref.read(settingNavigationProvider.state).state =
                       SettingsScreenOption.devices;
+                  ref.read(deviceListPageProvider.notifier).getDevices();
                 },
                 child: const Text('Устройства'),
               ),
