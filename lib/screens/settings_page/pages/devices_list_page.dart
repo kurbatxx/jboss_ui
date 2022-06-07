@@ -11,7 +11,6 @@ class DevicesListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(deviceListPageProvider);
-    state.devices.length.log();
 
     return Column(
       children: [
@@ -40,9 +39,10 @@ class DevicesListPage extends ConsumerWidget {
           ],
         ),
         Expanded(
-          child: ListView.builder(
+          child: ReorderableListView.builder(
             itemCount: state.devices.length,
             itemBuilder: (context, index) => Column(
+              key: Key('${state.devices[index].typeDeviceId}'),
               children: [
                 DeviceTileWidget(
                   device: state.devices[index],
@@ -54,6 +54,15 @@ class DevicesListPage extends ConsumerWidget {
                       ),
               ],
             ),
+            onReorder: (int oldIndex, int newIndex) {
+              if (oldIndex < newIndex) {
+                newIndex -= 1;
+              }
+              ref.read(deviceListPageProvider.notifier).updateList(
+                    oldIndex: oldIndex,
+                    newIndex: newIndex,
+                  );
+            },
           ),
         ),
       ],
