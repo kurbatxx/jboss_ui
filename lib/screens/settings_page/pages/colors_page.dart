@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/color_list_page_provider.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
@@ -9,7 +10,6 @@ class ColorsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(colorsListPageProvider);
-Color(0xff443a49);
     return Column(
       children: [
         Row(
