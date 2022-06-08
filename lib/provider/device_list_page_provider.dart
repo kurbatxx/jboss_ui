@@ -30,6 +30,7 @@ class DevicesListPageStateNotifer extends StateNotifier<DeviicesListPageState> {
     '-------'.log();
     oldIndex.log();
     newIndex.log();
+    '---'.log();
 
     List<SettingTypeDevice> modifyList = [];
     modifyList.addAll(state.devices);
@@ -37,5 +38,10 @@ class DevicesListPageStateNotifer extends StateNotifier<DeviicesListPageState> {
     final SettingTypeDevice item = modifyList.removeAt(oldIndex);
     modifyList.insert(newIndex, item);
     state = state.copyWith(devices: modifyList);
+
+    DbApi.updateTypeDevicePosition(
+      oldPosition: oldIndex,
+      newPosition: newIndex,
+    );
   }
 }

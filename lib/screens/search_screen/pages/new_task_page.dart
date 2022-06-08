@@ -60,7 +60,11 @@ class NewTaskPage extends ConsumerWidget {
                                     height: 40,
                                     child: state.listDevices[index].svgIcon,
                                   ),
-                                  Text(index.toString())
+                                  FittedBox(
+                                    child: Text(
+                                      state.listDevices[index].deviceName,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
