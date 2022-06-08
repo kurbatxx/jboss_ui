@@ -4,8 +4,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'devices_list_page_state.freezed.dart';
 
 @freezed
-class DeviicesListPageState with _$DeviicesListPageState {
-  const factory DeviicesListPageState({
+class DevicesListPageState with _$DevicesListPageState {
+  const factory DevicesListPageState({
     required List<SettingTypeDevice> devices,
-  }) = _DeviicesListPageState;
+  }) = _DevicesListPageState;
 }

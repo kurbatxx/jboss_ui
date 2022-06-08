@@ -2,20 +2,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/database.dart';
 import 'package:jboss_ui/models/database/setting_type_device.dart';
 import 'package:jboss_ui/states/devices_list_page_state.dart';
-import 'package:jboss_ui/utils/dev_log.dart';
 
 final deviceListPageProvider =
-    StateNotifierProvider<DevicesListPageStateNotifer, DeviicesListPageState>(
+    StateNotifierProvider<DevicesListPageStateNotifer, DevicesListPageState>(
   (ref) => DevicesListPageStateNotifer(
-    const DeviicesListPageState(
+    const DevicesListPageState(
       devices: [],
     ),
   ),
 );
 
-class DevicesListPageStateNotifer extends StateNotifier<DeviicesListPageState> {
+class DevicesListPageStateNotifer extends StateNotifier<DevicesListPageState> {
   DevicesListPageStateNotifer(
-    DeviicesListPageState state,
+    DevicesListPageState state,
   ) : super(state);
 
   getDevices() async {
@@ -27,11 +26,6 @@ class DevicesListPageStateNotifer extends StateNotifier<DeviicesListPageState> {
     required int oldIndex,
     required int newIndex,
   }) {
-    '-------'.log();
-    oldIndex.log();
-    newIndex.log();
-    '---'.log();
-
     List<SettingTypeDevice> modifyList = [];
     modifyList.addAll(state.devices);
 

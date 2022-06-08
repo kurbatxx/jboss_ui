@@ -15,30 +15,30 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$DeviicesListPageState {
+mixin _$DevicesListPageState {
   List<SettingTypeDevice> get devices => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $DeviicesListPageStateCopyWith<DeviicesListPageState> get copyWith =>
+  $DevicesListPageStateCopyWith<DevicesListPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DeviicesListPageStateCopyWith<$Res> {
-  factory $DeviicesListPageStateCopyWith(DeviicesListPageState value,
-          $Res Function(DeviicesListPageState) then) =
-      _$DeviicesListPageStateCopyWithImpl<$Res>;
+abstract class $DevicesListPageStateCopyWith<$Res> {
+  factory $DevicesListPageStateCopyWith(DevicesListPageState value,
+          $Res Function(DevicesListPageState) then) =
+      _$DevicesListPageStateCopyWithImpl<$Res>;
   $Res call({List<SettingTypeDevice> devices});
 }
 
 /// @nodoc
-class _$DeviicesListPageStateCopyWithImpl<$Res>
-    implements $DeviicesListPageStateCopyWith<$Res> {
-  _$DeviicesListPageStateCopyWithImpl(this._value, this._then);
+class _$DevicesListPageStateCopyWithImpl<$Res>
+    implements $DevicesListPageStateCopyWith<$Res> {
+  _$DevicesListPageStateCopyWithImpl(this._value, this._then);
 
-  final DeviicesListPageState _value;
+  final DevicesListPageState _value;
   // ignore: unused_field
-  final $Res Function(DeviicesListPageState) _then;
+  final $Res Function(DevicesListPageState) _then;
 
   @override
   $Res call({
@@ -54,32 +54,31 @@ class _$DeviicesListPageStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_DeviicesListPageStateCopyWith<$Res>
-    implements $DeviicesListPageStateCopyWith<$Res> {
-  factory _$$_DeviicesListPageStateCopyWith(_$_DeviicesListPageState value,
-          $Res Function(_$_DeviicesListPageState) then) =
-      __$$_DeviicesListPageStateCopyWithImpl<$Res>;
+abstract class _$$_DevicesListPageStateCopyWith<$Res>
+    implements $DevicesListPageStateCopyWith<$Res> {
+  factory _$$_DevicesListPageStateCopyWith(_$_DevicesListPageState value,
+          $Res Function(_$_DevicesListPageState) then) =
+      __$$_DevicesListPageStateCopyWithImpl<$Res>;
   @override
   $Res call({List<SettingTypeDevice> devices});
 }
 
 /// @nodoc
-class __$$_DeviicesListPageStateCopyWithImpl<$Res>
-    extends _$DeviicesListPageStateCopyWithImpl<$Res>
-    implements _$$_DeviicesListPageStateCopyWith<$Res> {
-  __$$_DeviicesListPageStateCopyWithImpl(_$_DeviicesListPageState _value,
-      $Res Function(_$_DeviicesListPageState) _then)
-      : super(_value, (v) => _then(v as _$_DeviicesListPageState));
+class __$$_DevicesListPageStateCopyWithImpl<$Res>
+    extends _$DevicesListPageStateCopyWithImpl<$Res>
+    implements _$$_DevicesListPageStateCopyWith<$Res> {
+  __$$_DevicesListPageStateCopyWithImpl(_$_DevicesListPageState _value,
+      $Res Function(_$_DevicesListPageState) _then)
+      : super(_value, (v) => _then(v as _$_DevicesListPageState));
 
   @override
-  _$_DeviicesListPageState get _value =>
-      super._value as _$_DeviicesListPageState;
+  _$_DevicesListPageState get _value => super._value as _$_DevicesListPageState;
 
   @override
   $Res call({
     Object? devices = freezed,
   }) {
-    return _then(_$_DeviicesListPageState(
+    return _then(_$_DevicesListPageState(
       devices: devices == freezed
           ? _value._devices
           : devices // ignore: cast_nullable_to_non_nullable
@@ -90,8 +89,8 @@ class __$$_DeviicesListPageStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DeviicesListPageState implements _DeviicesListPageState {
-  const _$_DeviicesListPageState(
+class _$_DevicesListPageState implements _DevicesListPageState {
+  const _$_DevicesListPageState(
       {required final List<SettingTypeDevice> devices})
       : _devices = devices;
 
@@ -104,14 +103,14 @@ class _$_DeviicesListPageState implements _DeviicesListPageState {
 
   @override
   String toString() {
-    return 'DeviicesListPageState(devices: $devices)';
+    return 'DevicesListPageState(devices: $devices)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DeviicesListPageState &&
+            other is _$_DevicesListPageState &&
             const DeepCollectionEquality().equals(other._devices, _devices));
   }
 
@@ -121,20 +120,20 @@ class _$_DeviicesListPageState implements _DeviicesListPageState {
 
   @JsonKey(ignore: true)
   @override
-  _$$_DeviicesListPageStateCopyWith<_$_DeviicesListPageState> get copyWith =>
-      __$$_DeviicesListPageStateCopyWithImpl<_$_DeviicesListPageState>(
+  _$$_DevicesListPageStateCopyWith<_$_DevicesListPageState> get copyWith =>
+      __$$_DevicesListPageStateCopyWithImpl<_$_DevicesListPageState>(
           this, _$identity);
 }
 
-abstract class _DeviicesListPageState implements DeviicesListPageState {
-  const factory _DeviicesListPageState(
+abstract class _DevicesListPageState implements DevicesListPageState {
+  const factory _DevicesListPageState(
           {required final List<SettingTypeDevice> devices}) =
-      _$_DeviicesListPageState;
+      _$_DevicesListPageState;
 
   @override
   List<SettingTypeDevice> get devices => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_DeviicesListPageStateCopyWith<_$_DeviicesListPageState> get copyWith =>
+  _$$_DevicesListPageStateCopyWith<_$_DevicesListPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }

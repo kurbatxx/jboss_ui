@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jboss_ui/models/database/color_item.dart';
 import 'package:jboss_ui/models/database/colored_device.dart';
 import 'package:jboss_ui/models/database/setting_type_device.dart';
 import 'package:jboss_ui/models/database/type_device.dart';
@@ -122,5 +123,23 @@ class DbApi {
     select 
     from update_type_device_position($oldPosition, $newPosition);
     ''');
+  }
+
+  static Future<List<ColorItem>> getColorItems() async {
+    final results = await DbApi.instance.conn.query('''
+    select color_id, color
+    from colors 
+    order by color_position;
+    ''');
+
+    List<ColorItem> colorItems = [];
+    for (List item in results) {
+      final colorItem = ColorItem(
+        colorId: item[0],
+        color: Color(item[1]),
+      );
+      colorItems.add(colorItem);
+    }
+    return colorItems;
   }
 }

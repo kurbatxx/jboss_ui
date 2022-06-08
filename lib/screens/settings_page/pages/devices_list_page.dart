@@ -4,7 +4,7 @@ import 'package:jboss_ui/models/database/setting_type_device.dart';
 import 'package:jboss_ui/provider/device_list_page_provider.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 import 'package:jboss_ui/utils/constant.dart';
-import 'package:jboss_ui/utils/dev_log.dart';
+
 
 class DevicesListPage extends ConsumerWidget {
   const DevicesListPage({Key? key}) : super(key: key);
@@ -40,12 +40,14 @@ class DevicesListPage extends ConsumerWidget {
         ),
         Expanded(
           child: ReorderableListView.builder(
+            buildDefaultDragHandles: false,
             itemCount: state.devices.length,
             itemBuilder: (context, index) => Column(
               key: Key('${state.devices[index].typeDeviceId}'),
               children: [
                 DeviceTileWidget(
                   device: state.devices[index],
+                  index: index,
                 ),
                 state.devices.length == index
                     ? const SizedBox()
@@ -72,9 +74,11 @@ class DevicesListPage extends ConsumerWidget {
 
 class DeviceTileWidget extends StatelessWidget {
   final SettingTypeDevice device;
+  final int index;
 
   const DeviceTileWidget({
     required this.device,
+    required this.index,
     Key? key,
   }) : super(key: key);
 
@@ -86,7 +90,14 @@ class DeviceTileWidget extends StatelessWidget {
         color: Colors.white,
         child: Row(
           children: [
-            SizedBox(height: 40, width: 40, child: device.svgIcon),
+            ReorderableDragStartListener(
+              index: index,
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: device.svgIcon,
+              ),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

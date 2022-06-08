@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/provider/color_list_page_provider.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 
 class AvailableColorsPage extends ConsumerWidget {
@@ -25,6 +26,7 @@ class AvailableColorsPage extends ConsumerWidget {
           onPressed: () {
             ref.read(settingNavigationProvider.state).state =
                 SettingsScreenOption.addColors;
+            ref.read(colorsListPageProvider.notifier).getColors();
           },
           child: const Text('Добавить новый цвет'),
         )
