@@ -23,7 +23,15 @@ class DbApi {
 
   static Future<List<TypeDevice>> getDevices() async {
     final results = await DbApi.instance.conn.query('''
-    select * from type_devices
+    select type_devices.type_device_id, type_device_name, type_device_icon 
+    from ( 
+        select  
+        distinct type_device_id
+        from devices
+        where availability = true
+      ) 
+      as d
+    join type_devices on type_devices.type_device_id = d.type_device_id
     order by device_position;
     ''');
 
@@ -34,7 +42,7 @@ class DbApi {
       final typeDevice = TypeDevice(
           typeDeviceId: device[0],
           deviceName: device[1],
-          svgIcon: device[4] ?? svgIcon);
+          svgIcon: device[2] ?? svgIcon);
 
       devices.add(typeDevice);
     }
