@@ -142,4 +142,21 @@ class DbApi {
     }
     return colorItems;
   }
+
+  static Future<void> addColor({required Color color}) async {
+    await DbApi.instance.conn.query('''
+    insert into colors (color_position, color)
+    values (
+	         (select count(color_position)
+		        from colors
+	         ), ${color.value});
+    ''');
+  }
+
+  static Future<void> deleteColor({required int id}) async {
+    await DbApi.instance.conn.query('''
+    select 
+    detele_color($id);
+    ''');
+  }
 }

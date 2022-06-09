@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ColorsListPageState {
+  Color get currentColor => throw _privateConstructorUsedError;
   List<ColorItem> get colorsList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -28,7 +29,7 @@ abstract class $ColorsListPageStateCopyWith<$Res> {
   factory $ColorsListPageStateCopyWith(
           ColorsListPageState value, $Res Function(ColorsListPageState) then) =
       _$ColorsListPageStateCopyWithImpl<$Res>;
-  $Res call({List<ColorItem> colorsList});
+  $Res call({Color currentColor, List<ColorItem> colorsList});
 }
 
 /// @nodoc
@@ -42,9 +43,14 @@ class _$ColorsListPageStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? currentColor = freezed,
     Object? colorsList = freezed,
   }) {
     return _then(_value.copyWith(
+      currentColor: currentColor == freezed
+          ? _value.currentColor
+          : currentColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       colorsList: colorsList == freezed
           ? _value.colorsList
           : colorsList // ignore: cast_nullable_to_non_nullable
@@ -60,7 +66,7 @@ abstract class _$$_ColorsListPageStateCopyWith<$Res>
           $Res Function(_$_ColorsListPageState) then) =
       __$$_ColorsListPageStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<ColorItem> colorsList});
+  $Res call({Color currentColor, List<ColorItem> colorsList});
 }
 
 /// @nodoc
@@ -76,9 +82,14 @@ class __$$_ColorsListPageStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? currentColor = freezed,
     Object? colorsList = freezed,
   }) {
     return _then(_$_ColorsListPageState(
+      currentColor: currentColor == freezed
+          ? _value.currentColor
+          : currentColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       colorsList: colorsList == freezed
           ? _value._colorsList
           : colorsList // ignore: cast_nullable_to_non_nullable
@@ -90,9 +101,12 @@ class __$$_ColorsListPageStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ColorsListPageState implements _ColorsListPageState {
-  const _$_ColorsListPageState({required final List<ColorItem> colorsList})
+  const _$_ColorsListPageState(
+      {required this.currentColor, required final List<ColorItem> colorsList})
       : _colorsList = colorsList;
 
+  @override
+  final Color currentColor;
   final List<ColorItem> _colorsList;
   @override
   List<ColorItem> get colorsList {
@@ -102,7 +116,7 @@ class _$_ColorsListPageState implements _ColorsListPageState {
 
   @override
   String toString() {
-    return 'ColorsListPageState(colorsList: $colorsList)';
+    return 'ColorsListPageState(currentColor: $currentColor, colorsList: $colorsList)';
   }
 
   @override
@@ -111,12 +125,16 @@ class _$_ColorsListPageState implements _ColorsListPageState {
         (other.runtimeType == runtimeType &&
             other is _$_ColorsListPageState &&
             const DeepCollectionEquality()
+                .equals(other.currentColor, currentColor) &&
+            const DeepCollectionEquality()
                 .equals(other._colorsList, _colorsList));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_colorsList));
+      runtimeType,
+      const DeepCollectionEquality().hash(currentColor),
+      const DeepCollectionEquality().hash(_colorsList));
 
   @JsonKey(ignore: true)
   @override
@@ -127,8 +145,11 @@ class _$_ColorsListPageState implements _ColorsListPageState {
 
 abstract class _ColorsListPageState implements ColorsListPageState {
   const factory _ColorsListPageState(
-      {required final List<ColorItem> colorsList}) = _$_ColorsListPageState;
+      {required final Color currentColor,
+      required final List<ColorItem> colorsList}) = _$_ColorsListPageState;
 
+  @override
+  Color get currentColor => throw _privateConstructorUsedError;
   @override
   List<ColorItem> get colorsList => throw _privateConstructorUsedError;
   @override
