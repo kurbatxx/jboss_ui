@@ -90,19 +90,13 @@ class NewTaskPage extends ConsumerWidget {
                           .read(newTaskStateProvider.notifier)
                           .selectColor(selected: index);
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
+                    child: Ink(
+                      color: state.listColoredDevices[index].color,
                       child: SizedBox(
                         width: 40,
                         height: 40,
                         child: Stack(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: state.listColoredDevices[index].color,
-                                borderRadius: kMinimumRadius,
-                              ),
-                            ),
                             state.colorPosition == index
                                 ? const Center(
                                     child: Icon(
