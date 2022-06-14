@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/database.dart';
 import 'package:jboss_ui/states/colors_list_page_state.dart';
-import 'package:jboss_ui/utils/dev_log.dart';
 
 final colorsListPageProvider =
     StateNotifierProvider<ColorListPageStateNotifer, ColorsListPageState>(

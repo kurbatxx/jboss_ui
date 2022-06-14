@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jboss_ui/screens/settings_page/pages/overlay_menu.dart';
 import 'package:jboss_ui/provider/device_editor_setting_provider.dart';
 import 'dart:io';
 
@@ -13,8 +14,8 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(registerDeviceScreenProvider);
-
+    final state = ref.watch(deviceEditorScreenProvider);
+    final containerKey = GlobalKey();
     return Column(
       children: [
         Row(
@@ -42,6 +43,7 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                       child: DevicesIconsWidget(),
                     ),
                     Expanded(
+                      key: containerKey,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
@@ -61,7 +63,24 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                final RenderBox renderBox = containerKey
+                                    .currentContext
+                                    ?.findRenderObject() as RenderBox;
+
+                                containerKey.currentContext?.size;
+                                final Size size = renderBox.size;
+                                print('Size: ${size.width}, ${size.height}');
+                                final Offset offset =
+                                    renderBox.localToGlobal(Offset.zero);
+                                print('Offset: ${offset.dx}, ${offset.dy}');
+                                print(
+                                    'Position: ${(offset.dx + size.width) / 2}, ${(offset.dy + size.height) / 2}');
+                                OverlayMenu.showMenu(context: context);
+                                ref
+                                    .read(deviceEditorScreenProvider.notifier)
+                                    .getJbossDevices();
+                              },
                               child: const Text('Тип устройства'),
                             ),
                           ],
@@ -82,7 +101,7 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                         child: InkWell(
                           onTap: () {
                             ref
-                                .read(registerDeviceScreenProvider.notifier)
+                                .read(deviceEditorScreenProvider.notifier)
                                 .coloredToogle();
                           },
                           child: Row(
@@ -126,7 +145,7 @@ class DevicesIconsWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(registerDeviceScreenProvider);
+    final state = ref.watch(deviceEditorScreenProvider);
 
     return Column(
       children: [
@@ -143,7 +162,7 @@ class DevicesIconsWidget extends ConsumerWidget {
                     File file = File(result.files.single.name);
                     final svgIcon = SvgPicture.file(file);
                     ref
-                        .read(registerDeviceScreenProvider.notifier)
+                        .read(deviceEditorScreenProvider.notifier)
                         .updateSvgIcon(svgIcon: svgIcon);
                   }
                 },
@@ -175,8 +194,8 @@ class DevicesIconsWidget extends ConsumerWidget {
                                     File file = File(result.files.single.name);
                                     final svgIcon = SvgPicture.file(file);
                                     ref
-                                        .read(registerDeviceScreenProvider
-                                            .notifier)
+                                        .read(
+                                            deviceEditorScreenProvider.notifier)
                                         .updateSvgIcon(svgIcon: svgIcon);
                                   }
                                 },
@@ -200,7 +219,7 @@ class DevicesIconsWidget extends ConsumerWidget {
                         child: InkWell(
                           onTap: () {
                             ref
-                                .read(registerDeviceScreenProvider.notifier)
+                                .read(deviceEditorScreenProvider.notifier)
                                 .clearSvg();
                           },
                           child: Ink(

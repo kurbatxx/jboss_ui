@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jboss_ui/models/database/color_item.dart';
 import 'package:jboss_ui/models/database/colored_device.dart';
+import 'package:jboss_ui/models/database/jboss_device_item.dart';
 import 'package:jboss_ui/models/database/setting_type_device.dart';
 import 'package:jboss_ui/models/database/type_device.dart';
 import 'package:jboss_ui/utils/constant.dart';
@@ -164,5 +165,27 @@ class DbApi {
       '--##--'.log();
       e.log();
     }
+  }
+
+  static Future<List<JbossDeviceItem>> getJbossDevices() async {
+    final results = await DbApi.instance.conn.query('''
+    select jboss_device_id, device_name, device_selected
+    from jboss_devices
+    where device_selected = false 
+    order by jboss_device_id;
+    ''');
+
+    List<JbossDeviceItem> jbossDevices = [];
+
+    for (List device in results) {
+      final jbossDevice = JbossDeviceItem(
+        id: device[0],
+        name: device[1],
+        selected: device[2],
+      );
+
+      jbossDevices.add(jbossDevice);
+    }
+    return jbossDevices;
   }
 }

@@ -21,6 +21,8 @@ mixin _$DeviceEditorSettingState {
   SvgPicture? get svgIcon => throw _privateConstructorUsedError;
   bool get isColored => throw _privateConstructorUsedError;
   int? get typeDevice => throw _privateConstructorUsedError;
+  List<JbossDeviceItem> get jbossDevicesList =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DeviceEditorSettingStateCopyWith<DeviceEditorSettingState> get copyWith =>
@@ -37,7 +39,8 @@ abstract class $DeviceEditorSettingStateCopyWith<$Res> {
       String price,
       SvgPicture? svgIcon,
       bool isColored,
-      int? typeDevice});
+      int? typeDevice,
+      List<JbossDeviceItem> jbossDevicesList});
 }
 
 /// @nodoc
@@ -56,6 +59,7 @@ class _$DeviceEditorSettingStateCopyWithImpl<$Res>
     Object? svgIcon = freezed,
     Object? isColored = freezed,
     Object? typeDevice = freezed,
+    Object? jbossDevicesList = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -78,6 +82,10 @@ class _$DeviceEditorSettingStateCopyWithImpl<$Res>
           ? _value.typeDevice
           : typeDevice // ignore: cast_nullable_to_non_nullable
               as int?,
+      jbossDevicesList: jbossDevicesList == freezed
+          ? _value.jbossDevicesList
+          : jbossDevicesList // ignore: cast_nullable_to_non_nullable
+              as List<JbossDeviceItem>,
     ));
   }
 }
@@ -95,7 +103,8 @@ abstract class _$$_DeviceEditorSettingStateCopyWith<$Res>
       String price,
       SvgPicture? svgIcon,
       bool isColored,
-      int? typeDevice});
+      int? typeDevice,
+      List<JbossDeviceItem> jbossDevicesList});
 }
 
 /// @nodoc
@@ -117,6 +126,7 @@ class __$$_DeviceEditorSettingStateCopyWithImpl<$Res>
     Object? svgIcon = freezed,
     Object? isColored = freezed,
     Object? typeDevice = freezed,
+    Object? jbossDevicesList = freezed,
   }) {
     return _then(_$_DeviceEditorSettingState(
       name: name == freezed
@@ -139,6 +149,10 @@ class __$$_DeviceEditorSettingStateCopyWithImpl<$Res>
           ? _value.typeDevice
           : typeDevice // ignore: cast_nullable_to_non_nullable
               as int?,
+      jbossDevicesList: jbossDevicesList == freezed
+          ? _value._jbossDevicesList
+          : jbossDevicesList // ignore: cast_nullable_to_non_nullable
+              as List<JbossDeviceItem>,
     ));
   }
 }
@@ -151,7 +165,9 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
       required this.price,
       required this.svgIcon,
       required this.isColored,
-      required this.typeDevice});
+      required this.typeDevice,
+      required final List<JbossDeviceItem> jbossDevicesList})
+      : _jbossDevicesList = jbossDevicesList;
 
   @override
   final String name;
@@ -163,10 +179,16 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
   final bool isColored;
   @override
   final int? typeDevice;
+  final List<JbossDeviceItem> _jbossDevicesList;
+  @override
+  List<JbossDeviceItem> get jbossDevicesList {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_jbossDevicesList);
+  }
 
   @override
   String toString() {
-    return 'DeviceEditorSettingState(name: $name, price: $price, svgIcon: $svgIcon, isColored: $isColored, typeDevice: $typeDevice)';
+    return 'DeviceEditorSettingState(name: $name, price: $price, svgIcon: $svgIcon, isColored: $isColored, typeDevice: $typeDevice, jbossDevicesList: $jbossDevicesList)';
   }
 
   @override
@@ -179,7 +201,9 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
             const DeepCollectionEquality().equals(other.svgIcon, svgIcon) &&
             const DeepCollectionEquality().equals(other.isColored, isColored) &&
             const DeepCollectionEquality()
-                .equals(other.typeDevice, typeDevice));
+                .equals(other.typeDevice, typeDevice) &&
+            const DeepCollectionEquality()
+                .equals(other._jbossDevicesList, _jbossDevicesList));
   }
 
   @override
@@ -189,7 +213,8 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
       const DeepCollectionEquality().hash(price),
       const DeepCollectionEquality().hash(svgIcon),
       const DeepCollectionEquality().hash(isColored),
-      const DeepCollectionEquality().hash(typeDevice));
+      const DeepCollectionEquality().hash(typeDevice),
+      const DeepCollectionEquality().hash(_jbossDevicesList));
 
   @JsonKey(ignore: true)
   @override
@@ -200,11 +225,13 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
 
 abstract class _DeviceEditorSettingState implements DeviceEditorSettingState {
   const factory _DeviceEditorSettingState(
-      {required final String name,
-      required final String price,
-      required final SvgPicture? svgIcon,
-      required final bool isColored,
-      required final int? typeDevice}) = _$_DeviceEditorSettingState;
+          {required final String name,
+          required final String price,
+          required final SvgPicture? svgIcon,
+          required final bool isColored,
+          required final int? typeDevice,
+          required final List<JbossDeviceItem> jbossDevicesList}) =
+      _$_DeviceEditorSettingState;
 
   @override
   String get name => throw _privateConstructorUsedError;
@@ -216,6 +243,9 @@ abstract class _DeviceEditorSettingState implements DeviceEditorSettingState {
   bool get isColored => throw _privateConstructorUsedError;
   @override
   int? get typeDevice => throw _privateConstructorUsedError;
+  @override
+  List<JbossDeviceItem> get jbossDevicesList =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_DeviceEditorSettingStateCopyWith<_$_DeviceEditorSettingState>

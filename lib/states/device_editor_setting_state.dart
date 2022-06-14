@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:jboss_ui/models/database/jboss_device_item.dart';
 part 'device_editor_setting_state.freezed.dart';
 
 @freezed
@@ -10,5 +11,6 @@ class DeviceEditorSettingState with _$DeviceEditorSettingState {
     required SvgPicture? svgIcon,
     required bool isColored,
     required int? typeDevice,
+    required List<JbossDeviceItem> jbossDevicesList,
   }) = _DeviceEditorSettingState;
 }
