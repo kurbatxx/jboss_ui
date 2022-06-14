@@ -57,11 +57,6 @@ class SearchFormWidget extends ConsumerWidget {
           ),
         ),
         onChanged: (value) {
-          // if (value.isEmpty) {
-          //   ref
-          //       .read(searchPageStateProvider.notifier)
-          //       .setSearchString(text: searchController.text);
-          // }
           ref
               .read(searchPageStateProvider.notifier)
               .setSwitchersSearchString(text: searchController.text);

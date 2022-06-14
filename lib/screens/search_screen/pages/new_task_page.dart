@@ -10,7 +10,6 @@ class NewTaskPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(newTaskStateProvider);
-    //state.listColoredDevices[0].deviceId;
     return Column(
       children: [
         Row(

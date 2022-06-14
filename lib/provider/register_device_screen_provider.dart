@@ -42,11 +42,11 @@ class RegisterDeviceScreenStateNotifier
     );
   }
 
-  toogle() {
+  void toogle() {
     state = state.copyWith(register: !state.register);
   }
 
-  updateTextField(
+  void updateTextField(
       {required TextEditingController textController,
       required TextControllersEnum textControllersEnum}) {
     switch (textControllersEnum) {
@@ -68,7 +68,7 @@ class RegisterDeviceScreenStateNotifier
     );
   }
 
-  switchDevice(int position) {
+  void switchDevice(int position) {
     state = state.copyWith(
       devicePosition: position,
     );

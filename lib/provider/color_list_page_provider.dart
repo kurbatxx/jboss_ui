@@ -19,27 +19,22 @@ class ColorListPageStateNotifer extends StateNotifier<ColorsListPageState> {
     ColorsListPageState state,
   ) : super(state);
 
-  getColors() async {
+  void getColors() async {
     final colorItems = await DbApi.getColorItems();
     state = state.copyWith(colorsList: colorItems);
   }
 
-  setColor({required Color color}) {
+  void setColor({required Color color}) {
     state = state.copyWith(currentColor: color);
   }
 
-  addColor({required Color color}) {
+  void addColor({required Color color}) {
     DbApi.addColor(color: color);
     getColors();
   }
 
-  deleteColor({required int id}) {
-    try {
-      DbApi.deleteColor(id: id);
-    } catch (e) {
-      "Возникло исключение $e".log();
-      "--- Не удаляется цвет ---".log();
-    }
+  void deleteColor({required int id}) {
+    DbApi.deleteColor(id: id);
     getColors();
   }
 }

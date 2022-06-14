@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/device_list_page_provider.dart';
-import 'package:jboss_ui/screens/settings_page/pages/add_devices_settings_page.dart';
+import 'package:jboss_ui/screens/settings_page/pages/device_editor_settings_page.dart';
 import 'package:jboss_ui/screens/settings_page/pages/available_colors.page.dart';
 import 'package:jboss_ui/screens/settings_page/pages/colors_page.dart';
 import 'package:jboss_ui/screens/settings_page/pages/devices_list_page.dart';
@@ -18,7 +18,7 @@ enum SettingsScreenOption {
     screen: DevicesListPage(),
   ),
   addDevice(
-    screen: AddDevicesSettingsPage(),
+    screen: DeviceEditorSettingsPage(),
   ),
   availableColors(
     screen: AvailableColorsPage(),

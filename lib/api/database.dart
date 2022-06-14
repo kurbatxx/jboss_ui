@@ -5,6 +5,7 @@ import 'package:jboss_ui/models/database/colored_device.dart';
 import 'package:jboss_ui/models/database/setting_type_device.dart';
 import 'package:jboss_ui/models/database/type_device.dart';
 import 'package:jboss_ui/utils/constant.dart';
+import 'package:jboss_ui/utils/dev_log.dart';
 import 'package:postgres/postgres.dart';
 
 class DbApi {
@@ -154,9 +155,14 @@ class DbApi {
   }
 
   static Future<void> deleteColor({required int id}) async {
-    await DbApi.instance.conn.query('''
-    select 
-    detele_color($id);
-    ''');
+    try {
+      await DbApi.instance.conn.query('''
+          select 
+          detele_color($id);
+          ''');
+    } catch (e) {
+      '--##--'.log();
+      e.log();
+    }
   }
 }
