@@ -6,11 +6,17 @@ import 'package:jboss_ui/utils/constant.dart';
 class OverlayMenu {
   static OverlayEntry? overlayEntry;
 
-  static void showMenu({required BuildContext context}) {
+  static void showMenu({
+    required BuildContext context,
+    required Size widgetSize,
+    required Offset offset,
+  }) {
+    final freeSpace = MediaQuery.of(context).size.width - widgetSize.width;
     OverlayState? overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(
       builder: (context) {
         return Stack(
+          fit: StackFit.passthrough,
           children: [
             Padding(
               padding: const EdgeInsets.only(
@@ -24,17 +30,15 @@ class OverlayMenu {
               ),
             ),
             Positioned(
-              left: 86,
-              top: 187,
+              left: offset.dx,
+              top: offset.dy + widgetSize.height + 4,
               child: ClipRRect(
                 borderRadius: kMinimumRadius,
-                child: Material(
-                  child: Container(
-                    width: 258,
-                    height: 350,
-                    color: Colors.grey[100],
-                    child: const JbossDevicesListWidget(),
-                  ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width - freeSpace,
+                  height: 350,
+                  color: Colors.grey[200],
+                  child: const JbossDevicesListWidget(),
                 ),
               ),
             ),
@@ -62,41 +66,50 @@ class JbossDevicesListWidget extends ConsumerWidget {
     final state = ref.watch(deviceEditorScreenProvider);
     return state.jbossDevicesList.isEmpty
         ? const Center(child: CircularProgressIndicator())
-        : ListView.builder(
-            itemCount: state.jbossDevicesList.length,
-            itemBuilder: (context, index) {
-              final jbossDevice = state.jbossDevicesList[index];
-              return Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      OverlayMenu.dismissMenu();
-                    },
-                    child: Ink(
-                      color: Colors.grey,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 30,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(jbossDevice.name),
-                              ],
+        : Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: ListView.builder(
+              itemCount: state.jbossDevicesList.length,
+              itemBuilder: (context, index) {
+                final jbossDevice = state.jbossDevicesList[index];
+                return Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: kMinimumRadius,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            OverlayMenu.dismissMenu();
+                          },
+                          child: Ink(
+                            color: Colors.white,
+                            child: SizedBox(
+                              height: 30,
+                              child: Row(
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(jbossDevice.name),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          Container(
-                            height: 2,
-                          )
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              );
-            },
+                    state.jbossDevicesList.length != index
+                        ? const SizedBox(
+                            height: 2,
+                          )
+                        : const SizedBox(),
+                  ],
+                );
+              },
+            ),
           );
   }
 }

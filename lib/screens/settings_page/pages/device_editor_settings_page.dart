@@ -16,6 +16,7 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(deviceEditorScreenProvider);
     final containerKey = GlobalKey();
+
     return Column(
       children: [
         Row(
@@ -43,12 +44,12 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                       child: DevicesIconsWidget(),
                     ),
                     Expanded(
-                      key: containerKey,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
                         ),
                         child: Column(
+                          key: containerKey,
                           children: [
                             TextFormField(
                               decoration: const InputDecoration(
@@ -68,15 +69,15 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                                     .currentContext
                                     ?.findRenderObject() as RenderBox;
 
-                                containerKey.currentContext?.size;
                                 final Size size = renderBox.size;
-                                print('Size: ${size.width}, ${size.height}');
                                 final Offset offset =
                                     renderBox.localToGlobal(Offset.zero);
-                                print('Offset: ${offset.dx}, ${offset.dy}');
-                                print(
-                                    'Position: ${(offset.dx + size.width) / 2}, ${(offset.dy + size.height) / 2}');
-                                OverlayMenu.showMenu(context: context);
+
+                                OverlayMenu.showMenu(
+                                  context: context,
+                                  widgetSize: size,
+                                  offset: offset,
+                                );
                                 ref
                                     .read(deviceEditorScreenProvider.notifier)
                                     .getJbossDevices();
