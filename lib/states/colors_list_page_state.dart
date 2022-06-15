@@ -9,5 +9,6 @@ class ColorsListPageState with _$ColorsListPageState {
   const factory ColorsListPageState({
     required Color currentColor,
     required List<ColorItem> colorsList,
+    required List<ColorItem> selectedColorsList,
   }) = _ColorsListPageState;
 }

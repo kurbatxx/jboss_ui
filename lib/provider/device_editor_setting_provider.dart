@@ -7,11 +7,13 @@ final deviceEditorScreenProvider = StateNotifierProvider<
     DeviceEditorSettingStateNotifer, DeviceEditorSettingState>(
   (ref) => DeviceEditorSettingStateNotifer(
     const DeviceEditorSettingState(
+      isNewDevice: true,
       isColored: false,
+      colorList: [],
       name: '',
       price: '',
       svgIcon: null,
-      typeDevice: null,
+      jbossDevice: null,
       jbossDevicesList: [],
     ),
   ),
@@ -38,5 +40,9 @@ class DeviceEditorSettingStateNotifer
   void getJbossDevices() async {
     final jbossDevices = await DbApi.getJbossDevices();
     state = state.copyWith(jbossDevicesList: jbossDevices);
+  }
+
+  setJbossDevice({required int position}) {
+    state = state.copyWith(jbossDevice: state.jbossDevicesList[position]);
   }
 }

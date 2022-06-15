@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jboss_ui/provider/color_list_page_provider.dart';
 import 'package:jboss_ui/screens/settings_page/pages/overlay_menu.dart';
 import 'package:jboss_ui/provider/device_editor_setting_provider.dart';
 import 'dart:io';
@@ -64,26 +65,27 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {
-                                final RenderBox renderBox = containerKey
-                                    .currentContext
-                                    ?.findRenderObject() as RenderBox;
+                                onPressed: () {
+                                  final RenderBox renderBox = containerKey
+                                      .currentContext
+                                      ?.findRenderObject() as RenderBox;
 
-                                final Size size = renderBox.size;
-                                final Offset offset =
-                                    renderBox.localToGlobal(Offset.zero);
+                                  final Size size = renderBox.size;
+                                  final Offset offset =
+                                      renderBox.localToGlobal(Offset.zero);
 
-                                OverlayMenu.showMenu(
-                                  context: context,
-                                  widgetSize: size,
-                                  offset: offset,
-                                );
-                                ref
-                                    .read(deviceEditorScreenProvider.notifier)
-                                    .getJbossDevices();
-                              },
-                              child: const Text('Тип устройства'),
-                            ),
+                                  OverlayMenu.showMenu(
+                                    context: context,
+                                    widgetSize: size,
+                                    offset: offset,
+                                  );
+                                  ref
+                                      .read(deviceEditorScreenProvider.notifier)
+                                      .getJbossDevices();
+                                },
+                                child: state.jbossDevice == null
+                                    ? const Text('Тип устройства')
+                                    : Text(state.jbossDevice!.name)),
                           ],
                         ),
                       ),
@@ -121,7 +123,13 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                     ),
                     state.isColored
                         ? TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              ref.read(settingNavigationProvider.state).state =
+                                  SettingsScreenOption.addColors;
+                              ref
+                                  .read(colorsListPageProvider.notifier)
+                                  .getColors();
+                            },
                             child: const Text('Указать цвета'),
                           )
                         : const SizedBox(),

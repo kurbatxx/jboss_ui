@@ -80,6 +80,9 @@ class JbossDevicesListWidget extends ConsumerWidget {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () {
+                            ref
+                                .read(deviceEditorScreenProvider.notifier)
+                                .setJbossDevice(position: index);
                             OverlayMenu.dismissMenu();
                           },
                           child: Ink(

@@ -11,6 +11,10 @@ class ColorsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(colorsListPageProvider);
+    final List<int> selectedColorsId = [
+      ...state.selectedColorsList.map((element) => element.colorId).toList()
+    ];
+
     return Column(
       children: [
         Row(
@@ -45,7 +49,6 @@ class ColorsPage extends ConsumerWidget {
           },
           onColorChangeEnd: (Color color) => {
             print(color),
-            //ref.read(colorsListPageProvider.notifier).setColor(color: color),
           },
         ),
         ConstrainedBox(
@@ -97,6 +100,7 @@ class ColorsPage extends ConsumerWidget {
                     ),
                     itemCount: state.colorsList.length,
                     itemBuilder: (context, index) {
+                      final colorItem = state.colorsList[index];
                       return Stack(
                         alignment: AlignmentDirectional.topEnd,
                         children: [
@@ -108,13 +112,31 @@ class ColorsPage extends ConsumerWidget {
                                 color: Colors.transparent,
                                 child: InkWell(
                                   onTap: () {
-                                    print(state.colorsList[index].colorId);
+                                    if (selectedColorsId
+                                        .contains(colorItem.colorId)) {
+                                      ref
+                                          .read(colorsListPageProvider.notifier)
+                                          .unSelectColor(colorItem: colorItem);
+                                    } else {
+                                      ref
+                                          .read(colorsListPageProvider.notifier)
+                                          .selectColor(colorItem: colorItem);
+                                    }
                                   },
                                   child: Ink(
-                                    color: state.colorsList[index].color,
-                                    child: const SizedBox(
+                                    color: colorItem.color,
+                                    child: SizedBox(
                                       height: 45,
                                       width: 45,
+                                      child: Center(
+                                        child: selectedColorsId
+                                                .contains(colorItem.colorId)
+                                            ? const Icon(
+                                                Icons.check,
+                                                color: Colors.white,
+                                              )
+                                            : const SizedBox(),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -130,7 +152,7 @@ class ColorsPage extends ConsumerWidget {
                                   ref
                                       .read(colorsListPageProvider.notifier)
                                       .deleteColor(
-                                        id: state.colorsList[index].colorId,
+                                        item: colorItem,
                                       );
                                 },
                                 child: Ink(

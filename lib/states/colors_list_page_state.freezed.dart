@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ColorsListPageState {
   Color get currentColor => throw _privateConstructorUsedError;
   List<ColorItem> get colorsList => throw _privateConstructorUsedError;
+  List<ColorItem> get selectedColorsList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ColorsListPageStateCopyWith<ColorsListPageState> get copyWith =>
@@ -29,7 +30,10 @@ abstract class $ColorsListPageStateCopyWith<$Res> {
   factory $ColorsListPageStateCopyWith(
           ColorsListPageState value, $Res Function(ColorsListPageState) then) =
       _$ColorsListPageStateCopyWithImpl<$Res>;
-  $Res call({Color currentColor, List<ColorItem> colorsList});
+  $Res call(
+      {Color currentColor,
+      List<ColorItem> colorsList,
+      List<ColorItem> selectedColorsList});
 }
 
 /// @nodoc
@@ -45,6 +49,7 @@ class _$ColorsListPageStateCopyWithImpl<$Res>
   $Res call({
     Object? currentColor = freezed,
     Object? colorsList = freezed,
+    Object? selectedColorsList = freezed,
   }) {
     return _then(_value.copyWith(
       currentColor: currentColor == freezed
@@ -54,6 +59,10 @@ class _$ColorsListPageStateCopyWithImpl<$Res>
       colorsList: colorsList == freezed
           ? _value.colorsList
           : colorsList // ignore: cast_nullable_to_non_nullable
+              as List<ColorItem>,
+      selectedColorsList: selectedColorsList == freezed
+          ? _value.selectedColorsList
+          : selectedColorsList // ignore: cast_nullable_to_non_nullable
               as List<ColorItem>,
     ));
   }
@@ -66,7 +75,10 @@ abstract class _$$_ColorsListPageStateCopyWith<$Res>
           $Res Function(_$_ColorsListPageState) then) =
       __$$_ColorsListPageStateCopyWithImpl<$Res>;
   @override
-  $Res call({Color currentColor, List<ColorItem> colorsList});
+  $Res call(
+      {Color currentColor,
+      List<ColorItem> colorsList,
+      List<ColorItem> selectedColorsList});
 }
 
 /// @nodoc
@@ -84,6 +96,7 @@ class __$$_ColorsListPageStateCopyWithImpl<$Res>
   $Res call({
     Object? currentColor = freezed,
     Object? colorsList = freezed,
+    Object? selectedColorsList = freezed,
   }) {
     return _then(_$_ColorsListPageState(
       currentColor: currentColor == freezed
@@ -94,6 +107,10 @@ class __$$_ColorsListPageStateCopyWithImpl<$Res>
           ? _value._colorsList
           : colorsList // ignore: cast_nullable_to_non_nullable
               as List<ColorItem>,
+      selectedColorsList: selectedColorsList == freezed
+          ? _value._selectedColorsList
+          : selectedColorsList // ignore: cast_nullable_to_non_nullable
+              as List<ColorItem>,
     ));
   }
 }
@@ -102,8 +119,11 @@ class __$$_ColorsListPageStateCopyWithImpl<$Res>
 
 class _$_ColorsListPageState implements _ColorsListPageState {
   const _$_ColorsListPageState(
-      {required this.currentColor, required final List<ColorItem> colorsList})
-      : _colorsList = colorsList;
+      {required this.currentColor,
+      required final List<ColorItem> colorsList,
+      required final List<ColorItem> selectedColorsList})
+      : _colorsList = colorsList,
+        _selectedColorsList = selectedColorsList;
 
   @override
   final Color currentColor;
@@ -114,9 +134,16 @@ class _$_ColorsListPageState implements _ColorsListPageState {
     return EqualUnmodifiableListView(_colorsList);
   }
 
+  final List<ColorItem> _selectedColorsList;
+  @override
+  List<ColorItem> get selectedColorsList {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedColorsList);
+  }
+
   @override
   String toString() {
-    return 'ColorsListPageState(currentColor: $currentColor, colorsList: $colorsList)';
+    return 'ColorsListPageState(currentColor: $currentColor, colorsList: $colorsList, selectedColorsList: $selectedColorsList)';
   }
 
   @override
@@ -127,14 +154,17 @@ class _$_ColorsListPageState implements _ColorsListPageState {
             const DeepCollectionEquality()
                 .equals(other.currentColor, currentColor) &&
             const DeepCollectionEquality()
-                .equals(other._colorsList, _colorsList));
+                .equals(other._colorsList, _colorsList) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedColorsList, _selectedColorsList));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(currentColor),
-      const DeepCollectionEquality().hash(_colorsList));
+      const DeepCollectionEquality().hash(_colorsList),
+      const DeepCollectionEquality().hash(_selectedColorsList));
 
   @JsonKey(ignore: true)
   @override
@@ -145,13 +175,17 @@ class _$_ColorsListPageState implements _ColorsListPageState {
 
 abstract class _ColorsListPageState implements ColorsListPageState {
   const factory _ColorsListPageState(
-      {required final Color currentColor,
-      required final List<ColorItem> colorsList}) = _$_ColorsListPageState;
+          {required final Color currentColor,
+          required final List<ColorItem> colorsList,
+          required final List<ColorItem> selectedColorsList}) =
+      _$_ColorsListPageState;
 
   @override
   Color get currentColor => throw _privateConstructorUsedError;
   @override
   List<ColorItem> get colorsList => throw _privateConstructorUsedError;
+  @override
+  List<ColorItem> get selectedColorsList => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ColorsListPageStateCopyWith<_$_ColorsListPageState> get copyWith =>
