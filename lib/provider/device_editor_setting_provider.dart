@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jboss_ui/api/database.dart';
+import 'package:jboss_ui/models/database/color_item.dart';
 import 'package:jboss_ui/states/device_editor_setting_state.dart';
 
 final deviceEditorScreenProvider = StateNotifierProvider<
@@ -44,5 +45,9 @@ class DeviceEditorSettingStateNotifer
 
   setJbossDevice({required int position}) {
     state = state.copyWith(jbossDevice: state.jbossDevicesList[position]);
+  }
+
+  void updateSelectedColors({required List<ColorItem> selectedColors}) {
+    state = state.copyWith(colorList: selectedColors);
   }
 }

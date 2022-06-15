@@ -2,6 +2,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/color_list_page_provider.dart';
+import 'package:jboss_ui/provider/device_editor_setting_provider.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 import 'package:jboss_ui/utils/constant.dart';
 
@@ -175,6 +176,20 @@ class ColorsPage extends ConsumerWidget {
                   ),
                 ),
               ),
+        state.selectedColorsList.isNotEmpty
+            ? TextButton(
+                onPressed: () {
+                  ref
+                      .read(deviceEditorScreenProvider.notifier)
+                      .updateSelectedColors(
+                          selectedColors: state.selectedColorsList);
+
+                  ref.read(settingNavigationProvider.state).state =
+                      SettingsScreenOption.addDevice;
+                },
+                child: const Text('Закончить выбор'),
+              )
+            : const SizedBox(),
       ],
     );
   }

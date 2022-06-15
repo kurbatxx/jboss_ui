@@ -64,6 +64,9 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                                 hintText: 'Цена устройства',
                               ),
                             ),
+                            const SizedBox(
+                              height: 2,
+                            ),
                             TextButton(
                                 onPressed: () {
                                   final RenderBox renderBox = containerKey
@@ -122,16 +125,60 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                       ),
                     ),
                     state.isColored
-                        ? TextButton(
-                            onPressed: () {
-                              ref.read(settingNavigationProvider.state).state =
-                                  SettingsScreenOption.addColors;
-                              ref
-                                  .read(colorsListPageProvider.notifier)
-                                  .getColors();
-                            },
-                            child: const Text('Указать цвета'),
-                          )
+                        ? state.colorList.isEmpty
+                            ? TextButton(
+                                onPressed: () {
+                                  ref
+                                      .read(settingNavigationProvider.state)
+                                      .state = SettingsScreenOption.addColors;
+                                  ref
+                                      .read(colorsListPageProvider.notifier)
+                                      .getColors();
+                                },
+                                child: const Text('Указать цвета'),
+                              )
+                            : Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: kMinimumRadius,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Wrap(
+                                        spacing: 2,
+                                        runSpacing: 2,
+                                        children: List.generate(
+                                          state.colorList.length,
+                                          (index) => ClipRRect(
+                                            borderRadius: kMinimumRadius,
+                                            child: Container(
+                                              height: 30,
+                                              width: 30,
+                                              color:
+                                                  state.colorList[index].color,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned.fill(
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(onTap: () {
+                                        ref
+                                                .read(settingNavigationProvider
+                                                    .state)
+                                                .state =
+                                            SettingsScreenOption.addColors;
+                                        ref
+                                            .read(
+                                                colorsListPageProvider.notifier)
+                                            .getColors();
+                                      }),
+                                    ),
+                                  )
+                                ],
+                              )
                         : const SizedBox(),
                     const Divider(),
                     TextButton(
