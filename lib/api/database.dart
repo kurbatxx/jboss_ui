@@ -5,9 +5,9 @@ import 'package:jboss_ui/models/database/colored_device.dart';
 import 'package:jboss_ui/models/database/jboss_device_item.dart';
 import 'package:jboss_ui/models/database/setting_type_device.dart';
 import 'package:jboss_ui/models/database/type_device.dart';
+import 'package:jboss_ui/states/connection_page_state.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
-import 'package:jboss_ui/utils/secure.dart';
 import 'package:postgres/postgres.dart';
 
 class DbApi {
@@ -17,14 +17,14 @@ class DbApi {
   static DbApi? _instance;
   static DbApi get inst => _instance ??= DbApi._();
 
-  init() async {
+  init({required ConnectionPageState connectionState}) async {
     await Future.delayed(const Duration(seconds: 2));
     conn = PostgreSQLConnection(
-      'localhost',
-      5432,
-      'crm_db',
-      username: 'postgres',
-      password: 'postgres',
+      connectionState.host,
+      int.tryParse(connectionState.port) ?? 5432,
+      connectionState.databaseName,
+      username: connectionState.username,
+      password: connectionState.password,
     );
   }
 

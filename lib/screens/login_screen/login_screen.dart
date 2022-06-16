@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/utils/bitsdojo.dart';
 import 'package:jboss_ui/utils/secure.dart';
@@ -22,22 +23,37 @@ class LoginScreen extends StatelessWidget {
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Column(
+                child: Stack(
+                  alignment: AlignmentDirectional.topEnd,
                   children: [
-                    Container(
-                      width: 200.0,
-                      height: 200.0,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage("assets/images/login.png"),
+                    Column(
+                      children: [
+                        Container(
+                          width: 200.0,
+                          height: 200.0,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage("assets/images/login.png"),
+                            ),
+                          ),
                         ),
+                        const SizedBox(
+                          height: 24.0,
+                        ),
+                        const LoginConsumer(),
+                      ],
+                    ),
+                    IconButton(
+                      splashRadius: 16,
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(NavigationRouteNames.connetionPage);
+                      },
+                      icon: const Icon(
+                        Icons.settings,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 24.0,
-                    ),
-                    const LoginConsumer(),
+                    )
                   ],
                 ),
               ),
@@ -54,10 +70,10 @@ class LoginConsumer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(loginScreenStateProvider);
+
     final loginController = TextEditingController();
     final passwordController = TextEditingController();
-
-    final state = ref.watch(loginScreenStateProvider);
 
     loginController.value = TextEditingValue(
       text: state.login,

@@ -7,24 +7,34 @@ import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/api/ui.dart';
 
 import 'package:jboss_ui/navigation/main_navigation.dart';
+import 'package:jboss_ui/provider/connection_page_provider.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/utils/app_dir.dart';
+import 'package:jboss_ui/utils/dev_log.dart';
 
 final appDir = getAppDir();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await DbApi.inst.init();
-  DbApi.inst.conn.open();
-
   JbossApi.initial();
-  final initialState = await UiApi.initial();
+  final loginState = await UiInitialApi.getLoginState();
+  final connectionState = await UiInitialApi.getConnetionPageState();
+
+  await DbApi.inst.init(connectionState: connectionState);
+  try {
+    DbApi.inst.conn.open();
+  } catch (e) {
+    e.log();
+  }
 
   runApp(
     ProviderScope(
       overrides: [
         loginScreenStateProvider.overrideWithValue(
-          LoginScreenStateNotifer(initialState),
+          LoginScreenStateNotifer(loginState),
+        ),
+        connectionPageProvider.overrideWithValue(
+          ConnectionPageStateNotifier(connectionState),
         ),
       ],
       child: const App(),
