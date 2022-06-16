@@ -139,42 +139,43 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                               )
                             : Stack(
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: kMinimumRadius,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Wrap(
-                                        spacing: 2,
-                                        runSpacing: 2,
-                                        children: List.generate(
-                                          state.colorList.length,
-                                          (index) => ClipRRect(
-                                            borderRadius: kMinimumRadius,
-                                            child: Container(
-                                              height: 30,
-                                              width: 30,
-                                              color:
-                                                  state.colorList[index].color,
-                                            ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Wrap(
+                                      spacing: 2,
+                                      runSpacing: 2,
+                                      children: List.generate(
+                                        state.colorList.length,
+                                        (index) => ClipRRect(
+                                          borderRadius: kMinimumRadius,
+                                          child: Container(
+                                            height: 30,
+                                            width: 30,
+                                            color:
+                                                state.colorList[index].color,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
                                   Positioned.fill(
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(onTap: () {
-                                        ref
-                                                .read(settingNavigationProvider
-                                                    .state)
-                                                .state =
-                                            SettingsScreenOption.addColors;
-                                        ref
-                                            .read(
-                                                colorsListPageProvider.notifier)
-                                            .getColors();
-                                      }),
+                                    child: ClipRRect(
+                                      borderRadius: kMinimumRadius,
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(onTap: () {
+                                          ref
+                                                  .read(
+                                                      settingNavigationProvider
+                                                          .state)
+                                                  .state =
+                                              SettingsScreenOption.addColors;
+                                          ref
+                                              .read(colorsListPageProvider
+                                                  .notifier)
+                                              .getColors();
+                                        }),
+                                      ),
                                     ),
                                   )
                                 ],

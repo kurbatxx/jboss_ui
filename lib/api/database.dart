@@ -7,15 +7,19 @@ import 'package:jboss_ui/models/database/setting_type_device.dart';
 import 'package:jboss_ui/models/database/type_device.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
+import 'package:jboss_ui/utils/secure.dart';
 import 'package:postgres/postgres.dart';
 
 class DbApi {
-  static DbApi instance = DbApi._();
-  DbApi._();
-  final PostgreSQLConnection conn = initial();
+  late PostgreSQLConnection conn;
 
-  static initial() {
-    return PostgreSQLConnection(
+  DbApi._();
+  static DbApi? _instance;
+  static DbApi get inst => _instance ??= DbApi._();
+
+  init() async {
+    await Future.delayed(const Duration(seconds: 2));
+    conn = PostgreSQLConnection(
       'localhost',
       5432,
       'crm_db',
@@ -25,7 +29,7 @@ class DbApi {
   }
 
   static Future<List<TypeDevice>> getDevices() async {
-    final results = await DbApi.instance.conn.query('''
+    final results = await DbApi.inst.conn.query('''
     select type_devices.type_device_id, type_device_name, type_device_icon 
     from ( 
         select  
@@ -54,7 +58,7 @@ class DbApi {
 
   static Future<List<ColoredDevice>> getColors(
       {required int typeDeviceId}) async {
-    final results = await DbApi.instance.conn.query('''
+    final results = await DbApi.inst.conn.query('''
     select devices.device_id, colors.color 
     from devices
     join colors ON colors.color_id = devices.color_id
@@ -78,7 +82,7 @@ class DbApi {
   }
 
   static Future<int> setColoredDevicesId({required int typeDeviceId}) async {
-    final results = await DbApi.instance.conn.query('''
+    final results = await DbApi.inst.conn.query('''
     select devices.device_id
     from devices
     where type_device_id = $typeDeviceId;
@@ -92,7 +96,7 @@ class DbApi {
   }
 
   static Future<List<SettingTypeDevice>> getSettingDevices() async {
-    final results = await DbApi.instance.conn.query('''
+    final results = await DbApi.inst.conn.query('''
     select type_device_id, device_position, type_device_name, device_name, price, type_device_icon
     from type_devices
     join jboss_devices on type_devices.jboss_device_id = jboss_devices.jboss_device_id
@@ -121,14 +125,14 @@ class DbApi {
     required int oldPosition,
     required int newPosition,
   }) async {
-    await DbApi.instance.conn.query('''
+    await DbApi.inst.conn.query('''
     select 
     from update_type_device_position($oldPosition, $newPosition);
     ''');
   }
 
   static Future<List<ColorItem>> getColorItems() async {
-    final results = await DbApi.instance.conn.query('''
+    final results = await DbApi.inst.conn.query('''
     select color_id, color
     from colors 
     order by color_position;
@@ -146,7 +150,7 @@ class DbApi {
   }
 
   static Future<void> addColor({required Color color}) async {
-    await DbApi.instance.conn.query('''
+    await DbApi.inst.conn.query('''
     insert into colors (color_position, color)
     values (
 	         (select count(color_position)
@@ -157,7 +161,7 @@ class DbApi {
 
   static Future<void> deleteColor({required int id}) async {
     try {
-      await DbApi.instance.conn.query('''
+      await DbApi.inst.conn.query('''
           select 
           detele_color($id);
           ''');
@@ -168,7 +172,7 @@ class DbApi {
   }
 
   static Future<List<JbossDeviceItem>> getJbossDevices() async {
-    final results = await DbApi.instance.conn.query('''
+    final results = await DbApi.inst.conn.query('''
     select jboss_device_id, device_name, device_selected
     from jboss_devices
     where device_selected = false 

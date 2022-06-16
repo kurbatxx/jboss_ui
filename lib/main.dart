@@ -13,8 +13,9 @@ import 'package:jboss_ui/utils/app_dir.dart';
 final appDir = getAppDir();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DbApi.initial();
-  await DbApi.instance.conn.open();
+
+  await DbApi.inst.init();
+  DbApi.inst.conn.open();
 
   JbossApi.initial();
   final initialState = await UiApi.initial();
