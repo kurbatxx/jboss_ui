@@ -99,19 +99,22 @@ class TextFieldsWidget extends ConsumerWidget {
           ),
         ),
         TextButton(
-          onPressed: () {
+          onPressed: () async {
             final state = ConnectionPageState(
-              host: hostTextController.text,
-              databaseName: databaseNameTextController.text,
-              port: portTextController.text,
-              username: usernameTextController.text,
-              password: passwordTextController.text,
+              host: hostTextController.text.trim(),
+              databaseName: databaseNameTextController.text.trim(),
+              port: portTextController.text.trim(),
+              username: usernameTextController.text.trim(),
+              password: passwordTextController.text.trim(),
             );
 
-            ref
+            Future<bool> checkConnect = ref
                 .read(connectionPageProvider.notifier)
                 .checkConnect(newState: state);
-            Navigator.pop(context);
+
+            if (await checkConnect) {
+              Navigator.pop(context);
+            }
           },
           child: const Text('Подключиться'),
         ),

@@ -22,9 +22,10 @@ Future<void> main() async {
 
   await DbApi.inst.init(connectionState: connectionState);
   try {
-    DbApi.inst.conn.open();
+    await DbApi.inst.conn.open();
   } catch (e) {
     e.log();
+    DbApi.inst.conn.close();
   }
 
   runApp(

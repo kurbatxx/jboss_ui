@@ -25,6 +25,7 @@ class DbApi {
       connectionState.databaseName,
       username: connectionState.username,
       password: connectionState.password,
+      useSSL: true,
     );
   }
 

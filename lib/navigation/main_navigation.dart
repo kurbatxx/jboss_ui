@@ -4,7 +4,6 @@ import 'package:jboss_ui/screens/hub_screen/hub_screen.dart';
 import 'package:jboss_ui/screens/login_screen/login_screen.dart';
 import 'package:jboss_ui/screens/settings_page/pages/connection_page.dart';
 
-
 abstract class NavigationRouteNames {
   static const loginScreen = '/';
   static const hubScreen = '/hub';
