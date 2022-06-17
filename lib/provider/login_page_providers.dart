@@ -29,22 +29,23 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
     LoginScreenState state,
   ) : super(state);
 
-  toogle() {
+  void toogle() {
     state = state.copyWith(save: !state.save);
   }
 
-  updateTextField(
-      {required TextEditingController textController,
-      required TextControllersEnum textControllersEnum}) {
-    switch (textControllersEnum) {
-      case TextControllersEnum.login:
+  void updateText(
+    String value, {
+    required LoginScreenFieldEnum field,
+  }) {
+    switch (field) {
+      case LoginScreenFieldEnum.login:
         state = state.copyWith(
-          login: textController.text,
+          login: value,
         );
         break;
-      case TextControllersEnum.password:
+      case LoginScreenFieldEnum.password:
         state = state.copyWith(
-          password: textController.text,
+          password: value,
         );
         break;
     }

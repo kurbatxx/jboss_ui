@@ -5,7 +5,7 @@ import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/utils/bitsdojo.dart';
 import 'package:jboss_ui/utils/secure.dart';
 
-enum TextControllersEnum {
+enum LoginScreenFieldEnum {
   login,
   password,
 }
@@ -91,25 +91,30 @@ class LoginConsumer extends ConsumerWidget {
         TextFormField(
           controller: loginController,
           decoration: const InputDecoration(
+            isDense: true,
             hintText: "Логин",
           ),
-          onChanged: (_) =>
-              ref.read(loginScreenStateProvider.notifier).updateTextField(
-                    textController: loginController,
-                    textControllersEnum: TextControllersEnum.login,
+          onChanged: (value) =>
+              ref.read(loginScreenStateProvider.notifier).updateText(
+                    value,
+                    field: LoginScreenFieldEnum.login,
                   ),
         ),
         TextFormField(
           controller: passwordController,
           decoration: const InputDecoration(
+            isDense: true,
             hintText: "Пароль",
           ),
           obscureText: true,
-          onChanged: (_) =>
-              ref.read(loginScreenStateProvider.notifier).updateTextField(
-                    textController: passwordController,
-                    textControllersEnum: TextControllersEnum.password,
-                  ),
+          onChanged: (value) => ref
+              .read(
+                loginScreenStateProvider.notifier,
+              )
+              .updateText(
+                value,
+                field: LoginScreenFieldEnum.password,
+              ),
         ),
         state.login.isNotEmpty && state.password.isNotEmpty
             ? Column(

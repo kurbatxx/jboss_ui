@@ -10,6 +10,11 @@ import 'dart:io';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 import 'package:jboss_ui/utils/constant.dart';
 
+enum DeviceEditorSettingsTextEnum {
+  name,
+  price,
+}
+
 class DeviceEditorSettingsPage extends ConsumerWidget {
   const DeviceEditorSettingsPage({Key? key}) : super(key: key);
 
@@ -17,6 +22,19 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(deviceEditorScreenProvider);
     final containerKey = GlobalKey();
+
+    final deviceNameTextController = TextEditingController();
+    final devicePriceTextController = TextEditingController();
+
+    deviceNameTextController.value = TextEditingValue(
+      text: state.name,
+      selection: TextSelection.collapsed(offset: state.name.length),
+    );
+
+    devicePriceTextController.value = TextEditingValue(
+      text: state.price,
+      selection: TextSelection.collapsed(offset: state.price.length),
+    );
 
     return Column(
       children: [
@@ -53,16 +71,34 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                           key: containerKey,
                           children: [
                             TextFormField(
+                              controller: deviceNameTextController,
                               decoration: const InputDecoration(
                                 isDense: true,
                                 hintText: 'Название устройства',
                               ),
+                              onChanged: (value) => {
+                                ref
+                                    .read(deviceEditorScreenProvider.notifier)
+                                    .updateText(
+                                      value,
+                                      field: DeviceEditorSettingsTextEnum.name,
+                                    ),
+                              },
                             ),
                             TextFormField(
+                              controller: devicePriceTextController,
                               decoration: const InputDecoration(
                                 isDense: true,
                                 hintText: 'Цена устройства',
                               ),
+                              onChanged: (value) => {
+                                ref
+                                    .read(deviceEditorScreenProvider.notifier)
+                                    .updateText(
+                                      value,
+                                      field: DeviceEditorSettingsTextEnum.price,
+                                    ),
+                              },
                             ),
                             const SizedBox(
                               height: 2,
@@ -151,8 +187,7 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                                           child: Container(
                                             height: 30,
                                             width: 30,
-                                            color:
-                                                state.colorList[index].color,
+                                            color: state.colorList[index].color,
                                           ),
                                         ),
                                       ),

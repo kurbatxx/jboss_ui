@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jboss_ui/api/database.dart';
 import 'package:jboss_ui/models/database/color_item.dart';
+import 'package:jboss_ui/screens/settings_page/pages/device_editor_settings_page.dart';
 import 'package:jboss_ui/states/device_editor_setting_state.dart';
 
 final deviceEditorScreenProvider = StateNotifierProvider<
@@ -49,5 +50,20 @@ class DeviceEditorSettingStateNotifer
 
   void updateSelectedColors({required List<ColorItem> selectedColors}) {
     state = state.copyWith(colorList: selectedColors);
+  }
+
+  void updateText(
+    String value, {
+    required DeviceEditorSettingsTextEnum field,
+  }) {
+    switch (field) {
+      case DeviceEditorSettingsTextEnum.name:
+        state = state.copyWith(name: value);
+        break;
+      case DeviceEditorSettingsTextEnum.price:
+        state = state.copyWith(price: value);
+        break;
+    }
+    state = state.copyWith(svgIcon: null);
   }
 }

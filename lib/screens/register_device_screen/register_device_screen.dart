@@ -41,8 +41,6 @@ enum TextControllersEnum {
   rfidId,
 }
 
-
-
 class RfidDevice {
   final int value;
   final String name;
