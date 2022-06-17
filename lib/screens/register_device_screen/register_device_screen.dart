@@ -76,12 +76,11 @@ class RegisterPage extends ConsumerWidget {
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
             decoration: const InputDecoration(hintText: "ID Клиента"),
-            onChanged: (_) => ref
-                .read(registerDeviceScreenStateProvider.notifier)
-                .updateTextField(
-                  textController: clientIdController,
-                  textControllersEnum: TextControllersEnum.clientId,
-                ),
+            onChanged: (value) =>
+                ref.read(registerDeviceScreenStateProvider.notifier).updateText(
+                      value,
+                      textControllersEnum: TextControllersEnum.clientId,
+                    ),
             onFieldSubmitted: (_) {
               FocusScope.of(context).requestFocus(rfidIdNode);
             },
@@ -94,12 +93,11 @@ class RegisterPage extends ConsumerWidget {
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
             decoration: const InputDecoration(hintText: "ID устройства"),
-            onChanged: (_) => ref
-                .read(registerDeviceScreenStateProvider.notifier)
-                .updateTextField(
-                  textController: rfidIdController,
-                  textControllersEnum: TextControllersEnum.rfidId,
-                ),
+            onChanged: (value) =>
+                ref.read(registerDeviceScreenStateProvider.notifier).updateText(
+                      value,
+                      textControllersEnum: TextControllersEnum.rfidId,
+                    ),
             onFieldSubmitted: (_) {
               if (registerState.rfidId.isNotEmpty) {
                 FocusScope.of(context).requestFocus(registerButtonNode);

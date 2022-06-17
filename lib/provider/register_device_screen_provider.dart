@@ -46,18 +46,19 @@ class RegisterDeviceScreenStateNotifier
     state = state.copyWith(register: !state.register);
   }
 
-  void updateTextField(
-      {required TextEditingController textController,
-      required TextControllersEnum textControllersEnum}) {
+  void updateText(
+    value, {
+    required TextControllersEnum textControllersEnum,
+  }) {
     switch (textControllersEnum) {
       case TextControllersEnum.clientId:
         state = state.copyWith(
-          clientId: textController.text,
+          clientId: value,
         );
         break;
       case TextControllersEnum.rfidId:
         state = state.copyWith(
-          rfidId: textController.text,
+          rfidId: value,
         );
         break;
     }

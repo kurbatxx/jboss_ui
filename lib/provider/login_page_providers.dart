@@ -14,9 +14,9 @@ import 'package:jboss_ui/utils/secure.dart';
 final loginScreenStateProvider =
     StateNotifierProvider<LoginScreenStateNotifer, LoginScreenState>(
   (ref) => LoginScreenStateNotifer(
-    const LoginScreenState(
-      login: '',
-      password: '',
+    LoginScreenState(
+      login: TextEditingController(),
+      password: TextEditingController(),
       isLoading: false,
       error: '',
       save: false,
@@ -33,19 +33,19 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
     state = state.copyWith(save: !state.save);
   }
 
-  void updateText(
-    String value, {
+  void updateText({
+    required TextEditingController controller,
     required LoginScreenFieldEnum field,
   }) {
     switch (field) {
       case LoginScreenFieldEnum.login:
         state = state.copyWith(
-          login: value,
+          login: controller,
         );
         break;
       case LoginScreenFieldEnum.password:
         state = state.copyWith(
-          password: value,
+          password: controller,
         );
         break;
     }
@@ -76,8 +76,8 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
       Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);
 
       if (state.save) {
-        await SecureStorage.instance.setLogin(state.login);
-        await SecureStorage.instance.setPassword(state.password);
+        await SecureStorage.instance.setLogin(state.login.text);
+        await SecureStorage.instance.setPassword(state.password.text);
         await SecureStorage.instance.setSaveLoginState(state.save);
       }
 
@@ -92,7 +92,10 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
   Future<void> logout(BuildContext context, WidgetRef ref) async {
     try {
       if (!await SecureStorage.instance.getSaveLoginState()) {
-        state.copyWith(login: '', password: '');
+        state.copyWith(
+          login: TextEditingController(),
+          password: TextEditingController(),
+        );
       }
       await JbossApi.logout();
 

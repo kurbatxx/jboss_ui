@@ -16,8 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginScreenState {
-  String get login => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
+//required String login,
+//required String password,
+//
+  TextEditingController get login => throw _privateConstructorUsedError;
+  TextEditingController get password => throw _privateConstructorUsedError; //
   bool get save => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
@@ -33,7 +36,11 @@ abstract class $LoginScreenStateCopyWith<$Res> {
           LoginScreenState value, $Res Function(LoginScreenState) then) =
       _$LoginScreenStateCopyWithImpl<$Res>;
   $Res call(
-      {String login, String password, bool save, bool isLoading, String error});
+      {TextEditingController login,
+      TextEditingController password,
+      bool save,
+      bool isLoading,
+      String error});
 }
 
 /// @nodoc
@@ -57,11 +64,11 @@ class _$LoginScreenStateCopyWithImpl<$Res>
       login: login == freezed
           ? _value.login
           : login // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TextEditingController,
       password: password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TextEditingController,
       save: save == freezed
           ? _value.save
           : save // ignore: cast_nullable_to_non_nullable
@@ -86,7 +93,11 @@ abstract class _$$_LoginScreenStateCopyWith<$Res>
       __$$_LoginScreenStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String login, String password, bool save, bool isLoading, String error});
+      {TextEditingController login,
+      TextEditingController password,
+      bool save,
+      bool isLoading,
+      String error});
 }
 
 /// @nodoc
@@ -112,11 +123,11 @@ class __$$_LoginScreenStateCopyWithImpl<$Res>
       login: login == freezed
           ? _value.login
           : login // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TextEditingController,
       password: password == freezed
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TextEditingController,
       save: save == freezed
           ? _value.save
           : save // ignore: cast_nullable_to_non_nullable
@@ -143,10 +154,14 @@ class _$_LoginScreenState implements _LoginScreenState {
       required this.isLoading,
       required this.error});
 
+//required String login,
+//required String password,
+//
   @override
-  final String login;
+  final TextEditingController login;
   @override
-  final String password;
+  final TextEditingController password;
+//
   @override
   final bool save;
   @override
@@ -188,17 +203,19 @@ class _$_LoginScreenState implements _LoginScreenState {
 
 abstract class _LoginScreenState implements LoginScreenState {
   const factory _LoginScreenState(
-      {required final String login,
-      required final String password,
+      {required final TextEditingController login,
+      required final TextEditingController password,
       required final bool save,
       required final bool isLoading,
       required final String error}) = _$_LoginScreenState;
 
+  @override //required String login,
+//required String password,
+//
+  TextEditingController get login => throw _privateConstructorUsedError;
   @override
-  String get login => throw _privateConstructorUsedError;
-  @override
-  String get password => throw _privateConstructorUsedError;
-  @override
+  TextEditingController get password => throw _privateConstructorUsedError;
+  @override //
   bool get save => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;

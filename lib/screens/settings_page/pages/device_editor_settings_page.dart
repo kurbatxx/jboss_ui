@@ -21,20 +21,6 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(deviceEditorScreenProvider);
-    final containerKey = GlobalKey();
-
-    final deviceNameTextController = TextEditingController();
-    final devicePriceTextController = TextEditingController();
-
-    deviceNameTextController.value = TextEditingValue(
-      text: state.name,
-      selection: TextSelection.collapsed(offset: state.name.length),
-    );
-
-    devicePriceTextController.value = TextEditingValue(
-      text: state.price,
-      selection: TextSelection.collapsed(offset: state.price.length),
-    );
 
     return Column(
       children: [
@@ -67,66 +53,7 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8,
                         ),
-                        child: Column(
-                          key: containerKey,
-                          children: [
-                            TextFormField(
-                              controller: deviceNameTextController,
-                              decoration: const InputDecoration(
-                                isDense: true,
-                                hintText: 'Название устройства',
-                              ),
-                              onChanged: (value) => {
-                                ref
-                                    .read(deviceEditorScreenProvider.notifier)
-                                    .updateText(
-                                      value,
-                                      field: DeviceEditorSettingsTextEnum.name,
-                                    ),
-                              },
-                            ),
-                            TextFormField(
-                              controller: devicePriceTextController,
-                              decoration: const InputDecoration(
-                                isDense: true,
-                                hintText: 'Цена устройства',
-                              ),
-                              onChanged: (value) => {
-                                ref
-                                    .read(deviceEditorScreenProvider.notifier)
-                                    .updateText(
-                                      value,
-                                      field: DeviceEditorSettingsTextEnum.price,
-                                    ),
-                              },
-                            ),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  final RenderBox renderBox = containerKey
-                                      .currentContext
-                                      ?.findRenderObject() as RenderBox;
-
-                                  final Size size = renderBox.size;
-                                  final Offset offset =
-                                      renderBox.localToGlobal(Offset.zero);
-
-                                  OverlayMenu.showMenu(
-                                    context: context,
-                                    widgetSize: size,
-                                    offset: offset,
-                                  );
-                                  ref
-                                      .read(deviceEditorScreenProvider.notifier)
-                                      .getJbossDevices();
-                                },
-                                child: state.jbossDevice == null
-                                    ? const Text('Тип устройства')
-                                    : Text(state.jbossDevice!.name)),
-                          ],
-                        ),
+                        child: TextFieldsWidget(),
                       ),
                     ),
                   ],
@@ -226,6 +153,76 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
               ],
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class TextFieldsWidget extends ConsumerWidget {
+  TextFieldsWidget({Key? key}) : super(key: key);
+
+  final deviceNameTextController = TextEditingController();
+  final devicePriceTextController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(deviceEditorScreenProvider);
+    final containerKey = GlobalKey();
+
+    return Column(
+      //key: containerKey,
+      children: [
+        TextFormField(
+          controller: deviceNameTextController,
+          decoration: const InputDecoration(
+            isDense: true,
+            hintText: 'Название устройства',
+          ),
+          onChanged: (value) => {
+            ref.read(deviceEditorScreenProvider.notifier).updateText(
+                  value,
+                  field: DeviceEditorSettingsTextEnum.name,
+                ),
+          },
+        ),
+        TextFormField(
+          controller: devicePriceTextController,
+          decoration: const InputDecoration(
+            isDense: true,
+            hintText: 'Цена устройства',
+          ),
+          onChanged: (value) => {
+            ref.read(deviceEditorScreenProvider.notifier).updateText(
+                  value,
+                  field: DeviceEditorSettingsTextEnum.price,
+                ),
+          },
+        ),
+        const SizedBox(
+          height: 2,
+        ),
+        SizedBox(
+          width: double.infinity,
+          key: containerKey,
+          child: TextButton(
+              onPressed: () {
+                final RenderBox renderBox = containerKey.currentContext
+                    ?.findRenderObject() as RenderBox;
+
+                final Size size = renderBox.size;
+                final Offset offset = renderBox.localToGlobal(Offset.zero);
+
+                OverlayMenu.showMenu(
+                  context: context,
+                  widgetSize: size,
+                  offset: offset,
+                );
+                ref.read(deviceEditorScreenProvider.notifier).getJbossDevices();
+              },
+              child: state.jbossDevice == null
+                  ? const Text('Тип устройства')
+                  : Text(state.jbossDevice!.name)),
         ),
       ],
     );
