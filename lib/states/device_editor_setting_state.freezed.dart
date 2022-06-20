@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$DeviceEditorSettingState {
   bool get isNewDevice => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get price => throw _privateConstructorUsedError;
+  TextEditingController get nameController =>
+      throw _privateConstructorUsedError;
+  TextEditingController get priceController =>
+      throw _privateConstructorUsedError;
   SvgPicture? get svgIcon => throw _privateConstructorUsedError;
   bool get isColored => throw _privateConstructorUsedError;
   List<ColorItem> get colorList => throw _privateConstructorUsedError;
@@ -38,8 +40,8 @@ abstract class $DeviceEditorSettingStateCopyWith<$Res> {
       _$DeviceEditorSettingStateCopyWithImpl<$Res>;
   $Res call(
       {bool isNewDevice,
-      String name,
-      String price,
+      TextEditingController nameController,
+      TextEditingController priceController,
       SvgPicture? svgIcon,
       bool isColored,
       List<ColorItem> colorList,
@@ -59,8 +61,8 @@ class _$DeviceEditorSettingStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isNewDevice = freezed,
-    Object? name = freezed,
-    Object? price = freezed,
+    Object? nameController = freezed,
+    Object? priceController = freezed,
     Object? svgIcon = freezed,
     Object? isColored = freezed,
     Object? colorList = freezed,
@@ -72,14 +74,14 @@ class _$DeviceEditorSettingStateCopyWithImpl<$Res>
           ? _value.isNewDevice
           : isNewDevice // ignore: cast_nullable_to_non_nullable
               as bool,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: price == freezed
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as String,
+      nameController: nameController == freezed
+          ? _value.nameController
+          : nameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      priceController: priceController == freezed
+          ? _value.priceController
+          : priceController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
       svgIcon: svgIcon == freezed
           ? _value.svgIcon
           : svgIcon // ignore: cast_nullable_to_non_nullable
@@ -114,8 +116,8 @@ abstract class _$$_DeviceEditorSettingStateCopyWith<$Res>
   @override
   $Res call(
       {bool isNewDevice,
-      String name,
-      String price,
+      TextEditingController nameController,
+      TextEditingController priceController,
       SvgPicture? svgIcon,
       bool isColored,
       List<ColorItem> colorList,
@@ -138,8 +140,8 @@ class __$$_DeviceEditorSettingStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isNewDevice = freezed,
-    Object? name = freezed,
-    Object? price = freezed,
+    Object? nameController = freezed,
+    Object? priceController = freezed,
     Object? svgIcon = freezed,
     Object? isColored = freezed,
     Object? colorList = freezed,
@@ -151,14 +153,14 @@ class __$$_DeviceEditorSettingStateCopyWithImpl<$Res>
           ? _value.isNewDevice
           : isNewDevice // ignore: cast_nullable_to_non_nullable
               as bool,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: price == freezed
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as String,
+      nameController: nameController == freezed
+          ? _value.nameController
+          : nameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      priceController: priceController == freezed
+          ? _value.priceController
+          : priceController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
       svgIcon: svgIcon == freezed
           ? _value.svgIcon
           : svgIcon // ignore: cast_nullable_to_non_nullable
@@ -188,8 +190,8 @@ class __$$_DeviceEditorSettingStateCopyWithImpl<$Res>
 class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
   const _$_DeviceEditorSettingState(
       {required this.isNewDevice,
-      required this.name,
-      required this.price,
+      required this.nameController,
+      required this.priceController,
       required this.svgIcon,
       required this.isColored,
       required final List<ColorItem> colorList,
@@ -201,9 +203,9 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
   @override
   final bool isNewDevice;
   @override
-  final String name;
+  final TextEditingController nameController;
   @override
-  final String price;
+  final TextEditingController priceController;
   @override
   final SvgPicture? svgIcon;
   @override
@@ -226,7 +228,7 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
 
   @override
   String toString() {
-    return 'DeviceEditorSettingState(isNewDevice: $isNewDevice, name: $name, price: $price, svgIcon: $svgIcon, isColored: $isColored, colorList: $colorList, jbossDevice: $jbossDevice, jbossDevicesList: $jbossDevicesList)';
+    return 'DeviceEditorSettingState(isNewDevice: $isNewDevice, nameController: $nameController, priceController: $priceController, svgIcon: $svgIcon, isColored: $isColored, colorList: $colorList, jbossDevice: $jbossDevice, jbossDevicesList: $jbossDevicesList)';
   }
 
   @override
@@ -236,8 +238,10 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
             other is _$_DeviceEditorSettingState &&
             const DeepCollectionEquality()
                 .equals(other.isNewDevice, isNewDevice) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.price, price) &&
+            const DeepCollectionEquality()
+                .equals(other.nameController, nameController) &&
+            const DeepCollectionEquality()
+                .equals(other.priceController, priceController) &&
             const DeepCollectionEquality().equals(other.svgIcon, svgIcon) &&
             const DeepCollectionEquality().equals(other.isColored, isColored) &&
             const DeepCollectionEquality()
@@ -252,8 +256,8 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(isNewDevice),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(price),
+      const DeepCollectionEquality().hash(nameController),
+      const DeepCollectionEquality().hash(priceController),
       const DeepCollectionEquality().hash(svgIcon),
       const DeepCollectionEquality().hash(isColored),
       const DeepCollectionEquality().hash(_colorList),
@@ -270,8 +274,8 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
 abstract class _DeviceEditorSettingState implements DeviceEditorSettingState {
   const factory _DeviceEditorSettingState(
           {required final bool isNewDevice,
-          required final String name,
-          required final String price,
+          required final TextEditingController nameController,
+          required final TextEditingController priceController,
           required final SvgPicture? svgIcon,
           required final bool isColored,
           required final List<ColorItem> colorList,
@@ -282,9 +286,11 @@ abstract class _DeviceEditorSettingState implements DeviceEditorSettingState {
   @override
   bool get isNewDevice => throw _privateConstructorUsedError;
   @override
-  String get name => throw _privateConstructorUsedError;
+  TextEditingController get nameController =>
+      throw _privateConstructorUsedError;
   @override
-  String get price => throw _privateConstructorUsedError;
+  TextEditingController get priceController =>
+      throw _privateConstructorUsedError;
   @override
   SvgPicture? get svgIcon => throw _privateConstructorUsedError;
   @override

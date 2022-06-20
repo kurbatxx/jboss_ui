@@ -19,8 +19,10 @@ mixin _$LoginScreenState {
 //required String login,
 //required String password,
 //
-  TextEditingController get login => throw _privateConstructorUsedError;
-  TextEditingController get password => throw _privateConstructorUsedError; //
+  TextEditingController get loginController =>
+      throw _privateConstructorUsedError;
+  TextEditingController get passwordController =>
+      throw _privateConstructorUsedError; //
   bool get save => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
@@ -36,8 +38,8 @@ abstract class $LoginScreenStateCopyWith<$Res> {
           LoginScreenState value, $Res Function(LoginScreenState) then) =
       _$LoginScreenStateCopyWithImpl<$Res>;
   $Res call(
-      {TextEditingController login,
-      TextEditingController password,
+      {TextEditingController loginController,
+      TextEditingController passwordController,
       bool save,
       bool isLoading,
       String error});
@@ -54,20 +56,20 @@ class _$LoginScreenStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? login = freezed,
-    Object? password = freezed,
+    Object? loginController = freezed,
+    Object? passwordController = freezed,
     Object? save = freezed,
     Object? isLoading = freezed,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      login: login == freezed
-          ? _value.login
-          : login // ignore: cast_nullable_to_non_nullable
+      loginController: loginController == freezed
+          ? _value.loginController
+          : loginController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      password: password == freezed
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
+      passwordController: passwordController == freezed
+          ? _value.passwordController
+          : passwordController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
       save: save == freezed
           ? _value.save
@@ -93,8 +95,8 @@ abstract class _$$_LoginScreenStateCopyWith<$Res>
       __$$_LoginScreenStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {TextEditingController login,
-      TextEditingController password,
+      {TextEditingController loginController,
+      TextEditingController passwordController,
       bool save,
       bool isLoading,
       String error});
@@ -113,20 +115,20 @@ class __$$_LoginScreenStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? login = freezed,
-    Object? password = freezed,
+    Object? loginController = freezed,
+    Object? passwordController = freezed,
     Object? save = freezed,
     Object? isLoading = freezed,
     Object? error = freezed,
   }) {
     return _then(_$_LoginScreenState(
-      login: login == freezed
-          ? _value.login
-          : login // ignore: cast_nullable_to_non_nullable
+      loginController: loginController == freezed
+          ? _value.loginController
+          : loginController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
-      password: password == freezed
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
+      passwordController: passwordController == freezed
+          ? _value.passwordController
+          : passwordController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
       save: save == freezed
           ? _value.save
@@ -148,8 +150,8 @@ class __$$_LoginScreenStateCopyWithImpl<$Res>
 
 class _$_LoginScreenState implements _LoginScreenState {
   const _$_LoginScreenState(
-      {required this.login,
-      required this.password,
+      {required this.loginController,
+      required this.passwordController,
       required this.save,
       required this.isLoading,
       required this.error});
@@ -158,9 +160,9 @@ class _$_LoginScreenState implements _LoginScreenState {
 //required String password,
 //
   @override
-  final TextEditingController login;
+  final TextEditingController loginController;
   @override
-  final TextEditingController password;
+  final TextEditingController passwordController;
 //
   @override
   final bool save;
@@ -171,7 +173,7 @@ class _$_LoginScreenState implements _LoginScreenState {
 
   @override
   String toString() {
-    return 'LoginScreenState(login: $login, password: $password, save: $save, isLoading: $isLoading, error: $error)';
+    return 'LoginScreenState(loginController: $loginController, passwordController: $passwordController, save: $save, isLoading: $isLoading, error: $error)';
   }
 
   @override
@@ -179,8 +181,10 @@ class _$_LoginScreenState implements _LoginScreenState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoginScreenState &&
-            const DeepCollectionEquality().equals(other.login, login) &&
-            const DeepCollectionEquality().equals(other.password, password) &&
+            const DeepCollectionEquality()
+                .equals(other.loginController, loginController) &&
+            const DeepCollectionEquality()
+                .equals(other.passwordController, passwordController) &&
             const DeepCollectionEquality().equals(other.save, save) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.error, error));
@@ -189,8 +193,8 @@ class _$_LoginScreenState implements _LoginScreenState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(login),
-      const DeepCollectionEquality().hash(password),
+      const DeepCollectionEquality().hash(loginController),
+      const DeepCollectionEquality().hash(passwordController),
       const DeepCollectionEquality().hash(save),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(error));
@@ -203,8 +207,8 @@ class _$_LoginScreenState implements _LoginScreenState {
 
 abstract class _LoginScreenState implements LoginScreenState {
   const factory _LoginScreenState(
-      {required final TextEditingController login,
-      required final TextEditingController password,
+      {required final TextEditingController loginController,
+      required final TextEditingController passwordController,
       required final bool save,
       required final bool isLoading,
       required final String error}) = _$_LoginScreenState;
@@ -212,9 +216,11 @@ abstract class _LoginScreenState implements LoginScreenState {
   @override //required String login,
 //required String password,
 //
-  TextEditingController get login => throw _privateConstructorUsedError;
+  TextEditingController get loginController =>
+      throw _privateConstructorUsedError;
   @override
-  TextEditingController get password => throw _privateConstructorUsedError;
+  TextEditingController get passwordController =>
+      throw _privateConstructorUsedError;
   @override //
   bool get save => throw _privateConstructorUsedError;
   @override

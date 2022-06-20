@@ -15,8 +15,8 @@ final loginScreenStateProvider =
     StateNotifierProvider<LoginScreenStateNotifer, LoginScreenState>(
   (ref) => LoginScreenStateNotifer(
     LoginScreenState(
-      login: TextEditingController(),
-      password: TextEditingController(),
+      loginController: TextEditingController(),
+      passwordController: TextEditingController(),
       isLoading: false,
       error: '',
       save: false,
@@ -40,12 +40,12 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
     switch (field) {
       case LoginScreenFieldEnum.login:
         state = state.copyWith(
-          login: controller,
+          loginController: controller,
         );
         break;
       case LoginScreenFieldEnum.password:
         state = state.copyWith(
-          password: controller,
+          passwordController: controller,
         );
         break;
     }
@@ -76,8 +76,8 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
       Navigator.of(context).pushNamed(NavigationRouteNames.hubScreen);
 
       if (state.save) {
-        await SecureStorage.instance.setLogin(state.login.text);
-        await SecureStorage.instance.setPassword(state.password.text);
+        await SecureStorage.instance.setLogin(state.loginController.text);
+        await SecureStorage.instance.setPassword(state.passwordController.text);
         await SecureStorage.instance.setSaveLoginState(state.save);
       }
 
@@ -93,8 +93,8 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
     try {
       if (!await SecureStorage.instance.getSaveLoginState()) {
         state.copyWith(
-          login: TextEditingController(),
-          password: TextEditingController(),
+          loginController: TextEditingController(),
+          passwordController: TextEditingController(),
         );
       }
       await JbossApi.logout();

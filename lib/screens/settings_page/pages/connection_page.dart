@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/provider/connection_page_provider.dart';
-import 'package:jboss_ui/states/connection_page_state.dart';
 import 'package:jboss_ui/utils/bitsdojo.dart';
 
 class ConnectionPage extends StatelessWidget {
@@ -30,69 +29,38 @@ class TextFieldsWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(connectionPageProvider);
 
-    final hostTextController = TextEditingController();
-    final databaseNameTextController = TextEditingController();
-    final portTextController = TextEditingController();
-    final usernameTextController = TextEditingController();
-    final passwordTextController = TextEditingController();
-
-    hostTextController.value = TextEditingValue(
-      text: state.host,
-      selection: TextSelection.collapsed(offset: state.host.length),
-    );
-
-    databaseNameTextController.value = TextEditingValue(
-      text: state.databaseName,
-      selection: TextSelection.collapsed(offset: state.databaseName.length),
-    );
-
-    portTextController.value = TextEditingValue(
-      text: state.port,
-      selection: TextSelection.collapsed(offset: state.port.length),
-    );
-
-    usernameTextController.value = TextEditingValue(
-      text: state.username,
-      selection: TextSelection.collapsed(offset: state.username.length),
-    );
-
-    passwordTextController.value = TextEditingValue(
-      text: state.password,
-      selection: TextSelection.collapsed(offset: state.password.length),
-    );
-
     return Column(
       children: [
         TextField(
-          controller: hostTextController,
+          controller: state.hostController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: 'host',
           ),
         ),
         TextField(
-          controller: databaseNameTextController,
+          controller: state.databaseNameController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: 'database',
           ),
         ),
         TextField(
-          controller: portTextController,
+          controller: state.portController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: 'port',
           ),
         ),
         TextField(
-          controller: usernameTextController,
+          controller: state.usernameController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: 'username',
           ),
         ),
         TextField(
-          controller: passwordTextController,
+          controller: state.passwordController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: 'password',
@@ -100,13 +68,13 @@ class TextFieldsWidget extends ConsumerWidget {
         ),
         TextButton(
           onPressed: () async {
-            final state = ConnectionPageState(
-              host: hostTextController.text.trim(),
-              databaseName: databaseNameTextController.text.trim(),
-              port: portTextController.text.trim(),
-              username: usernameTextController.text.trim(),
-              password: passwordTextController.text.trim(),
-            );
+            // final state = ConnectionPageState(
+            //   hostController: hostTextController.text.trim(),
+            //   databaseNameController: databaseNameTextController.text.trim(),
+            //   portController: portTextController.text.trim(),
+            //   usernameController: usernameTextController.text.trim(),
+            //   passwordController: passwordTextController.text.trim(),
+            // );
 
             Future<bool> checkConnect = ref
                 .read(connectionPageProvider.notifier)

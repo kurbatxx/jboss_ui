@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:jboss_ui/models/database/color_item.dart';
@@ -8,8 +9,8 @@ part 'device_editor_setting_state.freezed.dart';
 class DeviceEditorSettingState with _$DeviceEditorSettingState {
   const factory DeviceEditorSettingState({
     required bool isNewDevice,
-    required String name,
-    required String price,
+    required TextEditingController nameController,
+    required TextEditingController priceController,
     required SvgPicture? svgIcon,
     required bool isColored,
     required List<ColorItem> colorList,

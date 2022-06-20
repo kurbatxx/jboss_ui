@@ -15,119 +15,121 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: const [
         SearchFormWidget(),
-        const SizedBox(height: 2),
-        const DeletePersonSwitcherWidget(),
-        const SizedBox(height: 4),
-        const NewSearchResultWidget(),
+        SizedBox(height: 2),
+        DeletePersonSwitcherWidget(),
+        SizedBox(height: 4),
+        NewSearchResultWidget(),
       ],
     );
   }
 }
 
 class SearchFormWidget extends ConsumerWidget {
-  SearchFormWidget({Key? key}) : super(key: key);
-
-  final searchController = TextEditingController();
-  final _searchFocusNode = FocusNode();
+  const SearchFormWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Stack(alignment: AlignmentDirectional.center, children: [
-      TextFormField(
-        focusNode: _searchFocusNode,
-        autofocus: true,
-        controller: searchController,
-        decoration: InputDecoration(
-          constraints: const BoxConstraints(maxHeight: 32),
-          contentPadding: const EdgeInsets.fromLTRB(8.0, 10.0, 80, 10.0),
-          hintText: "Введите ФИО или ID",
-          isCollapsed: true,
-          isDense: true,
-          filled: true,
-          fillColor: Colors.grey[50],
-          border: const OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: kMinimumRadius,
+    final state = ref.read(searchPageStateProvider);
+
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        TextFormField(
+          focusNode: state.focus,
+          autofocus: true,
+          controller: state.searchController,
+          decoration: InputDecoration(
+            constraints: const BoxConstraints(maxHeight: 32),
+            contentPadding: const EdgeInsets.fromLTRB(8.0, 10.0, 80, 10.0),
+            hintText: "Введите ФИО или ID",
+            isCollapsed: true,
+            isDense: true,
+            filled: true,
+            fillColor: Colors.grey[50],
+            border: const OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: kMinimumRadius,
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: kMinimumRadius,
+            ),
           ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: kMinimumRadius,
-          ),
+          onChanged: (_) {
+            ref
+                .read(searchPageStateProvider.notifier)
+                .setSwitchersSearchString(text: state.searchController.text);
+          },
+          onFieldSubmitted: (_) {
+            ref
+                .read(searchPageStateProvider.notifier)
+                .setSearchString(text: state.searchController.text);
+            ref.read(searchPageStateProvider.notifier).search(paginated: false);
+            state.focus.requestFocus();
+          },
         ),
-        onChanged: (value) {
-          ref
-              .read(searchPageStateProvider.notifier)
-              .setSwitchersSearchString(text: searchController.text);
-        },
-        onFieldSubmitted: (_) {
-          ref
-              .read(searchPageStateProvider.notifier)
-              .setSearchString(text: searchController.text);
-          ref.read(searchPageStateProvider.notifier).search(paginated: false);
-          _searchFocusNode.requestFocus();
-        },
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(
-            height: 24,
-            width: 24,
-            child: RawMaterialButton(
-              onPressed: () {
-                searchController.clear();
-                _searchFocusNode.requestFocus();
-              },
-              elevation: 0,
-              hoverElevation: 0,
-              focusElevation: 0,
-              highlightElevation: 0,
-              fillColor: Colors.red.withOpacity(0.8),
-              shape: const CircleBorder(),
-              child: const Icon(
-                Icons.clear,
-                color: Colors.white,
-                size: 20.0,
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 4.0,
-          ),
-          SizedBox(
-            height: 32,
-            width: 50,
-            child: ElevatedButton(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(
+              height: 24,
+              width: 24,
+              child: RawMaterialButton(
+                onPressed: () {
+                  state.searchController.clear();
+                  state.focus.requestFocus();
+                },
                 elevation: 0,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: kMinimumRadius,
-                ),
-              ),
-              onPressed: () {
-                ref
-                    .read(searchPageStateProvider.notifier)
-                    .setSearchString(text: searchController.text);
-                ref
-                    .read(searchPageStateProvider.notifier)
-                    .search(paginated: false);
-                _searchFocusNode.requestFocus();
-              },
-              child: const FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text(
-                  "Найти",
-                  overflow: TextOverflow.clip,
+                hoverElevation: 0,
+                focusElevation: 0,
+                highlightElevation: 0,
+                fillColor: Colors.red.withOpacity(0.8),
+                shape: const CircleBorder(),
+                child: const Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                  size: 20.0,
                 ),
               ),
             ),
-          ),
-        ],
-      )
-    ]);
+            const SizedBox(
+              width: 4.0,
+            ),
+            SizedBox(
+              height: 32,
+              width: 50,
+              child: ElevatedButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: kMinimumRadius,
+                  ),
+                ),
+                onPressed: () {
+                  ref
+                      .read(searchPageStateProvider.notifier)
+                      .setSearchString(text: state.searchController.text);
+                  ref
+                      .read(searchPageStateProvider.notifier)
+                      .search(paginated: false);
+                  state.focus.requestFocus();
+                },
+                child: const FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    "Найти",
+                    overflow: TextOverflow.clip,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
   }
 }
 
@@ -178,10 +180,7 @@ class NewSearchResultWidget extends ConsumerWidget {
     return Expanded(
       child: ClipRRect(
         borderRadius: kMinimumRadius,
-        child: Container(
-            color: Colors.blueGrey,
-            child: showWidget(state) //const SearchResultListWidget(),
-            ),
+        child: Container(color: Colors.blueGrey, child: showWidget(state)),
       ),
     );
   }

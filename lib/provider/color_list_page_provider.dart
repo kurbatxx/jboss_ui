@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/database.dart';
 import 'package:jboss_ui/models/database/color_item.dart';
 import 'package:jboss_ui/states/colors_list_page_state.dart';
+import 'package:jboss_ui/utils/dev_log.dart';
 
 final colorsListPageProvider =
     StateNotifierProvider<ColorListPageStateNotifer, ColorsListPageState>(
@@ -23,8 +24,8 @@ class ColorListPageStateNotifer extends StateNotifier<ColorsListPageState> {
   void getColors() async {
     final colorItems = await DbApi.getColorItems();
     state = state.copyWith(colorsList: colorItems);
-    print(state.colorsList.map((e) => e.colorId));
-    print(state.selectedColorsList.map((e) => e.colorId));
+    (state.colorsList.map((e) => e.colorId)).log();
+    (state.selectedColorsList.map((e) => e.colorId)).log();
   }
 
   void setColor({required Color color}) {

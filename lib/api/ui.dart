@@ -5,12 +5,11 @@ import 'package:jboss_ui/utils/secure.dart';
 
 class UiInitialApi {
   static Future<LoginScreenState> getLoginState() async {
-    ///////////////
     final login = await SecureStorage.instance.getLogin();
     final password = await SecureStorage.instance.getPassword();
     return LoginScreenState(
-      login: TextEditingController(),
-      password: TextEditingController(),
+      loginController: TextEditingController(text: login),
+      passwordController: TextEditingController(text: password),
       save: await SecureStorage.instance.getSaveLoginState(),
       isLoading: false,
       error: '',
@@ -19,11 +18,21 @@ class UiInitialApi {
 
   static Future<ConnectionPageState> getConnetionPageState() async {
     return ConnectionPageState(
-      host: await SecureStorage.instance.getDbHost(),
-      databaseName: await SecureStorage.instance.getDatabaseName(),
-      port: await SecureStorage.instance.getDbPort(),
-      username: await SecureStorage.instance.getDbUsername(),
-      password: await SecureStorage.instance.getDbPassword(),
+      hostController: TextEditingController(
+        text: await SecureStorage.instance.getDbHost(),
+      ),
+      databaseNameController: TextEditingController(
+        text: await SecureStorage.instance.getDatabaseName(),
+      ),
+      portController: TextEditingController(
+        text: await SecureStorage.instance.getDbPort(),
+      ),
+      usernameController: TextEditingController(
+        text: await SecureStorage.instance.getDbUsername(),
+      ),
+      passwordController: TextEditingController(
+        text: await SecureStorage.instance.getDbPassword(),
+      ),
     );
   }
 }

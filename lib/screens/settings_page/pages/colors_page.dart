@@ -5,6 +5,7 @@ import 'package:jboss_ui/provider/color_list_page_provider.dart';
 import 'package:jboss_ui/provider/device_editor_setting_provider.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 import 'package:jboss_ui/utils/constant.dart';
+import 'package:jboss_ui/utils/dev_log.dart';
 
 class ColorsPage extends ConsumerWidget {
   const ColorsPage({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class ColorsPage extends ConsumerWidget {
                 ),
           },
           onColorChangeEnd: (Color color) => {
-            print(color),
+            color.log(),
           },
         ),
         ConstrainedBox(
@@ -74,7 +75,7 @@ class ColorsPage extends ConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      print(state.currentColor.value);
+                      state.currentColor.value.log();
                       ref
                           .read(colorsListPageProvider.notifier)
                           .addColor(color: state.currentColor);

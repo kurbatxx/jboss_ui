@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
 import 'package:jboss_ui/states/search_page_state.dart';
@@ -11,10 +12,11 @@ import 'package:jboss_ui/utils/dev_log.dart';
 final searchPageStateProvider =
     StateNotifierProvider<SearchPageStateNotifer, SearchPageState>(
   (ref) => SearchPageStateNotifer(
-    const SearchPageState(
+    SearchPageState(
       isInitial: true,
-      searchString: '',
-      switchersSearchString: '',
+      focus: FocusNode(),
+      searchController: TextEditingController(),
+      searchBuffer: '',
       showDeleted: false,
       pageNumber: 1,
       maxPage: 1,
@@ -33,30 +35,29 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
   showDeletedtoogle() {
     state = state.copyWith(showDeleted: !state.showDeleted);
 
-    if (state.switchersSearchString.isNotEmpty) {
+    if (state.searchBuffer.isNotEmpty) {
       state = state.copyWith(
-        searchString: state.switchersSearchString,
+        searchController: state.searchController,
         pageNumber: 1,
         maxPage: 1,
         clientList: [],
       );
-      state.switchersSearchString.log();
+      state.searchBuffer.log();
       search(paginated: false);
     }
   }
 
   setSearchString({required String text}) {
-    state = state.copyWith(searchString: text);
+    state = state.copyWith(searchController: TextEditingController(text: text));
   }
 
   setSwitchersSearchString({required String text}) {
-    state = state.copyWith(switchersSearchString: text);
+    state = state.copyWith(searchBuffer: text);
   }
 
   search({required bool paginated}) async {
-    'Ищу'.log();
     if (state.isLoading) return;
-    if (state.searchString.isEmpty) return;
+    if (state.searchController.text.isEmpty) return;
 
     if (!paginated) {
       state = state.copyWith(clientList: []);
@@ -77,7 +78,7 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
     );
 
     final searchRequest = SearchRequest(
-      searchString: state.searchString,
+      searchString: state.searchController.text.trim(),
       schoolId: 0,
       page: state.pageNumber,
       showDeleted: state.showDeleted,
@@ -118,8 +119,8 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
   clearState() {
     state = state.copyWith(
       isInitial: true,
-      searchString: '',
-      switchersSearchString: '',
+      searchController: TextEditingController(),
+      searchBuffer: '',
       showDeleted: false,
       pageNumber: 1,
       clientList: [],

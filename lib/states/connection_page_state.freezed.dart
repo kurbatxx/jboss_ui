@@ -16,11 +16,16 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ConnectionPageState {
-  String get host => throw _privateConstructorUsedError;
-  String get databaseName => throw _privateConstructorUsedError;
-  String get port => throw _privateConstructorUsedError;
-  String get username => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
+  TextEditingController get hostController =>
+      throw _privateConstructorUsedError;
+  TextEditingController get databaseNameController =>
+      throw _privateConstructorUsedError;
+  TextEditingController get portController =>
+      throw _privateConstructorUsedError;
+  TextEditingController get usernameController =>
+      throw _privateConstructorUsedError;
+  TextEditingController get passwordController =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ConnectionPageStateCopyWith<ConnectionPageState> get copyWith =>
@@ -33,11 +38,11 @@ abstract class $ConnectionPageStateCopyWith<$Res> {
           ConnectionPageState value, $Res Function(ConnectionPageState) then) =
       _$ConnectionPageStateCopyWithImpl<$Res>;
   $Res call(
-      {String host,
-      String databaseName,
-      String port,
-      String username,
-      String password});
+      {TextEditingController hostController,
+      TextEditingController databaseNameController,
+      TextEditingController portController,
+      TextEditingController usernameController,
+      TextEditingController passwordController});
 }
 
 /// @nodoc
@@ -51,33 +56,33 @@ class _$ConnectionPageStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? host = freezed,
-    Object? databaseName = freezed,
-    Object? port = freezed,
-    Object? username = freezed,
-    Object? password = freezed,
+    Object? hostController = freezed,
+    Object? databaseNameController = freezed,
+    Object? portController = freezed,
+    Object? usernameController = freezed,
+    Object? passwordController = freezed,
   }) {
     return _then(_value.copyWith(
-      host: host == freezed
-          ? _value.host
-          : host // ignore: cast_nullable_to_non_nullable
-              as String,
-      databaseName: databaseName == freezed
-          ? _value.databaseName
-          : databaseName // ignore: cast_nullable_to_non_nullable
-              as String,
-      port: port == freezed
-          ? _value.port
-          : port // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: username == freezed
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: password == freezed
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
+      hostController: hostController == freezed
+          ? _value.hostController
+          : hostController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      databaseNameController: databaseNameController == freezed
+          ? _value.databaseNameController
+          : databaseNameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      portController: portController == freezed
+          ? _value.portController
+          : portController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      usernameController: usernameController == freezed
+          ? _value.usernameController
+          : usernameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      passwordController: passwordController == freezed
+          ? _value.passwordController
+          : passwordController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -90,11 +95,11 @@ abstract class _$$_ConnectionPageStateCopyWith<$Res>
       __$$_ConnectionPageStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String host,
-      String databaseName,
-      String port,
-      String username,
-      String password});
+      {TextEditingController hostController,
+      TextEditingController databaseNameController,
+      TextEditingController portController,
+      TextEditingController usernameController,
+      TextEditingController passwordController});
 }
 
 /// @nodoc
@@ -110,33 +115,33 @@ class __$$_ConnectionPageStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? host = freezed,
-    Object? databaseName = freezed,
-    Object? port = freezed,
-    Object? username = freezed,
-    Object? password = freezed,
+    Object? hostController = freezed,
+    Object? databaseNameController = freezed,
+    Object? portController = freezed,
+    Object? usernameController = freezed,
+    Object? passwordController = freezed,
   }) {
     return _then(_$_ConnectionPageState(
-      host: host == freezed
-          ? _value.host
-          : host // ignore: cast_nullable_to_non_nullable
-              as String,
-      databaseName: databaseName == freezed
-          ? _value.databaseName
-          : databaseName // ignore: cast_nullable_to_non_nullable
-              as String,
-      port: port == freezed
-          ? _value.port
-          : port // ignore: cast_nullable_to_non_nullable
-              as String,
-      username: username == freezed
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: password == freezed
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
+      hostController: hostController == freezed
+          ? _value.hostController
+          : hostController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      databaseNameController: databaseNameController == freezed
+          ? _value.databaseNameController
+          : databaseNameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      portController: portController == freezed
+          ? _value.portController
+          : portController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      usernameController: usernameController == freezed
+          ? _value.usernameController
+          : usernameController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      passwordController: passwordController == freezed
+          ? _value.passwordController
+          : passwordController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -145,26 +150,26 @@ class __$$_ConnectionPageStateCopyWithImpl<$Res>
 
 class _$_ConnectionPageState implements _ConnectionPageState {
   const _$_ConnectionPageState(
-      {required this.host,
-      required this.databaseName,
-      required this.port,
-      required this.username,
-      required this.password});
+      {required this.hostController,
+      required this.databaseNameController,
+      required this.portController,
+      required this.usernameController,
+      required this.passwordController});
 
   @override
-  final String host;
+  final TextEditingController hostController;
   @override
-  final String databaseName;
+  final TextEditingController databaseNameController;
   @override
-  final String port;
+  final TextEditingController portController;
   @override
-  final String username;
+  final TextEditingController usernameController;
   @override
-  final String password;
+  final TextEditingController passwordController;
 
   @override
   String toString() {
-    return 'ConnectionPageState(host: $host, databaseName: $databaseName, port: $port, username: $username, password: $password)';
+    return 'ConnectionPageState(hostController: $hostController, databaseNameController: $databaseNameController, portController: $portController, usernameController: $usernameController, passwordController: $passwordController)';
   }
 
   @override
@@ -172,22 +177,26 @@ class _$_ConnectionPageState implements _ConnectionPageState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ConnectionPageState &&
-            const DeepCollectionEquality().equals(other.host, host) &&
             const DeepCollectionEquality()
-                .equals(other.databaseName, databaseName) &&
-            const DeepCollectionEquality().equals(other.port, port) &&
-            const DeepCollectionEquality().equals(other.username, username) &&
-            const DeepCollectionEquality().equals(other.password, password));
+                .equals(other.hostController, hostController) &&
+            const DeepCollectionEquality()
+                .equals(other.databaseNameController, databaseNameController) &&
+            const DeepCollectionEquality()
+                .equals(other.portController, portController) &&
+            const DeepCollectionEquality()
+                .equals(other.usernameController, usernameController) &&
+            const DeepCollectionEquality()
+                .equals(other.passwordController, passwordController));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(host),
-      const DeepCollectionEquality().hash(databaseName),
-      const DeepCollectionEquality().hash(port),
-      const DeepCollectionEquality().hash(username),
-      const DeepCollectionEquality().hash(password));
+      const DeepCollectionEquality().hash(hostController),
+      const DeepCollectionEquality().hash(databaseNameController),
+      const DeepCollectionEquality().hash(portController),
+      const DeepCollectionEquality().hash(usernameController),
+      const DeepCollectionEquality().hash(passwordController));
 
   @JsonKey(ignore: true)
   @override
@@ -198,22 +207,28 @@ class _$_ConnectionPageState implements _ConnectionPageState {
 
 abstract class _ConnectionPageState implements ConnectionPageState {
   const factory _ConnectionPageState(
-      {required final String host,
-      required final String databaseName,
-      required final String port,
-      required final String username,
-      required final String password}) = _$_ConnectionPageState;
+          {required final TextEditingController hostController,
+          required final TextEditingController databaseNameController,
+          required final TextEditingController portController,
+          required final TextEditingController usernameController,
+          required final TextEditingController passwordController}) =
+      _$_ConnectionPageState;
 
   @override
-  String get host => throw _privateConstructorUsedError;
+  TextEditingController get hostController =>
+      throw _privateConstructorUsedError;
   @override
-  String get databaseName => throw _privateConstructorUsedError;
+  TextEditingController get databaseNameController =>
+      throw _privateConstructorUsedError;
   @override
-  String get port => throw _privateConstructorUsedError;
+  TextEditingController get portController =>
+      throw _privateConstructorUsedError;
   @override
-  String get username => throw _privateConstructorUsedError;
+  TextEditingController get usernameController =>
+      throw _privateConstructorUsedError;
   @override
-  String get password => throw _privateConstructorUsedError;
+  TextEditingController get passwordController =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ConnectionPageStateCopyWith<_$_ConnectionPageState> get copyWith =>

@@ -14,9 +14,9 @@ import 'package:jboss_ui/utils/dev_log.dart';
 final registerDeviceScreenStateProvider = StateNotifierProvider<
     RegisterDeviceScreenStateNotifier, RegisterDeviceState>(
   (ref) => RegisterDeviceScreenStateNotifier(
-    const RegisterDeviceState(
-      clientId: '',
-      rfidId: '',
+    RegisterDeviceState(
+      clientIdController: TextEditingController(),
+      rfidIdController: TextEditingController(),
       loading: false,
       register: false,
       errorMessage: '',
@@ -33,7 +33,8 @@ class RegisterDeviceScreenStateNotifier
 
   clearState() {
     state = state.copyWith(
-      clientId: "",
+      clientIdController: TextEditingController(),
+      rfidIdController: TextEditingController(),
       successMessage: "",
       errorMessage: "",
       clientMessage: "",
@@ -46,19 +47,19 @@ class RegisterDeviceScreenStateNotifier
     state = state.copyWith(register: !state.register);
   }
 
-  void updateText(
-    value, {
+  void updateText({
+    required TextEditingController controller,
     required TextControllersEnum textControllersEnum,
   }) {
     switch (textControllersEnum) {
       case TextControllersEnum.clientId:
         state = state.copyWith(
-          clientId: value,
+          clientIdController: controller,
         );
         break;
       case TextControllersEnum.rfidId:
         state = state.copyWith(
-          rfidId: value,
+          rfidIdController: controller,
         );
         break;
     }
@@ -88,8 +89,8 @@ class RegisterDeviceScreenStateNotifier
     );
 
     final registerDeviceRequest = RegisterDeviceRequest(
-      clientId: int.parse(state.clientId),
-      rfidId: int.parse(state.rfidId),
+      clientId: int.parse(state.clientIdController.text),
+      rfidId: int.parse(state.rfidIdController.text),
       deviceId: devices[state.devicePosition].value,
     );
 
@@ -111,8 +112,8 @@ class RegisterDeviceScreenStateNotifier
       rfidIdController.clear();
 
       state = state.copyWith(
-        clientId: clientIdController.text,
-        rfidId: rfidIdController.text,
+        clientIdController: clientIdController,
+        rfidIdController: rfidIdController,
         loading: false,
         successMessage: registerDeviceResponse.resultMessage,
         clientMessage: registerDeviceResponse.client,

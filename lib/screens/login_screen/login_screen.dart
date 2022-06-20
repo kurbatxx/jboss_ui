@@ -72,51 +72,39 @@ class LoginConsumer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(loginScreenStateProvider);
 
-    // final loginController = TextEditingController();
-    // final passwordController = TextEditingController();
-
-    // loginController.value = TextEditingValue(
-    //   text: state.login,
-    //   selection: TextSelection.collapsed(offset: state.login.length),
-    // );
-
-    // passwordController.value = TextEditingValue(
-    //   text: state.password,
-    //   selection: TextSelection.collapsed(offset: state.password.length),
-    // );
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextFormField(
-          controller: state.login,
+          controller: state.loginController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: "Логин",
           ),
           onChanged: (value) =>
               ref.read(loginScreenStateProvider.notifier).updateText(
-                    controller: state.login,
+                    controller: state.loginController,
                     field: LoginScreenFieldEnum.login,
                   ),
         ),
         TextFormField(
-          controller: state.password,
+          controller: state.passwordController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: "Пароль",
           ),
           obscureText: true,
-          onChanged: (value) => ref
+          onChanged: (_) => ref
               .read(
                 loginScreenStateProvider.notifier,
               )
               .updateText(
-                controller: state.password,
+                controller: state.passwordController,
                 field: LoginScreenFieldEnum.password,
               ),
         ),
-        state.login.text.isNotEmpty && state.password.text.isNotEmpty
+        state.loginController.text.isNotEmpty &&
+                state.passwordController.text.isNotEmpty
             ? Column(
                 children: [
                   CheckboxListTile(
@@ -144,8 +132,8 @@ class LoginConsumer extends ConsumerWidget {
                               .read(loginScreenStateProvider.notifier)
                               .login(
                                   context: context,
-                                  login: state.login.text,
-                                  password: state.password.text),
+                                  login: state.loginController.text,
+                                  password: state.passwordController.text),
                           child: const Text('Войти'),
                         ),
                   const SizedBox(

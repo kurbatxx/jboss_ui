@@ -52,8 +52,8 @@ class RfidDevice {
 class RegisterPage extends ConsumerWidget {
   RegisterPage({Key? key}) : super(key: key);
 
-  final clientIdController = TextEditingController();
-  final rfidIdController = TextEditingController();
+  // final clientIdController = TextEditingController();
+  // final rfidIdController = TextEditingController();
 
   final clientIdNode = FocusNode();
   final rfidIdNode = FocusNode();
@@ -61,14 +61,14 @@ class RegisterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final registerState = ref.watch(registerDeviceScreenStateProvider);
+    final state = ref.watch(registerDeviceScreenStateProvider);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           TextFormField(
-            controller: clientIdController,
+            controller: state.clientIdController,
             autofocus: true,
             focusNode: clientIdNode,
             inputFormatters: <TextInputFormatter>[
@@ -76,9 +76,9 @@ class RegisterPage extends ConsumerWidget {
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
             decoration: const InputDecoration(hintText: "ID Клиента"),
-            onChanged: (value) =>
+            onChanged: (_) =>
                 ref.read(registerDeviceScreenStateProvider.notifier).updateText(
-                      value,
+                      controller: state.clientIdController,
                       textControllersEnum: TextControllersEnum.clientId,
                     ),
             onFieldSubmitted: (_) {
@@ -86,7 +86,7 @@ class RegisterPage extends ConsumerWidget {
             },
           ),
           TextFormField(
-            controller: rfidIdController,
+            controller: state.rfidIdController,
             focusNode: rfidIdNode,
             inputFormatters: <TextInputFormatter>[
               LengthLimitingTextInputFormatter(10),
@@ -95,11 +95,11 @@ class RegisterPage extends ConsumerWidget {
             decoration: const InputDecoration(hintText: "ID устройства"),
             onChanged: (value) =>
                 ref.read(registerDeviceScreenStateProvider.notifier).updateText(
-                      value,
+                      controller: state.rfidIdController,
                       textControllersEnum: TextControllersEnum.rfidId,
                     ),
             onFieldSubmitted: (_) {
-              if (registerState.rfidId.isNotEmpty) {
+              if (state.rfidIdController.text.trim().isNotEmpty) {
                 FocusScope.of(context).requestFocus(registerButtonNode);
               }
             },
@@ -108,7 +108,7 @@ class RegisterPage extends ConsumerWidget {
             height: 10,
           ),
           AnimatedToggleSwitch<int>.size(
-            current: registerState.devicePosition,
+            current: state.devicePosition,
             values: Iterable<int>.generate(devices.length).toList(),
             iconOpacity: 0.2,
             indicatorSize: const Size.fromWidth(100),
@@ -133,8 +133,9 @@ class RegisterPage extends ConsumerWidget {
           const SizedBox(
             height: 40,
           ),
-          registerState.clientId.isNotEmpty && registerState.rfidId.isNotEmpty
-              ? registerState.loading
+          state.clientIdController.text.trim().isNotEmpty &&
+                  state.rfidIdController.text.trim().isNotEmpty
+              ? state.loading
                   ? const CircularProgressIndicator()
                   : TextButton(
                       focusNode: registerButtonNode,
@@ -142,8 +143,8 @@ class RegisterPage extends ConsumerWidget {
                         ref
                             .read(registerDeviceScreenStateProvider.notifier)
                             .registerDevice(
-                              clientIdController: clientIdController,
-                              rfidIdController: rfidIdController,
+                              clientIdController: state.clientIdController,
+                              rfidIdController: state.rfidIdController,
                               clientIdNode: clientIdNode,
                               context: context,
                             );
@@ -154,18 +155,18 @@ class RegisterPage extends ConsumerWidget {
                       ),
                     )
               : const SizedBox(),
-          registerState.errorMessage.isEmpty
+          state.errorMessage.isEmpty
               ? Column(
                   children: [
                     Text(
-                      registerState.successMessage,
+                      state.successMessage,
                       style: const TextStyle(color: Colors.green),
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
-                      registerState.clientMessage,
+                      state.clientMessage,
                       style: TextStyle(
                         color: Colors.green[700],
                       ),
@@ -173,7 +174,7 @@ class RegisterPage extends ConsumerWidget {
                   ],
                 )
               : Text(
-                  registerState.errorMessage,
+                  state.errorMessage,
                   style: const TextStyle(color: Colors.red),
                 )
         ],

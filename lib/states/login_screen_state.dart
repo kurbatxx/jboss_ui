@@ -8,8 +8,8 @@ class LoginScreenState with _$LoginScreenState {
     //required String login,
     //required String password,
     //
-    required TextEditingController login,
-    required TextEditingController password,
+    required TextEditingController loginController,
+    required TextEditingController passwordController,
     //
     required bool save,
     required bool isLoading,

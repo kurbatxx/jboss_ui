@@ -43,14 +43,14 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
             child: Column(
               children: [
                 Row(
-                  children: [
-                    const SizedBox(
+                  children: const [
+                    SizedBox(
                       width: 80,
                       child: DevicesIconsWidget(),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 8,
                         ),
                         child: TextFieldsWidget(),
@@ -160,10 +160,7 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
 }
 
 class TextFieldsWidget extends ConsumerWidget {
-  TextFieldsWidget({Key? key}) : super(key: key);
-
-  final deviceNameTextController = TextEditingController();
-  final devicePriceTextController = TextEditingController();
+  const TextFieldsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -171,30 +168,29 @@ class TextFieldsWidget extends ConsumerWidget {
     final containerKey = GlobalKey();
 
     return Column(
-      //key: containerKey,
       children: [
         TextFormField(
-          controller: deviceNameTextController,
+          controller: state.nameController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: 'Название устройства',
           ),
-          onChanged: (value) => {
+          onChanged: (_) => {
             ref.read(deviceEditorScreenProvider.notifier).updateText(
-                  value,
+                  controller: state.nameController,
                   field: DeviceEditorSettingsTextEnum.name,
                 ),
           },
         ),
         TextFormField(
-          controller: devicePriceTextController,
+          controller: state.priceController,
           decoration: const InputDecoration(
             isDense: true,
             hintText: 'Цена устройства',
           ),
-          onChanged: (value) => {
+          onChanged: (_) => {
             ref.read(deviceEditorScreenProvider.notifier).updateText(
-                  value,
+                  controller: state.priceController,
                   field: DeviceEditorSettingsTextEnum.price,
                 ),
           },

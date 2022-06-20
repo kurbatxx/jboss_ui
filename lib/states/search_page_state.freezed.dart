@@ -17,15 +17,16 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SearchPageState {
   bool get isInitial => throw _privateConstructorUsedError;
-  String get searchString => throw _privateConstructorUsedError;
-  String get switchersSearchString => throw _privateConstructorUsedError;
+  FocusNode get focus => throw _privateConstructorUsedError;
+  TextEditingController get searchController =>
+      throw _privateConstructorUsedError;
+  String get searchBuffer => throw _privateConstructorUsedError;
   bool get showDeleted => throw _privateConstructorUsedError;
   int get pageNumber => throw _privateConstructorUsedError;
   int get maxPage => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   List<Client> get clientList => throw _privateConstructorUsedError;
-  dynamic get required => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SearchPageStateCopyWith<SearchPageState> get copyWith =>
@@ -39,15 +40,15 @@ abstract class $SearchPageStateCopyWith<$Res> {
       _$SearchPageStateCopyWithImpl<$Res>;
   $Res call(
       {bool isInitial,
-      String searchString,
-      String switchersSearchString,
+      FocusNode focus,
+      TextEditingController searchController,
+      String searchBuffer,
       bool showDeleted,
       int pageNumber,
       int maxPage,
       bool isLoading,
       String error,
-      List<Client> clientList,
-      dynamic required});
+      List<Client> clientList});
 }
 
 /// @nodoc
@@ -62,28 +63,32 @@ class _$SearchPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isInitial = freezed,
-    Object? searchString = freezed,
-    Object? switchersSearchString = freezed,
+    Object? focus = freezed,
+    Object? searchController = freezed,
+    Object? searchBuffer = freezed,
     Object? showDeleted = freezed,
     Object? pageNumber = freezed,
     Object? maxPage = freezed,
     Object? isLoading = freezed,
     Object? error = freezed,
     Object? clientList = freezed,
-    Object? required = freezed,
   }) {
     return _then(_value.copyWith(
       isInitial: isInitial == freezed
           ? _value.isInitial
           : isInitial // ignore: cast_nullable_to_non_nullable
               as bool,
-      searchString: searchString == freezed
-          ? _value.searchString
-          : searchString // ignore: cast_nullable_to_non_nullable
-              as String,
-      switchersSearchString: switchersSearchString == freezed
-          ? _value.switchersSearchString
-          : switchersSearchString // ignore: cast_nullable_to_non_nullable
+      focus: focus == freezed
+          ? _value.focus
+          : focus // ignore: cast_nullable_to_non_nullable
+              as FocusNode,
+      searchController: searchController == freezed
+          ? _value.searchController
+          : searchController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      searchBuffer: searchBuffer == freezed
+          ? _value.searchBuffer
+          : searchBuffer // ignore: cast_nullable_to_non_nullable
               as String,
       showDeleted: showDeleted == freezed
           ? _value.showDeleted
@@ -109,10 +114,6 @@ class _$SearchPageStateCopyWithImpl<$Res>
           ? _value.clientList
           : clientList // ignore: cast_nullable_to_non_nullable
               as List<Client>,
-      required: required == freezed
-          ? _value.required
-          : required // ignore: cast_nullable_to_non_nullable
-              as dynamic,
     ));
   }
 }
@@ -126,15 +127,15 @@ abstract class _$$_SearchPageStateCopyWith<$Res>
   @override
   $Res call(
       {bool isInitial,
-      String searchString,
-      String switchersSearchString,
+      FocusNode focus,
+      TextEditingController searchController,
+      String searchBuffer,
       bool showDeleted,
       int pageNumber,
       int maxPage,
       bool isLoading,
       String error,
-      List<Client> clientList,
-      dynamic required});
+      List<Client> clientList});
 }
 
 /// @nodoc
@@ -151,28 +152,32 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isInitial = freezed,
-    Object? searchString = freezed,
-    Object? switchersSearchString = freezed,
+    Object? focus = freezed,
+    Object? searchController = freezed,
+    Object? searchBuffer = freezed,
     Object? showDeleted = freezed,
     Object? pageNumber = freezed,
     Object? maxPage = freezed,
     Object? isLoading = freezed,
     Object? error = freezed,
     Object? clientList = freezed,
-    Object? required = freezed,
   }) {
     return _then(_$_SearchPageState(
       isInitial: isInitial == freezed
           ? _value.isInitial
           : isInitial // ignore: cast_nullable_to_non_nullable
               as bool,
-      searchString: searchString == freezed
-          ? _value.searchString
-          : searchString // ignore: cast_nullable_to_non_nullable
-              as String,
-      switchersSearchString: switchersSearchString == freezed
-          ? _value.switchersSearchString
-          : switchersSearchString // ignore: cast_nullable_to_non_nullable
+      focus: focus == freezed
+          ? _value.focus
+          : focus // ignore: cast_nullable_to_non_nullable
+              as FocusNode,
+      searchController: searchController == freezed
+          ? _value.searchController
+          : searchController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      searchBuffer: searchBuffer == freezed
+          ? _value.searchBuffer
+          : searchBuffer // ignore: cast_nullable_to_non_nullable
               as String,
       showDeleted: showDeleted == freezed
           ? _value.showDeleted
@@ -198,7 +203,6 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
           ? _value._clientList
           : clientList // ignore: cast_nullable_to_non_nullable
               as List<Client>,
-      required: required == freezed ? _value.required : required,
     ));
   }
 }
@@ -208,23 +212,25 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
 class _$_SearchPageState implements _SearchPageState {
   const _$_SearchPageState(
       {required this.isInitial,
-      required this.searchString,
-      required this.switchersSearchString,
+      required this.focus,
+      required this.searchController,
+      required this.searchBuffer,
       required this.showDeleted,
       required this.pageNumber,
       required this.maxPage,
       required this.isLoading,
       required this.error,
-      required final List<Client> clientList,
-      this.required})
+      required final List<Client> clientList})
       : _clientList = clientList;
 
   @override
   final bool isInitial;
   @override
-  final String searchString;
+  final FocusNode focus;
   @override
-  final String switchersSearchString;
+  final TextEditingController searchController;
+  @override
+  final String searchBuffer;
   @override
   final bool showDeleted;
   @override
@@ -243,11 +249,8 @@ class _$_SearchPageState implements _SearchPageState {
   }
 
   @override
-  final dynamic required;
-
-  @override
   String toString() {
-    return 'SearchPageState(isInitial: $isInitial, searchString: $searchString, switchersSearchString: $switchersSearchString, showDeleted: $showDeleted, pageNumber: $pageNumber, maxPage: $maxPage, isLoading: $isLoading, error: $error, clientList: $clientList, required: $required)';
+    return 'SearchPageState(isInitial: $isInitial, focus: $focus, searchController: $searchController, searchBuffer: $searchBuffer, showDeleted: $showDeleted, pageNumber: $pageNumber, maxPage: $maxPage, isLoading: $isLoading, error: $error, clientList: $clientList)';
   }
 
   @override
@@ -256,10 +259,11 @@ class _$_SearchPageState implements _SearchPageState {
         (other.runtimeType == runtimeType &&
             other is _$_SearchPageState &&
             const DeepCollectionEquality().equals(other.isInitial, isInitial) &&
+            const DeepCollectionEquality().equals(other.focus, focus) &&
             const DeepCollectionEquality()
-                .equals(other.searchString, searchString) &&
+                .equals(other.searchController, searchController) &&
             const DeepCollectionEquality()
-                .equals(other.switchersSearchString, switchersSearchString) &&
+                .equals(other.searchBuffer, searchBuffer) &&
             const DeepCollectionEquality()
                 .equals(other.showDeleted, showDeleted) &&
             const DeepCollectionEquality()
@@ -268,23 +272,22 @@ class _$_SearchPageState implements _SearchPageState {
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.error, error) &&
             const DeepCollectionEquality()
-                .equals(other._clientList, _clientList) &&
-            const DeepCollectionEquality().equals(other.required, required));
+                .equals(other._clientList, _clientList));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(isInitial),
-      const DeepCollectionEquality().hash(searchString),
-      const DeepCollectionEquality().hash(switchersSearchString),
+      const DeepCollectionEquality().hash(focus),
+      const DeepCollectionEquality().hash(searchController),
+      const DeepCollectionEquality().hash(searchBuffer),
       const DeepCollectionEquality().hash(showDeleted),
       const DeepCollectionEquality().hash(pageNumber),
       const DeepCollectionEquality().hash(maxPage),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(_clientList),
-      const DeepCollectionEquality().hash(required));
+      const DeepCollectionEquality().hash(_clientList));
 
   @JsonKey(ignore: true)
   @override
@@ -295,22 +298,25 @@ class _$_SearchPageState implements _SearchPageState {
 abstract class _SearchPageState implements SearchPageState {
   const factory _SearchPageState(
       {required final bool isInitial,
-      required final String searchString,
-      required final String switchersSearchString,
+      required final FocusNode focus,
+      required final TextEditingController searchController,
+      required final String searchBuffer,
       required final bool showDeleted,
       required final int pageNumber,
       required final int maxPage,
       required final bool isLoading,
       required final String error,
-      required final List<Client> clientList,
-      final dynamic required}) = _$_SearchPageState;
+      required final List<Client> clientList}) = _$_SearchPageState;
 
   @override
   bool get isInitial => throw _privateConstructorUsedError;
   @override
-  String get searchString => throw _privateConstructorUsedError;
+  FocusNode get focus => throw _privateConstructorUsedError;
   @override
-  String get switchersSearchString => throw _privateConstructorUsedError;
+  TextEditingController get searchController =>
+      throw _privateConstructorUsedError;
+  @override
+  String get searchBuffer => throw _privateConstructorUsedError;
   @override
   bool get showDeleted => throw _privateConstructorUsedError;
   @override
@@ -323,8 +329,6 @@ abstract class _SearchPageState implements SearchPageState {
   String get error => throw _privateConstructorUsedError;
   @override
   List<Client> get clientList => throw _privateConstructorUsedError;
-  @override
-  dynamic get required => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_SearchPageStateCopyWith<_$_SearchPageState> get copyWith =>

@@ -20,11 +20,11 @@ class DbApi {
   init({required ConnectionPageState connectionState}) async {
     await Future.delayed(const Duration(seconds: 2));
     conn = PostgreSQLConnection(
-      connectionState.host,
-      int.tryParse(connectionState.port) ?? 5432,
-      connectionState.databaseName,
-      username: connectionState.username,
-      password: connectionState.password,
+      connectionState.hostController.text.trim(),
+      int.tryParse(connectionState.portController.text.trim()) ?? 5432,
+      connectionState.databaseNameController.text.trim(),
+      username: connectionState.usernameController.text.trim(),
+      password: connectionState.passwordController.text.trim(),
       useSSL: true,
     );
   }

@@ -16,8 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RegisterDeviceState {
-  String get clientId => throw _privateConstructorUsedError;
-  String get rfidId => throw _privateConstructorUsedError;
+  TextEditingController get clientIdController =>
+      throw _privateConstructorUsedError;
+  TextEditingController get rfidIdController =>
+      throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   bool get register => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
@@ -36,8 +38,8 @@ abstract class $RegisterDeviceStateCopyWith<$Res> {
           RegisterDeviceState value, $Res Function(RegisterDeviceState) then) =
       _$RegisterDeviceStateCopyWithImpl<$Res>;
   $Res call(
-      {String clientId,
-      String rfidId,
+      {TextEditingController clientIdController,
+      TextEditingController rfidIdController,
       bool loading,
       bool register,
       String errorMessage,
@@ -57,8 +59,8 @@ class _$RegisterDeviceStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? clientId = freezed,
-    Object? rfidId = freezed,
+    Object? clientIdController = freezed,
+    Object? rfidIdController = freezed,
     Object? loading = freezed,
     Object? register = freezed,
     Object? errorMessage = freezed,
@@ -67,14 +69,14 @@ class _$RegisterDeviceStateCopyWithImpl<$Res>
     Object? devicePosition = freezed,
   }) {
     return _then(_value.copyWith(
-      clientId: clientId == freezed
-          ? _value.clientId
-          : clientId // ignore: cast_nullable_to_non_nullable
-              as String,
-      rfidId: rfidId == freezed
-          ? _value.rfidId
-          : rfidId // ignore: cast_nullable_to_non_nullable
-              as String,
+      clientIdController: clientIdController == freezed
+          ? _value.clientIdController
+          : clientIdController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      rfidIdController: rfidIdController == freezed
+          ? _value.rfidIdController
+          : rfidIdController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -111,8 +113,8 @@ abstract class _$$_RegisterDeviceStateCopyWith<$Res>
       __$$_RegisterDeviceStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String clientId,
-      String rfidId,
+      {TextEditingController clientIdController,
+      TextEditingController rfidIdController,
       bool loading,
       bool register,
       String errorMessage,
@@ -134,8 +136,8 @@ class __$$_RegisterDeviceStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? clientId = freezed,
-    Object? rfidId = freezed,
+    Object? clientIdController = freezed,
+    Object? rfidIdController = freezed,
     Object? loading = freezed,
     Object? register = freezed,
     Object? errorMessage = freezed,
@@ -144,14 +146,14 @@ class __$$_RegisterDeviceStateCopyWithImpl<$Res>
     Object? devicePosition = freezed,
   }) {
     return _then(_$_RegisterDeviceState(
-      clientId: clientId == freezed
-          ? _value.clientId
-          : clientId // ignore: cast_nullable_to_non_nullable
-              as String,
-      rfidId: rfidId == freezed
-          ? _value.rfidId
-          : rfidId // ignore: cast_nullable_to_non_nullable
-              as String,
+      clientIdController: clientIdController == freezed
+          ? _value.clientIdController
+          : clientIdController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
+      rfidIdController: rfidIdController == freezed
+          ? _value.rfidIdController
+          : rfidIdController // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -184,8 +186,8 @@ class __$$_RegisterDeviceStateCopyWithImpl<$Res>
 
 class _$_RegisterDeviceState implements _RegisterDeviceState {
   const _$_RegisterDeviceState(
-      {required this.clientId,
-      required this.rfidId,
+      {required this.clientIdController,
+      required this.rfidIdController,
       required this.loading,
       required this.register,
       required this.errorMessage,
@@ -194,9 +196,9 @@ class _$_RegisterDeviceState implements _RegisterDeviceState {
       required this.devicePosition});
 
   @override
-  final String clientId;
+  final TextEditingController clientIdController;
   @override
-  final String rfidId;
+  final TextEditingController rfidIdController;
   @override
   final bool loading;
   @override
@@ -212,7 +214,7 @@ class _$_RegisterDeviceState implements _RegisterDeviceState {
 
   @override
   String toString() {
-    return 'RegisterDeviceState(clientId: $clientId, rfidId: $rfidId, loading: $loading, register: $register, errorMessage: $errorMessage, successMessage: $successMessage, clientMessage: $clientMessage, devicePosition: $devicePosition)';
+    return 'RegisterDeviceState(clientIdController: $clientIdController, rfidIdController: $rfidIdController, loading: $loading, register: $register, errorMessage: $errorMessage, successMessage: $successMessage, clientMessage: $clientMessage, devicePosition: $devicePosition)';
   }
 
   @override
@@ -220,8 +222,10 @@ class _$_RegisterDeviceState implements _RegisterDeviceState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_RegisterDeviceState &&
-            const DeepCollectionEquality().equals(other.clientId, clientId) &&
-            const DeepCollectionEquality().equals(other.rfidId, rfidId) &&
+            const DeepCollectionEquality()
+                .equals(other.clientIdController, clientIdController) &&
+            const DeepCollectionEquality()
+                .equals(other.rfidIdController, rfidIdController) &&
             const DeepCollectionEquality().equals(other.loading, loading) &&
             const DeepCollectionEquality().equals(other.register, register) &&
             const DeepCollectionEquality()
@@ -237,8 +241,8 @@ class _$_RegisterDeviceState implements _RegisterDeviceState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(clientId),
-      const DeepCollectionEquality().hash(rfidId),
+      const DeepCollectionEquality().hash(clientIdController),
+      const DeepCollectionEquality().hash(rfidIdController),
       const DeepCollectionEquality().hash(loading),
       const DeepCollectionEquality().hash(register),
       const DeepCollectionEquality().hash(errorMessage),
@@ -255,8 +259,8 @@ class _$_RegisterDeviceState implements _RegisterDeviceState {
 
 abstract class _RegisterDeviceState implements RegisterDeviceState {
   const factory _RegisterDeviceState(
-      {required final String clientId,
-      required final String rfidId,
+      {required final TextEditingController clientIdController,
+      required final TextEditingController rfidIdController,
       required final bool loading,
       required final bool register,
       required final String errorMessage,
@@ -265,9 +269,11 @@ abstract class _RegisterDeviceState implements RegisterDeviceState {
       required final int devicePosition}) = _$_RegisterDeviceState;
 
   @override
-  String get clientId => throw _privateConstructorUsedError;
+  TextEditingController get clientIdController =>
+      throw _privateConstructorUsedError;
   @override
-  String get rfidId => throw _privateConstructorUsedError;
+  TextEditingController get rfidIdController =>
+      throw _privateConstructorUsedError;
   @override
   bool get loading => throw _privateConstructorUsedError;
   @override

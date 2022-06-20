@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jboss_ui/api/database.dart';
@@ -8,12 +9,12 @@ import 'package:jboss_ui/states/device_editor_setting_state.dart';
 final deviceEditorScreenProvider = StateNotifierProvider<
     DeviceEditorSettingStateNotifer, DeviceEditorSettingState>(
   (ref) => DeviceEditorSettingStateNotifer(
-    const DeviceEditorSettingState(
+    DeviceEditorSettingState(
       isNewDevice: true,
       isColored: false,
       colorList: [],
-      name: '',
-      price: '',
+      nameController: TextEditingController(),
+      priceController: TextEditingController(),
       svgIcon: null,
       jbossDevice: null,
       jbossDevicesList: [],
@@ -52,18 +53,17 @@ class DeviceEditorSettingStateNotifer
     state = state.copyWith(colorList: selectedColors);
   }
 
-  void updateText(
-    String value, {
+  void updateText({
+    required TextEditingController controller,
     required DeviceEditorSettingsTextEnum field,
   }) {
     switch (field) {
       case DeviceEditorSettingsTextEnum.name:
-        state = state.copyWith(name: value);
+        state = state.copyWith(nameController: controller);
         break;
       case DeviceEditorSettingsTextEnum.price:
-        state = state.copyWith(price: value);
+        state = state.copyWith(priceController: controller);
         break;
     }
-    state = state.copyWith(svgIcon: null);
   }
 }
