@@ -101,7 +101,9 @@ class SettingSelectorWidget extends ConsumerWidget {
             ],
           ),
         ),
-        Expanded(child: Container()),
+        Expanded(
+          child: Container(),
+        ),
       ],
     );
   }

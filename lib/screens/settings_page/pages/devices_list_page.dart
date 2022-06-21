@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/models/database/setting_type_device.dart';
+import 'package:jboss_ui/provider/device_editor_setting_provider.dart';
 import 'package:jboss_ui/provider/device_list_page_provider.dart';
 import 'package:jboss_ui/screens/settings_page/settings_page.dart';
 import 'package:jboss_ui/utils/constant.dart';
-
 
 class DevicesListPage extends ConsumerWidget {
   const DevicesListPage({Key? key}) : super(key: key);
@@ -33,6 +33,7 @@ class DevicesListPage extends ConsumerWidget {
               onPressed: () {
                 ref.read(settingNavigationProvider.state).state =
                     SettingsScreenOption.addDevice;
+                ref.read(deviceEditorScreenProvider.notifier).initial();
               },
               child: const Text('Добавить новое устройство'),
             )
@@ -46,7 +47,7 @@ class DevicesListPage extends ConsumerWidget {
               key: Key('${state.devices[index].typeDeviceId}'),
               children: [
                 DeviceTileWidget(
-                  device: state.devices[index],
+                  typeDevice: state.devices[index],
                   index: index,
                 ),
                 state.devices.length == index
@@ -73,11 +74,11 @@ class DevicesListPage extends ConsumerWidget {
 }
 
 class DeviceTileWidget extends StatelessWidget {
-  final SettingTypeDevice device;
+  final SettingTypeDevice typeDevice;
   final int index;
 
   const DeviceTileWidget({
-    required this.device,
+    required this.typeDevice,
     required this.index,
     Key? key,
   }) : super(key: key);
@@ -90,19 +91,32 @@ class DeviceTileWidget extends StatelessWidget {
         color: Colors.white,
         child: Row(
           children: [
-            ReorderableDragStartListener(
-              index: index,
-              child: SizedBox(
-                height: 40,
-                width: 40,
-                child: device.svgIcon,
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: ReorderableDragStartListener(
+                index: index,
+                child: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: typeDevice.svgIcon,
+                ),
               ),
+            ),
+            const SizedBox(
+              width: 4.0,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(device.typeDeviceName),
-                Text(device.deviceName),
+                Text(typeDevice.typeDeviceName),
+                SizedBox(
+                  width: 140,
+                  child: FittedBox(
+                    alignment: Alignment.centerLeft,
+                    fit: BoxFit.scaleDown,
+                    child: Text(typeDevice.deviceName),
+                  ),
+                ),
               ],
             ),
             const SizedBox(
@@ -114,7 +128,7 @@ class DeviceTileWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('${device.price} тг.'),
+                  Text('${typeDevice.price} тг.'),
                 ],
               ),
             ),

@@ -21,6 +21,7 @@ mixin _$DeviceEditorSettingState {
       throw _privateConstructorUsedError;
   TextEditingController get priceController =>
       throw _privateConstructorUsedError;
+  String get rawSvg => throw _privateConstructorUsedError;
   SvgPicture? get svgIcon => throw _privateConstructorUsedError;
   bool get isColored => throw _privateConstructorUsedError;
   List<ColorItem> get colorList => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $DeviceEditorSettingStateCopyWith<$Res> {
       {bool isNewDevice,
       TextEditingController nameController,
       TextEditingController priceController,
+      String rawSvg,
       SvgPicture? svgIcon,
       bool isColored,
       List<ColorItem> colorList,
@@ -63,6 +65,7 @@ class _$DeviceEditorSettingStateCopyWithImpl<$Res>
     Object? isNewDevice = freezed,
     Object? nameController = freezed,
     Object? priceController = freezed,
+    Object? rawSvg = freezed,
     Object? svgIcon = freezed,
     Object? isColored = freezed,
     Object? colorList = freezed,
@@ -82,6 +85,10 @@ class _$DeviceEditorSettingStateCopyWithImpl<$Res>
           ? _value.priceController
           : priceController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      rawSvg: rawSvg == freezed
+          ? _value.rawSvg
+          : rawSvg // ignore: cast_nullable_to_non_nullable
+              as String,
       svgIcon: svgIcon == freezed
           ? _value.svgIcon
           : svgIcon // ignore: cast_nullable_to_non_nullable
@@ -118,6 +125,7 @@ abstract class _$$_DeviceEditorSettingStateCopyWith<$Res>
       {bool isNewDevice,
       TextEditingController nameController,
       TextEditingController priceController,
+      String rawSvg,
       SvgPicture? svgIcon,
       bool isColored,
       List<ColorItem> colorList,
@@ -142,6 +150,7 @@ class __$$_DeviceEditorSettingStateCopyWithImpl<$Res>
     Object? isNewDevice = freezed,
     Object? nameController = freezed,
     Object? priceController = freezed,
+    Object? rawSvg = freezed,
     Object? svgIcon = freezed,
     Object? isColored = freezed,
     Object? colorList = freezed,
@@ -161,6 +170,10 @@ class __$$_DeviceEditorSettingStateCopyWithImpl<$Res>
           ? _value.priceController
           : priceController // ignore: cast_nullable_to_non_nullable
               as TextEditingController,
+      rawSvg: rawSvg == freezed
+          ? _value.rawSvg
+          : rawSvg // ignore: cast_nullable_to_non_nullable
+              as String,
       svgIcon: svgIcon == freezed
           ? _value.svgIcon
           : svgIcon // ignore: cast_nullable_to_non_nullable
@@ -192,6 +205,7 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
       {required this.isNewDevice,
       required this.nameController,
       required this.priceController,
+      required this.rawSvg,
       required this.svgIcon,
       required this.isColored,
       required final List<ColorItem> colorList,
@@ -206,6 +220,8 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
   final TextEditingController nameController;
   @override
   final TextEditingController priceController;
+  @override
+  final String rawSvg;
   @override
   final SvgPicture? svgIcon;
   @override
@@ -228,7 +244,7 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
 
   @override
   String toString() {
-    return 'DeviceEditorSettingState(isNewDevice: $isNewDevice, nameController: $nameController, priceController: $priceController, svgIcon: $svgIcon, isColored: $isColored, colorList: $colorList, jbossDevice: $jbossDevice, jbossDevicesList: $jbossDevicesList)';
+    return 'DeviceEditorSettingState(isNewDevice: $isNewDevice, nameController: $nameController, priceController: $priceController, rawSvg: $rawSvg, svgIcon: $svgIcon, isColored: $isColored, colorList: $colorList, jbossDevice: $jbossDevice, jbossDevicesList: $jbossDevicesList)';
   }
 
   @override
@@ -242,6 +258,7 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
                 .equals(other.nameController, nameController) &&
             const DeepCollectionEquality()
                 .equals(other.priceController, priceController) &&
+            const DeepCollectionEquality().equals(other.rawSvg, rawSvg) &&
             const DeepCollectionEquality().equals(other.svgIcon, svgIcon) &&
             const DeepCollectionEquality().equals(other.isColored, isColored) &&
             const DeepCollectionEquality()
@@ -258,6 +275,7 @@ class _$_DeviceEditorSettingState implements _DeviceEditorSettingState {
       const DeepCollectionEquality().hash(isNewDevice),
       const DeepCollectionEquality().hash(nameController),
       const DeepCollectionEquality().hash(priceController),
+      const DeepCollectionEquality().hash(rawSvg),
       const DeepCollectionEquality().hash(svgIcon),
       const DeepCollectionEquality().hash(isColored),
       const DeepCollectionEquality().hash(_colorList),
@@ -276,6 +294,7 @@ abstract class _DeviceEditorSettingState implements DeviceEditorSettingState {
           {required final bool isNewDevice,
           required final TextEditingController nameController,
           required final TextEditingController priceController,
+          required final String rawSvg,
           required final SvgPicture? svgIcon,
           required final bool isColored,
           required final List<ColorItem> colorList,
@@ -291,6 +310,8 @@ abstract class _DeviceEditorSettingState implements DeviceEditorSettingState {
   @override
   TextEditingController get priceController =>
       throw _privateConstructorUsedError;
+  @override
+  String get rawSvg => throw _privateConstructorUsedError;
   @override
   SvgPicture? get svgIcon => throw _privateConstructorUsedError;
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jboss_ui/provider/color_list_page_provider.dart';
+import 'package:jboss_ui/provider/device_list_page_provider.dart';
 import 'package:jboss_ui/screens/settings_page/pages/overlay_menu.dart';
 import 'package:jboss_ui/provider/device_editor_setting_provider.dart';
 import 'dart:io';
@@ -31,6 +31,7 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
               onPressed: () {
                 ref.read(settingNavigationProvider.state).state =
                     SettingsScreenOption.devices;
+                ref.read(deviceListPageProvider.notifier).getDevices();
               },
               child: const Text('Назад'),
             ),
@@ -144,10 +145,26 @@ class DeviceEditorSettingsPage extends ConsumerWidget {
                               )
                         : const SizedBox(),
                     const Divider(),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('Сохранить устройство'),
-                    ),
+                    state.nameController.text.trim().isNotEmpty &&
+                            state.priceController.text.trim().isNotEmpty &&
+                            state.jbossDevice != null
+                        ? TextButton(
+                            onPressed: () async {
+                              final createdDevice = ref
+                                  .read(deviceEditorScreenProvider.notifier)
+                                  .createNewDevice();
+                              if (await createdDevice) {
+                                ref
+                                    .read(settingNavigationProvider.state)
+                                    .state = SettingsScreenOption.devices;
+                                ref
+                                    .read(deviceListPageProvider.notifier)
+                                    .getDevices();
+                              }
+                            },
+                            child: const Text('Сохранить устройство'),
+                          )
+                        : const SizedBox()
                   ],
                 )
               ],
@@ -245,10 +262,9 @@ class DevicesIconsWidget extends ConsumerWidget {
 
                   if (result != null) {
                     File file = File(result.files.single.name);
-                    final svgIcon = SvgPicture.file(file);
-                    ref
-                        .read(deviceEditorScreenProvider.notifier)
-                        .updateSvgIcon(svgIcon: svgIcon);
+                    ref.read(deviceEditorScreenProvider.notifier).updateSvgIcon(
+                          rawSvg: await file.readAsString(),
+                        );
                   }
                 },
                 child: const Text('Выбрать\n иконку'),
@@ -277,11 +293,11 @@ class DevicesIconsWidget extends ConsumerWidget {
 
                                   if (result != null) {
                                     File file = File(result.files.single.name);
-                                    final svgIcon = SvgPicture.file(file);
                                     ref
                                         .read(
                                             deviceEditorScreenProvider.notifier)
-                                        .updateSvgIcon(svgIcon: svgIcon);
+                                        .updateSvgIcon(
+                                            rawSvg: await file.readAsString());
                                   }
                                 },
                                 child: Center(

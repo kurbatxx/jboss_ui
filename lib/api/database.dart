@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:jboss_ui/models/database/color_item.dart';
 import 'package:jboss_ui/models/database/colored_device.dart';
 import 'package:jboss_ui/models/database/jboss_device_item.dart';
@@ -48,9 +49,10 @@ class DbApi {
 
     for (List device in results) {
       final typeDevice = TypeDevice(
-          typeDeviceId: device[0],
-          deviceName: device[1],
-          svgIcon: device[2] ?? svgIcon);
+        typeDeviceId: device[0],
+        deviceName: device[1],
+        svgIcon: device[2] != null ? SvgPicture.string(device[2]) : svgIcon,
+      );
 
       devices.add(typeDevice);
     }
@@ -114,7 +116,7 @@ class DbApi {
         typeDeviceName: device[2],
         deviceName: device[3],
         price: device[4],
-        svgIcon: device[5] ?? svgIcon,
+        svgIcon: device[5] != null ? SvgPicture.string(device[5]) : svgIcon,
       );
 
       settingDevices.add(settingDevice);
@@ -192,5 +194,25 @@ class DbApi {
       jbossDevices.add(jbossDevice);
     }
     return jbossDevices;
+  }
+
+  static Future<void> createNewDevice({
+    required String name,
+    required int jbossId,
+    required int price,
+    required String rawSvg,
+  }) async {
+    final icon = rawSvg.isNotEmpty ? rawSvg : 'null';
+    icon.log();
+
+    try {
+      await DbApi.inst.conn.query('''
+      select
+      from create_new_device('$name', $jbossId, $price, '$icon');
+      ''');
+    } catch (e) {
+      '--#######--'.log();
+      e.log();
+    }
   }
 }

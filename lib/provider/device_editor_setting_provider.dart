@@ -5,6 +5,7 @@ import 'package:jboss_ui/api/database.dart';
 import 'package:jboss_ui/models/database/color_item.dart';
 import 'package:jboss_ui/screens/settings_page/pages/device_editor_settings_page.dart';
 import 'package:jboss_ui/states/device_editor_setting_state.dart';
+import 'package:jboss_ui/utils/dev_log.dart';
 
 final deviceEditorScreenProvider = StateNotifierProvider<
     DeviceEditorSettingStateNotifer, DeviceEditorSettingState>(
@@ -15,6 +16,7 @@ final deviceEditorScreenProvider = StateNotifierProvider<
       colorList: [],
       nameController: TextEditingController(),
       priceController: TextEditingController(),
+      rawSvg: '',
       svgIcon: null,
       jbossDevice: null,
       jbossDevicesList: [],
@@ -28,12 +30,33 @@ class DeviceEditorSettingStateNotifer
     DeviceEditorSettingState state,
   ) : super(state);
 
-  void updateSvgIcon({required SvgPicture svgIcon}) {
-    state = state.copyWith(svgIcon: svgIcon);
+  void initial() {
+    state = state.copyWith(
+      isNewDevice: true,
+      isColored: false,
+      colorList: [],
+      nameController: TextEditingController(),
+      priceController: TextEditingController(),
+      rawSvg: '',
+      svgIcon: null,
+      jbossDevice: null,
+      jbossDevicesList: [],
+    );
+  }
+
+  void updateSvgIcon({required String rawSvg}) {
+    final svgIcon = SvgPicture.string(rawSvg);
+    state = state.copyWith(
+      svgIcon: svgIcon,
+      rawSvg: rawSvg,
+    );
   }
 
   void clearSvg() {
-    state = state.copyWith(svgIcon: null);
+    state = state.copyWith(
+      svgIcon: null,
+      rawSvg: '',
+    );
   }
 
   void coloredToogle() {
@@ -65,5 +88,20 @@ class DeviceEditorSettingStateNotifer
         state = state.copyWith(priceController: controller);
         break;
     }
+  }
+
+  Future<bool> createNewDevice() async {
+    try {
+      await DbApi.createNewDevice(
+        name: state.nameController.text.trim(),
+        price: int.tryParse(state.priceController.text.trim()) ?? 0,
+        jbossId: state.jbossDevice?.id ?? 0,
+        rawSvg: state.rawSvg,
+      );
+      return true;
+    } catch (e) {
+      e.log();
+    }
+    return false;
   }
 }

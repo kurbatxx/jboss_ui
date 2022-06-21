@@ -303,10 +303,12 @@ class ClientSearchCardWidget extends StatelessWidget {
                             width: 4,
                           ),
                           Expanded(
-                              child: FittedBox(
-                                  alignment: Alignment.bottomLeft,
-                                  fit: BoxFit.scaleDown,
-                                  child: Text(client.group))),
+                            child: FittedBox(
+                              alignment: Alignment.bottomLeft,
+                              fit: BoxFit.scaleDown,
+                              child: Text(client.group),
+                            ),
+                          ),
                           const SizedBox(
                             width: 4,
                           ),

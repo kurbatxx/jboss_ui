@@ -11,6 +11,7 @@ class DeviceEditorSettingState with _$DeviceEditorSettingState {
     required bool isNewDevice,
     required TextEditingController nameController,
     required TextEditingController priceController,
+    required String rawSvg,
     required SvgPicture? svgIcon,
     required bool isColored,
     required List<ColorItem> colorList,
