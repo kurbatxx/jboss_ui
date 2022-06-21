@@ -5,6 +5,7 @@ import 'package:jboss_ui/api/database.dart';
 import 'package:jboss_ui/models/database/color_item.dart';
 import 'package:jboss_ui/screens/settings_page/pages/device_editor_settings_page.dart';
 import 'package:jboss_ui/states/device_editor_setting_state.dart';
+import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
 
 final deviceEditorScreenProvider = StateNotifierProvider<
@@ -45,7 +46,12 @@ class DeviceEditorSettingStateNotifer
   }
 
   void updateSvgIcon({required String rawSvg}) {
-    final svgIcon = SvgPicture.string(rawSvg);
+    SvgPicture svgIcon = SvgPicture.string(kRawSvg);
+    try {
+      svgIcon = SvgPicture.string(rawSvg);
+    } catch (e) {
+      e.log();
+    }
     state = state.copyWith(
       svgIcon: svgIcon,
       rawSvg: rawSvg,
@@ -97,6 +103,7 @@ class DeviceEditorSettingStateNotifer
         price: int.tryParse(state.priceController.text.trim()) ?? 0,
         jbossId: state.jbossDevice?.id ?? 0,
         rawSvg: state.rawSvg,
+        colorsList: state.colorList,
       );
       return true;
     } catch (e) {

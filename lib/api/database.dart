@@ -44,7 +44,7 @@ class DbApi {
     order by device_position;
     ''');
 
-    final svgIcon = SvgPicture.string(rawSvg);
+    final svgIcon = SvgPicture.string(kRawSvg);
     List<TypeDevice> devices = [];
 
     for (List device in results) {
@@ -106,7 +106,7 @@ class DbApi {
     order by device_position;
     ''');
 
-    final svgIcon = SvgPicture.string(rawSvg);
+    final svgIcon = SvgPicture.string(kRawSvg);
     List<SettingTypeDevice> settingDevices = [];
 
     for (List device in results) {
@@ -196,19 +196,27 @@ class DbApi {
     return jbossDevices;
   }
 
-  static Future<void> createNewDevice({
-    required String name,
-    required int jbossId,
-    required int price,
-    required String rawSvg,
-  }) async {
+  static Future<void> createNewDevice(
+      {required String name,
+      required int jbossId,
+      required int price,
+      required String rawSvg,
+      required List<ColorItem> colorsList}) async {
     final icon = rawSvg.isNotEmpty ? rawSvg : 'null';
-    icon.log();
+
+    String colors = '{}';
+    if (colorsList.isNotEmpty) {
+      List<int> list = [];
+      for (final i in colorsList) {
+        list.add(i.colorId);
+      }
+      colors = list.toString().replaceFirst('[', '{').replaceFirst(']', '}');
+    }
 
     try {
       await DbApi.inst.conn.query('''
       select
-      from create_new_device('$name', $jbossId, $price, '$icon');
+      from create_new_device('$name', $jbossId, $price, '$icon', '$colors');
       ''');
     } catch (e) {
       '--#######--'.log();
