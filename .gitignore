@@ -49,3 +49,6 @@ app.*.map.json
 # My files
 /jboss/
 /objectbox/ 
+sql/.project
+config.toml
+pubspec.lock

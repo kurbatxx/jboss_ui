@@ -19,7 +19,7 @@ class DbApi {
   static DbApi get inst => _instance ??= DbApi._();
 
   init({required ConnectionPageState connectionState}) async {
-    await Future.delayed(const Duration(seconds: 2));
+    //await Future.delayed(const Duration(seconds: 2));
     conn = PostgreSQLConnection(
       connectionState.hostController.text.trim(),
       int.tryParse(connectionState.portController.text.trim()) ?? 5432,
