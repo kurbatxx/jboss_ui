@@ -11,13 +11,8 @@ import 'package:jboss_ui/provider/connection_page_provider.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
 import 'package:jboss_ui/utils/app_dir.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
-//import 'package:web_socket_channel/web_socket_channel.dart';
 
 final appDir = getAppDir();
-
-// final websocket = WebSocketChannel.connect(
-//   Uri.parse('ws://127.0.0.1:5009/ws'),
-// );
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -14,8 +14,19 @@ import 'package:jboss_ui/screens/task_screen/tasks_screen.dart';
 import 'package:jboss_ui/utils/bitsdojo.dart';
 import 'package:jboss_ui/utils/constant.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 final navBarPositionProvider = StateProvider((ref) => 0);
+
+final providerOfMessages = Provider.autoDispose<WebSocketChannel>((ref) {
+  WebSocketChannel channel =
+      WebSocketChannel.connect(Uri.parse('ws://127.0.0.1:5009/ws'));
+
+  ref.onDispose(() => channel.sink.close());
+
+  channel.sink.add('send_something');
+  return channel;
+});
 
 enum NavBarOptions {
   search(
@@ -24,7 +35,9 @@ enum NavBarOptions {
   ),
   history(
     icon: Icons.analytics_outlined,
-    screen: TaskScreen(),
+    screen: TaskScreenConsumer(
+      child: Text('--'),
+    ),
   ),
   registerDevice(
     icon: Icons.devices_other_rounded,
@@ -91,8 +104,37 @@ class NavBarSwithcer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final position = ref.watch(navBarPositionProvider);
+    final messages = ref.watch(providerOfMessages);
 
+    return StreamBuilder<String>(
+      stream: messages.stream.asBroadcastStream().cast(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const NavBar(child: SizedBox());
+        }
+        if (snapshot.hasData) {
+          return const NavBar(
+            child: SizedBox(
+              height: 10,
+              child: CircleAvatar(
+                backgroundColor: Colors.red,
+              ),
+            ),
+          );
+        }
+        return const NavBar(child: SizedBox());
+      },
+    );
+  }
+}
+
+class NavBar extends ConsumerWidget {
+  final Widget child;
+  const NavBar({Key? key, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final position = ref.watch(navBarPositionProvider);
     return AnimatedToggleSwitch<int>.size(
       current: position,
       height: kTabSize.height,
@@ -110,9 +152,17 @@ class NavBarSwithcer extends ConsumerWidget {
       iconSize: const Size(28, 28),
       selectedIconSize: const Size(32, 32),
       iconBuilder: (position, size) {
-        return Icon(
-          NavBarOptions.values.elementAt(position).icon,
-          size: min(size.width, size.height),
+        return Stack(
+          alignment: AlignmentDirectional.topEnd,
+          children: [
+            Center(
+              child: Icon(
+                NavBarOptions.values.elementAt(position).icon,
+                size: min(size.width, size.height),
+              ),
+            ),
+            position == 1 ? child : const SizedBox(),
+          ],
         );
       },
       onChanged: (position) {
