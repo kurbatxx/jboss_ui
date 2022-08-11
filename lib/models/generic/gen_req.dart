@@ -5,7 +5,9 @@ part 'gen_req.g.dart';
 @JsonSerializable(genericArgumentFactories: true)
 class GenReq<T> {
   T data;
-  GenReq({required this.data});
+  String name;
+
+  GenReq({required this.data, required this.name});
 
   factory GenReq.fromJson(
     Map<String, dynamic> json,
