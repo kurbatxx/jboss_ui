@@ -16,9 +16,12 @@ class JbossApi {
     logoutFFI();
   }
 
-  static String computeLogin<T>(GenReq<T> loginRequest) {
-    return ffi(funcName: "login")(
-      json.encode(loginRequest.data).toNativeUtf8(),
+  //--
+  static String createFFIString<T>(
+    GenReq<T> request,
+  ) {
+    return ffi(funcName: request.name)(
+      json.encode(request.data).toNativeUtf8(),
     ).toDartString();
   }
 
