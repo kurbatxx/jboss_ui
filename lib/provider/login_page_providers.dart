@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
+import 'package:jboss_ui/models/generic/gen_req.dart';
 import 'package:jboss_ui/states/login_screen_state.dart';
 import 'package:jboss_ui/models/login/login_response.dart';
 import 'package:jboss_ui/models/login/login_request.dart';
@@ -60,7 +61,7 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
       state = state.copyWith(isLoading: true);
 
       final loginResponseString = await compute(JbossApi.computeLogin,
-          LoginRequest(login: login, password: password));
+          GenReq(data: LoginRequest(login: login, password: password)));
       Map<String, dynamic> loginResponseMap = jsonDecode(loginResponseString);
       LoginResponse loginResponse = LoginResponse.fromJson(loginResponseMap);
 

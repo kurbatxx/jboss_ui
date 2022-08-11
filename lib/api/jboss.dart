@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:ffi/ffi.dart';
-import 'package:jboss_ui/models/login/login_request.dart';
+import 'package:jboss_ui/models/generic/gen_req.dart';
 import 'package:jboss_ui/models/register_device/register_device_request.dart';
 import 'package:jboss_ui/models/search/search_request.dart';
 import 'package:jboss_ui/api/rust_dart_ffi.dart';
@@ -16,9 +16,9 @@ class JbossApi {
     logoutFFI();
   }
 
-  static String computeLogin(LoginRequest loginRequest) {
+  static String computeLogin<T>(GenReq<T> loginRequest) {
     return ffi(funcName: "login")(
-      json.encode(loginRequest.toJson()).toNativeUtf8(),
+      json.encode(loginRequest.data).toNativeUtf8(),
     ).toDartString();
   }
 
