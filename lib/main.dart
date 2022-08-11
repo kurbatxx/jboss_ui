@@ -9,10 +9,7 @@ import 'package:jboss_ui/api/ui.dart';
 import 'package:jboss_ui/navigation/main_navigation.dart';
 import 'package:jboss_ui/provider/connection_page_provider.dart';
 import 'package:jboss_ui/provider/login_page_providers.dart';
-import 'package:jboss_ui/utils/app_dir.dart';
 import 'package:jboss_ui/utils/dev_log.dart';
-
-final appDir = getAppDir();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
