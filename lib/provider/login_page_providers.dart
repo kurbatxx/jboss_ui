@@ -60,8 +60,14 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
     try {
       state = state.copyWith(isLoading: true);
 
-      final loginResponseString = await compute(JbossApi.computeLogin,
-          GenReq(data: LoginRequest(login: login, password: password)));
+      final loginResponseString = await compute(
+          JbossApi.createFFIString,
+          GenReq(
+              name: "login",
+              data: LoginRequest(login: login, password: password)));
+      // GenReq(
+      //   data: LoginRequest(login: login, password: password),
+      // ));
       Map<String, dynamic> loginResponseMap = jsonDecode(loginResponseString);
       LoginResponse loginResponse = LoginResponse.fromJson(loginResponseMap);
 

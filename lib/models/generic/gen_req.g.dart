@@ -12,6 +12,7 @@ GenReq<T> _$GenReqFromJson<T>(
 ) =>
     GenReq<T>(
       data: fromJsonT(json['data']),
+      name: json['name'] as String,
     );
 
 Map<String, dynamic> _$GenReqToJson<T>(
@@ -20,4 +21,5 @@ Map<String, dynamic> _$GenReqToJson<T>(
 ) =>
     <String, dynamic>{
       'data': toJsonT(instance.data),
+      'name': instance.name,
     };
