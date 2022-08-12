@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
+import 'package:jboss_ui/models/generic/gen_req.dart';
 import 'package:jboss_ui/states/search_page_state.dart';
 import 'package:jboss_ui/models/search/search_request.dart';
 import 'package:jboss_ui/models/search/search_response.dart';
@@ -86,8 +87,8 @@ class SearchPageStateNotifer extends StateNotifier<SearchPageState> {
 
     searchRequest.searchString.log();
 
-    final searchResponseString =
-        await compute(JbossApi.computeSearch, searchRequest);
+    final searchResponseString = await compute(JbossApi.createFFIString,
+        GenReq(data: searchRequest, name: "search_person"));
     Map<String, dynamic> searchResponseMap = jsonDecode(searchResponseString);
     SearchResponse searchResponse = SearchResponse.fromJson(searchResponseMap);
 

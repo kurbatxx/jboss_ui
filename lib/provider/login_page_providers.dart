@@ -65,9 +65,7 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
           GenReq(
               name: "login",
               data: LoginRequest(login: login, password: password)));
-      // GenReq(
-      //   data: LoginRequest(login: login, password: password),
-      // ));
+
       Map<String, dynamic> loginResponseMap = jsonDecode(loginResponseString);
       LoginResponse loginResponse = LoginResponse.fromJson(loginResponseMap);
 

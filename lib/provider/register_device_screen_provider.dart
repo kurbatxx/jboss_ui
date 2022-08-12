@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/jboss.dart';
+import 'package:jboss_ui/models/generic/gen_req.dart';
 import 'package:jboss_ui/states/register_device_screen_state.dart';
 import 'package:jboss_ui/models/register_device/register_device_request.dart';
 import 'package:jboss_ui/models/register_device/register_device_response.dart';
@@ -96,8 +97,11 @@ class RegisterDeviceScreenStateNotifier
 
     registerDeviceRequest.toJson().log();
 
-    final registerDeviceResponseString =
-        await compute(JbossApi.computeRegisterDevice, registerDeviceRequest);
+    final registerDeviceResponseString = await compute(
+      JbossApi.createFFIString,
+      GenReq(data: registerDeviceRequest, name: "register_device"),
+    );
+
     Map<String, dynamic> registerDeviceResponseMap =
         jsonDecode(registerDeviceResponseString);
     RegisterDeviceResponse registerDeviceResponse =
