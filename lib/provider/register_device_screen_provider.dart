@@ -1,9 +1,6 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/api/jboss.dart';
+import 'package:jboss_ui/api/ffi_api.dart';
 import 'package:jboss_ui/models/generic/gen_req.dart';
 import 'package:jboss_ui/states/register_device_screen_state.dart';
 import 'package:jboss_ui/models/register_device/register_device_request.dart';
@@ -97,17 +94,14 @@ class RegisterDeviceScreenStateNotifier
 
     registerDeviceRequest.toJson().log();
 
-    final registerDeviceResponseString = await compute(
-      JbossApi.createFFIString,
-      GenReq(data: registerDeviceRequest, name: "register_device"),
+    final registerDeviceResponse = RegisterDeviceResponse.fromJson(
+      await FFIApi.getResp(
+        GenReq(
+          data: registerDeviceRequest,
+          name: "register_device",
+        ),
+      ),
     );
-
-    Map<String, dynamic> registerDeviceResponseMap =
-        jsonDecode(registerDeviceResponseString);
-    RegisterDeviceResponse registerDeviceResponse =
-        RegisterDeviceResponse.fromJson(registerDeviceResponseMap);
-
-    //await Future.delayed(const Duration(seconds: 3));
 
     state = state.copyWith(register: registerDeviceResponse.register);
 
