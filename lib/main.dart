@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jboss_ui/api/database.dart';
-import 'package:jboss_ui/api/jboss.dart';
+import 'package:jboss_ui/api/ffi_api.dart';
 import 'package:jboss_ui/api/ui.dart';
 
 import 'package:jboss_ui/navigation/main_navigation.dart';
@@ -14,7 +14,7 @@ import 'package:jboss_ui/utils/dev_log.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  JbossApi.initial();
+  FFIApi.initial();
   final loginState = await UiInitialApi.getLoginState();
   final connectionState = await UiInitialApi.getConnetionPageState();
 

@@ -1,8 +1,6 @@
-import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jboss_ui/api/jboss.dart';
+import 'package:jboss_ui/api/ffi_api.dart';
 import 'package:jboss_ui/models/generic/gen_req.dart';
 import 'package:jboss_ui/states/login_screen_state.dart';
 import 'package:jboss_ui/models/login/login_response.dart';
@@ -60,14 +58,14 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
     try {
       state = state.copyWith(isLoading: true);
 
-      final loginResponseString = await compute(
-          JbossApi.createFFIString,
+      final loginResponse = LoginResponse.fromJson(
+        await FFIApi.getResp(
           GenReq(
-              name: "login",
-              data: LoginRequest(login: login, password: password)));
-
-      Map<String, dynamic> loginResponseMap = jsonDecode(loginResponseString);
-      LoginResponse loginResponse = LoginResponse.fromJson(loginResponseMap);
+            data: LoginRequest(login: login, password: password),
+            name: "login",
+          ),
+        ),
+      );
 
       if (loginResponse.error.isNotEmpty) {
         state = state.copyWith(
@@ -102,7 +100,7 @@ class LoginScreenStateNotifer extends StateNotifier<LoginScreenState> {
           passwordController: TextEditingController(),
         );
       }
-      await JbossApi.logout();
+      await FFIApi.logout();
 
       if (!mounted) return;
       Navigator.of(context).pushNamed(NavigationRouteNames.loginScreen);
