@@ -52,3 +52,4 @@ app.*.map.json
 sql/.project
 config.toml
 pubspec.lock
+generated*
